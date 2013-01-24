@@ -68,7 +68,7 @@
 		</div>
 		<h3 class="hndle"><?php _e('Custom Community settings','cc')?></h3>
 		<div class="inside">
-		<p>
+		<p> <div id="categories-set">
 			<b><?php _e('Slideshow','cc')?></b><br />
 			<label for="cc_page_slider"><?php _e('Slideshow on','cc')?>:</label>
 			<input name="cc_page_slider_on" id="cc_page_slider_on" type="checkbox" <?php echo $checked_slider ?> value="1" />
@@ -80,6 +80,7 @@
                     value="<?php echo $option['id']; ?>" /><?php echo $option['name']?>
             </label>
             <?php }?>
+            </div>
 			<br />
 			<label for="cc_page_slider_post_type"><?php _e('Use Post Type: for Pages write "page"','cc')?>:</label>
 			<input type="text" name="cc_page_slider_post_type" id="cc_page_slider_post_type" value="<?php echo $cc_page_slider_post_type; ?>" />

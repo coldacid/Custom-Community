@@ -157,7 +157,7 @@ class CheckboxGroupOptions extends Option{
 				<?php
 				
                 $value = get_option('custom_community_theme_options');
-                $value = (isset($value[$this->id])) ? unserialize($value[$this->id]) : array();
+                $value = (isset($value[$this->id]) && is_serialized($value[$this->id])) ? unserialize($value[$this->id]) : array($value[$this->id]);
 				foreach( $this->options as $option ) :
                     // If standard value is given?>
                     <label>
@@ -173,7 +173,13 @@ class CheckboxGroupOptions extends Option{
     
     function get(){
         $value = get_option('custom_community_theme_options');
-        return isset($value[$this->id]) ? unserialize($value[$this->id]) : array();
+        if(isset($value[$this->id]) && is_serialized($value[$this->id])){
+            return unserialize($value[$this->id]);
+        } else if(isset($value[$this->id]) && !is_serialized($value[$this->id])){
+            return array($value[$this->id]);
+        } else {
+            return  array();
+        }
     }
 }
 
@@ -468,7 +474,7 @@ class autoconfig {
 
 		foreach ($options as $group) {
 			foreach($group->options as $option) {
-				$this->data[$option->_key] = $option;
+                $this->data[$option->_key] = $option;
 			}
 		}
 	}
@@ -513,7 +519,7 @@ function cap_admin_js_libs() {
 	wp_enqueue_script( 'jquery-ui-accordion' );	
 	
 	wp_enqueue_script( 'colorpicker-js', get_template_directory_uri()."/admin/js/colorpicker.js", array(), true );
-	wp_enqueue_script( 'autogrow-textarea', get_template_directory_uri()."/admin/js/jquery.autogrow-textarea.js", array(), true );
+	wp_enqueue_script( 'autogrow-textarea');
 
 }
 

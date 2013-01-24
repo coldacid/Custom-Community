@@ -61,4 +61,17 @@ jQuery(document).ready(function(){
     jQuery('#cap_overwrite_css').focus(function(){
         jQuery('#cap_overwrite_css').elastic();
     });
+    
+    jQuery('#cc_page_slider_post_type').live('blur', function(){
+        var value = jQuery.trim(jQuery(this).val());
+        if(value){
+            var category_block = jQuery('#categories-set');
+            if(jQuery(this).val() != 'post'){
+                category_block.hide().find(':checkbox').attr('checked', false);
+            } else {
+                category_block.show()
+            }
+        }
+    });
+    
 });

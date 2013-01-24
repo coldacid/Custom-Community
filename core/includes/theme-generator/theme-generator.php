@@ -458,12 +458,12 @@ class CC_Theme_Generator{
             if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php')
                 return;
 
-            if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
-                $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
-                locate_template( array( 'sidebar-left.php' ), true );
-                return;		
-            }
+                if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
+                    $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
+                    $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
+                    locate_template( array( 'sidebar-left.php' ), true );
+                    return;		
+                }
         }
 		$component = explode('-',$this->detect->tk_get_page_type());
         if(!empty($component[2])){	

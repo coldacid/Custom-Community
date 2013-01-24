@@ -60,16 +60,22 @@ body.activity-permalink {
 #outerrim{
     margin: 0 auto;
 }
+<?php 
+$site_width = '';
+$units = 'px';
+if($cap->cc_responsive_enable){
+    $site_width = '1200';
+} else if($cap->website_width){
+    $site_width = $cap->website_width;
+    $units = $cap->website_width_unit;
+} else {
+    $site_width = '1000';
+}
+get_contant_width($site_width);
+
+?>
 #innerrim {
-    <?php if($cap->cc_responsive_enable): ?>
-        width: 1200px;
-	<?php elseif($cap->website_width): ?>
-        width: <?php echo $cap->website_width . $cap->website_width_unit; ?>;
-    <?php else : ?>
-        width: 1000px;
-    <?php endif;?>
-    /*max-width:1000px;*/
-    /*min-width:1000px;*/
+    width: <?php echo $site_width . $units;?>;
     float: none;
     margin: 0 auto;
 }
@@ -80,10 +86,10 @@ body.activity-permalink {
     width: 0;
 }
 .v_line_left {
-    margin-left: 223px;
+    margin-left: <?php echo $cap->leftsidebar_width?>;
 }
 .single .v_line_right {
-    right: 223px;
+    right: <?php echo $cap->rightsidebar_width?>;
 }
 h1, h2, h3, h4, h5, h6 {
     margin: 0 0 12px 0;
@@ -572,6 +578,9 @@ div#content .main-column {
 div#content  div.cc_slider{
     margin-left: 0px;
     background: #EDEDED;
+}
+.achievements #content, .single-bp_doc #content{
+    width: 75%;
 }
 /* > Item Headers (Profiles, Groups)
 -------------------------------------------------------------- */
@@ -2564,7 +2573,7 @@ p.form-allowed-tags {
 }
 
 #comments textarea {
-    width: 98%;
+    width: 90%;
 }
 
 /* > Additional WP comment styles
@@ -2890,16 +2899,17 @@ div.menu-top ul li.current-menu-item > a:hover {
 -------------------------------------------------------------- */
 
 #access {
-    background:#<?php echo $container_bg_color;?>;
+    background:#<?php echo $details_bg_color;?>;
     display:block;
     float:left;
-    padding-top:0;
+    padding-top:6px;
     width:100%;
     position: absolute;
     bottom: 0;
     margin: 0 0 -40px 0;
-    border-top: 1px solid #<?php echo $container_alt_bg_color; ?>;
-    border-bottom: 1px solid #<?php echo $container_alt_bg_color; ?>;
+}
+#access ul li {
+	margin-right: 4px;
 }
 #access .menu-header,
 div.menu {
@@ -3018,16 +3028,18 @@ div#cc_slider-top {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    background-color:#<?php echo $container_bg_color;?>;
+	background:#<?php echo $container_bg_color;?>;
     background-repeat:repeat-y;
     border:medium none;
-    overflow:hidden;
     width: 100%;
+    height: 249px;
+	overflow: hidden;
 }
 div.cc_slider {
     margin-bottom: 0;
     overflow: hidden;
     margin-left: 0;
+    margin-top: -1px;
 }
 div.cc_slider.cc_slider_shortcode {
     margin-bottom: 12px;
@@ -3039,7 +3051,6 @@ div.cc_slider .featured{
     position:relative;
     height:250px;
     float: left;
-    background:#<?php echo $container_bg_color;?>;
     margin-bottom: 20px;
 }
 div.cc_slider div.featured{
@@ -3064,13 +3075,13 @@ div.cc_slider ul.ui-tabs-nav {
     position: absolute;
     right: 0;
     top: 0;
-    width: 26%;
+    width: 25%;
 }
 div.cc_slider ul.ui-tabs-nav li{
-    padding:1px 2px 1px 13px;
+    padding: 0px 2px 1px 13px;
     font-size:12px;
     color:#<?php echo $font_color;?>;
-    height: 60px;
+    height: 62px;
     background:none transparent;
     border: none;
     float:none;
@@ -4794,11 +4805,11 @@ menu background colour, border-bottom, image and repeat  **/
 menu corner radius  **/
 
 #access {
-    -moz-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    -o-border-radius: 10px;
-    -ms-border-radius: 10px;
-    border-radius: 10px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -o-border-radius: 6px;
+    -ms-border-radius: 6px;
+    border-radius: 6px;
 <?php if($cap->menu_corner_radius == 'just the bottom ones' || $cap->menu_corner_radius == __('just the bottom ones','cc') ){?>
     -moz-border-radius-topleft:0px;
     -moz-border-radius-topright:0px;
@@ -4813,6 +4824,15 @@ menu corner radius  **/
     border-radius:0px;
 <?php } ?>
 }
+<?php if($cap->menu_corner_radius == 'not rounded' || $cap->menu_corner_radius == __('not rounded','cc') ){?>
+    #access .menu-header li, div.menu li, #access a{
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+        -o-border-radius: 0;
+        -ms-border-radius: 0;
+        border-radius: 0;
+    }
+<?php } ?>
 <?php endif;?>
 
 
@@ -4891,7 +4911,7 @@ menu background colour drop down menu item hover  **/
 
 <?php } ?>
 
-<?php if ( $cap->bg_leftsidebar_color != "" || $cap->bg_leftsidebar_img != "") {?>
+<?php if ( $cap->bg_leftsidebar_color != "" || $cap->bg_leftsidebar_img != "") { ?>
 /** ***
 left sidebar background colour  **/
 
@@ -5133,10 +5153,13 @@ div.item-list-tabs {
 }
 .row-fluid .span8, .span8 {
     width: 75%;
+}
+
+.row-fluid .span8 {
+    width: <?php echo get_contant_width($site_width) . $units;?>
 } 
-.home #container .row-fluid .span8 {
-    width: 80%;
-} 
+
+/*
 .row-fluid.left-right-template .span8,.row-fluid.archive-width .span8{
     width: 53%;
 }
@@ -5147,12 +5170,17 @@ div.item-list-tabs {
 .row-fluid .span8.left-right-template{
     width: 50%;
 }
+.row-fluid .span8.full-with {
+    width: 100%;
+}
 .row-fluid.left-right-sidebar .span11{
     width: 90%;
 }
 .row-fluid.full-width .span8 {
     width: 100%;
 }
+
+*/
 .row-fluid.left-right-sidebar div.post div.post-content,
 .row-fluid.left-right-template div.post div.post-content, 
 .row-fluid.left-right-template #blog-search div.post-content{
@@ -5253,4 +5281,69 @@ function cc_print_styles(){
 	}
 }
 add_action('wp_head', 'cc_print_styles', 100);
+
+/**
+ * Get content width
+ */
+function get_contant_width($site_width){
+    global $cap, $post;
+    
+    if(!is_page()){
+        if($cap->sidebar_position == __('left','cc')){
+            $site_width -= $cap->leftsidebar_width;
+        } else if($cap->sidebar_position == __('right','cc')){
+            $site_width -= $cap->rightsidebar_width;
+        } else if($cap->sidebar_position == __('full-width','cc')){
+
+        } else if($cap->sidebar_position == __('left and right','cc')){
+            $site_width = $site_width - $cap->rightsidebar_width - $cap->leftsidebar_width;
+        }
+    } else {
+        
+        if(isset($post)){
+            $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
+            
+            if( $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
+                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
+                $site_width -= $cap->leftsidebar_width;
+            }
+            if( $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
+                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
+                $site_width -= $cap->rightsidebar_width;
+            }
+            $detect = new TK_WP_Detect();
+            $component = explode('-', $detect->tk_get_page_type());
+            
+            if(!empty($component[2])){	
+                if($component[2] == 'groups') {
+                    if( $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
+                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
+                        $site_width -= $cap->leftsidebar_width;
+                    } 
+                    if($cap->bp_groups_sidebars == 'default' || $cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  
+                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
+                        $site_width -= $cap->rightsidebar_width;
+                    };
+
+                } elseif($component[2] == 'profile') {
+
+                    if($cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
+                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
+                        $site_width -= $cap->leftsidebar_width;
+                    } 
+                    if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
+                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') ) 
+                        || ($cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ) 
+                        && ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') )){
+                        $site_width -= $cap->rightsidebar_width;
+                    }
+                }  elseif($component[2] == 'members') {
+                    $site_width -= $cap->rightsidebar_width;
+                } 
+            } 
+            $site_width -= 40;
+        }
+    }
+    return $site_width;
+}
 ?>

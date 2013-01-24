@@ -685,7 +685,7 @@ function slider($atts, $content = null) {
         $tmp .= 'left:' . $width . 'px;' . chr(13);
         $tmp .= '}' . chr(13);
     }
-
+    
     if ($caption_height != "") {
         $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
         $tmp .= 'height:' . $caption_height . 'px;' . chr(13);
@@ -769,6 +769,7 @@ function slider($atts, $content = null) {
         $tmp .='<div id="featured' . $id . '" class="featured">' . chr(13);
 
         $i = 1;
+        $slider_class = $slider_nav == 'off' ? 'span12' : 'span8';
         while (have_posts()) : the_post();
             global $post;
             $url = get_permalink();
@@ -776,8 +777,7 @@ function slider($atts, $content = null) {
             if (isset($theme_fields[0])) {
                 $url = $theme_fields[0];
             }
-
-            $tmp .='<div id="fragment-' . $id . '-' . $i . '" class="ui-tabs-panel span8">' . chr(13);
+            $tmp .='<div id="fragment-' . $id . '-' . $i . '" class="ui-tabs-panel '.$slider_class.'">' . chr(13);
 
             if ($width != '' || $height != '') {
                 $ftrdimg = get_the_post_thumbnail($post->ID, array($width + 10, $height), "class={$reflect}");
@@ -911,22 +911,24 @@ add_action('wp_enqueue_scripts', 'cc_add_rotate_tabs');
  * @since 1.9.1
  */
 function admin_dtheme_enqueue_scripts() {
+    global $cap;
     $cap = new autoconfig();
     //add for imadiatly view settings after save options
     $responsive = !empty($_POST) && !empty($_POST['custom_community_theme_options']) ?
             $_POST['custom_community_theme_options']['cap_cc_responsive_enable'] == __('Enabled', 'cc') ? 1 : 0  : $cap->cc_responsive_enable;
 
     // Enqueue the global JS - Ajax will not work without it
-    wp_enqueue_script('dtheme-admin-js', get_template_directory_uri() . '/_inc/js/admin.js', array('jquery', 'autogrow-textarea'));
-    wp_localize_script('dtheme-admin-js', 'admin_params', array(
+    wp_register_script( 'autogrow-textarea', get_template_directory_uri()."/admin/js/jquery.autogrow-textarea.js", array(), true );
+    wp_enqueue_script('cc-theme-admin-js', get_template_directory_uri() . '/_inc/js/admin.js', array('jquery', 'autogrow-textarea'));
+    wp_localize_script('cc-theme-admin-js', 'admin_params', array(
         'ajax_url' => site_url('/wp-admin/admin-ajax.php'),
         'blog' => __('blog', 'cc'),
         'flux_slider' => __('flux slider', 'cc'),
         'default_slider' => __('default', 'cc'),
         'responsive' => $responsive
-            )
+        )
     );
-    unset($cap);
+
 }
 
 add_action('admin_enqueue_scripts', 'admin_dtheme_enqueue_scripts');

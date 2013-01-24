@@ -272,7 +272,7 @@ function cc_color_scheme(){
 function cc_slidertop(){
 	global $cc_page_options, $cap;
 
-	$cc_page_options = cc_get_page_meta();
+    $cc_page_options = cc_get_page_meta();
 	
 	$slidercat           = '0' ;
 	$slider_style        = 'default';
@@ -356,6 +356,11 @@ function cc_slidertop(){
             $is_allowed_direct_link = __('yes', 'cc');
         }
 	}
+    if($cap->cc_responsive_enable){
+        $slide_width = 1200;
+    } else {
+        $slide_width = $cap->website_width;
+    }
     $same_attrs = array(
         'category__in'      => $slidercat,
         'caption'           => $caption,
@@ -370,8 +375,8 @@ function cc_slidertop(){
 		$atts = array(
 					'amount'            => $slideshow_amount,
 					'slider_nav'        => 'off',
-					'caption_width'     => '1000',
-					'width'             => '1000',
+					'caption_width'     => $slide_width,
+					'width'             => $slide_width,
 					'height'            => '250',
 					     
 				);

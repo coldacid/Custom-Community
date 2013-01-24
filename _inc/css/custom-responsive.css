@@ -63,9 +63,7 @@ body .row-fluid.left-right-sidebar .span8, body .row-fluid.left-right-template .
     .row-fluid.full-width .span8 {
         width: 100%;
     }
-    .row-fluid .span8.full-with {
-        width: 100%;
-    }
+    
      .row-fluid .span8.left-right-template{
         width: 50%;
     }
