@@ -1025,7 +1025,7 @@ function cap_get_options() {
 	        new DropdownOption(
 	            __('Allow direct post access', 'cc'),
 	            __('When small thumbnails are displayed to the right of a slideshow currently.
-	                When clicking on them you will be redirected to page of the post of this thumbnail.'),
+	                When clicking on them you will be redirected to page of the post of this thumbnail.','cc'),
 	            'slideshow_direct_links',
 	            array(__('no', 'cc'), __('yes', 'cc')),
 	            __('no', 'cc')
