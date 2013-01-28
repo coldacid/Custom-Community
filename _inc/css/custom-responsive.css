@@ -3,7 +3,7 @@
 */
 body.bubble #outerrim div.post div.post-content, #blog-search #outerrim div.post-content {
     margin-left: 25px;
-    width: 91%;
+    width: 90%;
     float:left;
 }
 .cc_slider.hidden-phone.span12{
@@ -18,13 +18,16 @@ body .row-fluid .cc_slider .span8{
     width: 75%;
 }
 .row-fluid .span8{
-    width: 79%;
+    width: 81%;
+}
+.row-fluid.full-width .span8{
+    width: 100%;
 }
 textarea{
     max-width: 95%;
 }
 body .row-fluid.left-right-sidebar .span8, body .row-fluid.left-right-template .span8 {
-    width: 61%;
+    width: 62%;
 }
 .row-fluid.left-right-sidebar .span8, 
 .row-fluid .span8.left-right-template {

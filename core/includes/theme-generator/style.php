@@ -106,7 +106,6 @@ h6, h6 a, h6 a:hover, h6 a:focus {font-size: 12px;margin-bottom: 0}
 a {font-style:normal;color: #<?php echo $link_color;?>;text-decoration: none;padding: 1px 0}
 a:hover, a:active {color: #<?php echo $font_color;?>}
 a:focus {outline: none}
-/*.padder {padding: 20px}*/
 .clear {clear: left}
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
 h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
@@ -228,6 +227,8 @@ position: relative;
 }
 #logo{
     position: absolute;
+    padding: 10px;
+    top: 50px;
 }
 #header div#logo h1, #header div#logo h4 {
     left: 20px;
@@ -258,7 +259,8 @@ label.accessibly-hidden {
 }
 #header div#logo h1 a, #header div#logo h4 a {
     color: #<?php echo $font_color;?>;
-    font-size: 26px;
+    font-size: 37px;
+	line-height: 130%;
 }
 
 /* > Navigation
@@ -538,7 +540,7 @@ div#leftsidebar {
     position:relative;
     width:225px;
 }
-.paddersidebar{padding:30px 15px 30px 20px}
+.paddersidebar{ padding: 30px 10px; }
 
 div#sidebar div.item-options a.selected,
 div#leftsidebar div.item-options a.selected, div.widgetarea {
@@ -552,18 +554,16 @@ div#content {
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    margin: 10px -10px 0 10px;
+    margin: 0;
     float:left;
 }
 
 div#content .padder {
-/*    margin-left: <?php echo $cap->leftsidebar_width ?>px;
-    margin-right: <?php echo $cap->rightsidebar_width ?>px;*/
     border-radius: 0px; 
     border-left: none;
     border-right: none;
     min-height: 300px;
-    padding-top: 30px;
+    padding: 30px 10px 10px 10px;
     overflow: hidden;
 }
 
@@ -594,7 +594,7 @@ div#content div#item-header {
     overflow:hidden;
 }
 div#item-header div#item-header-content {
-    width: 60%;
+    width: 58%;
     float: left;
     margin-left: 20px;
 }
@@ -990,9 +990,9 @@ div.item-list-tabs#object-nav {
 div#subnav.item-list-tabs  {
     background:none repeat scroll 0 0 #<?php echo $container_alt_bg_color;?>;
     border-bottom: medium none;
-    margin: -20px 0 15px -20px;
+    margin: -20px 0 0 0;
     min-height: 26px;
-    padding: 5px 20px;
+    padding: 10px 20px 0 10px;
     overflow: hidden;
 
 }
@@ -1112,9 +1112,6 @@ div.dir-search input[type=text] {
 .read-more-link br{
     display: none;
 }
-#forums-order-select{
-    margin-top: -8px !important;
-}
 
 body.forum #subnav{
     padding-top: 10px !important;
@@ -1154,7 +1151,7 @@ div.pagination {
     color:#<?php echo $font_color;?>;
     font-size:11px;
     height:16px;
-    margin:-20px -20px 9px;
+    margin:-20px 0 0 0;
     padding:10px 20px;
 }
 
@@ -2282,7 +2279,7 @@ div.post {
     overflow: hidden;
 }
 div.post h2.pagetitle, div.post h2.posttitle {
-    margin: 0px 0 25px 0;
+    margin: 0px 0 20px 0;
     line-height: 120%;
 }
 .navigation, .paged-navigation, .comment-navigation {
@@ -2344,9 +2341,13 @@ div.post table th {border-top: 1px solid #<?php echo $body_bg_color;?>;text-alig
 div.post table td {border-top: 1px solid #<?php echo $body_bg_color;?>}
 
 div.post div.post-content {
-    margin-left: 20px;
-    width: 90%;
-    float:left;
+	margin-left: 20px;
+	width: 87.5%;
+	float: left;
+	padding: 0px 5px 10px 15px;
+}
+.left-right-sidebar div.post div.post-content {
+	width: 82%;
 }
 .search-result div.post div.post-content{
     width: 100%; 
@@ -2382,7 +2383,6 @@ div.post p.postmetadata {
     margin-top: 15px;
     clear: left;
     overflow: hidden;
-    width: 95%;
 }
 
 div.post .tags {float: left}
@@ -2765,8 +2765,8 @@ div.widget ul.item-list li div.item-title {
 div.widget ul li a.rsswidget {
     line-height:17px;
 }
-div.widget div.textwidget {
-    padding: 0 10px 0 0;
+div.textwidget {
+    padding: 0 10px 10px 0;
 }
 #header .row-fluid .span4,
 #content .row-fluid .span4,
@@ -3034,6 +3034,7 @@ div#cc_slider-top {
     width: 100%;
     height: 249px;
 	overflow: hidden;
+	margin-bottom: 12px;
 }
 div.cc_slider {
     margin-bottom: 0;
@@ -3043,6 +3044,10 @@ div.cc_slider {
 }
 div.cc_slider.cc_slider_shortcode {
     margin-bottom: 12px;
+}
+.slidershadow {
+	height: 34px;
+	margin-top: -12px;
 }
 
 div.cc_slider .featured{
@@ -3248,7 +3253,7 @@ div.post img {
 }
 
 .boxgrid p, .boxgrid p a {
-    padding: 0 0 0 10px;
+    padding: 0 0 0 5px;
     color: #ffffff;
     font: 11px Arial, sans-serif;
 }
@@ -4442,9 +4447,8 @@ body.bubble div.post div.post-content, #blog-search div.post-content{
     background: none repeat scroll 0 0 #<?php echo $container_alt_bg_color;?>;
     margin-left: 20px;
     margin-right: -5px;
-    padding: 15px 5px 5px 15px;
-    margin-bottom:8px;
-    width: 88%;
+    padding: 15px 10px 5px 15px;
+    margin-bottom:10px;
     float: left;
 }
 body.bubble div.post p.date, #blog-search div.post p.date{
@@ -4601,7 +4605,7 @@ header image, repeat  **/
     if ( HEADER_TEXTCOLOR != get_header_textcolor() ){
         // If we get this far, we have custom styles. Let's do this.
         // Has the text been hidden?
-        if ( 'blank' == get_header_textcolor() ) { ?>
+        if ( $cap->header_text == "__('off','cc')" ) { ?>
             #blog-description, #header div#logo h1 a, #header div#logo h4 a {
                 position: absolute;
                 left: -9000px;
@@ -4609,8 +4613,11 @@ header image, repeat  **/
         <?php // If the user has set a custom color for the text use that
         } else { ?>
             #blog-description, #header div#logo h1 a, #header div#logo h4 a {
-                color: #555555;
-                color: #<?php echo get_header_textcolor(); ?> !important;
+                color: #<?php if ( 'blank' == get_header_textcolor() ) {
+                					echo get_header_textcolor();
+								} else {
+									echo $font_color;
+								} ?> !important;
             }
             <?php } ?>
     <?php }
@@ -5000,10 +5007,11 @@ sidebars: widget title style, background colour and image  **/
 
 div#leftsidebar h3.widgettitle, div#sidebar h3.widgettitle, div.widgetarea h3.widgettitle, div.span3 h3.widgettitle  {
 <?php
+
         switch ($cap->bg_widgettitle_style) {
         case 'angled':
         case __('angled','cc') :
-            ?>-moz-border-radius:0 0 0 0;-webkit-border-radius:0;border-radius:0;margin: 0;padding: 5px 10px;<?php
+            ?>-moz-border-radius:0 0 0 0; -webkit-border-radius:0; border-radius:0; margin: 0 0 10px -10px; padding: 5px 31px 5px 10px;<?php
             break;
         case 'transparent':
         case __('transparent','cc') :
@@ -5042,7 +5050,7 @@ div#leftsidebar h3.widgettitle, div#leftsidebar h3.widgettitle a {
         switch ($cap->bg_widgettitle_style) {
         case 'angled':
         case __('angled','cc') :
-            ?>-moz-border-radius:0 0 0 0;-webkit-border-radius:0;border-radius:0;margin:0 0 12px -20px;padding:5px 22px 5px 19px;<?php
+            ?>-moz-border-radius:0 0 0 0;-webkit-border-radius:0;border-radius:0;margin:0 0 12px -10px;padding:5px 22px 5px 19px;<?php
             break;
         case 'transparent':
         case __('transparent','cc') :
@@ -5121,7 +5129,7 @@ div.item-list-tabs {
     margin-left: 34% !important;
 }
 #innerrim .default-homepage-last-posts{
-    margin-top:-44px;
+    margin-top:-21px;
 }
 #innerrim .group-header-left{
     margin-left:30% !important;
@@ -5181,11 +5189,13 @@ div.item-list-tabs {
 }
 
 */
-.row-fluid.left-right-sidebar div.post div.post-content,
-.row-fluid.left-right-template div.post div.post-content, 
-.row-fluid.left-right-template #blog-search div.post-content{
-    width: 82%;
-}
+<?php if ( $cap->cc_responsive_enable ) { ?>
+	.row-fluid.left-right-sidebar div.post div.post-content,
+	.row-fluid.left-right-template div.post div.post-content, 
+	.row-fluid.left-right-template #blog-search div.post-content {
+	    width: 90%;
+	}
+<?php } ?>
 [class^="rspace"], [class^="rspace"] img{
     width: 100% !important;
 }
@@ -5316,7 +5326,7 @@ function get_contant_width($site_width){
             
             if(!empty($component[2])){	
                 if($component[2] == 'groups') {
-                    if( $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
+                    if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
                         || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
                         $site_width -= $cap->leftsidebar_width;
                     } 
@@ -5327,7 +5337,7 @@ function get_contant_width($site_width){
 
                 } elseif($component[2] == 'profile') {
 
-                    if($cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
+                    if( ($cap->bp_profile_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
                         || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
                         $site_width -= $cap->leftsidebar_width;
                     } 
@@ -5338,10 +5348,14 @@ function get_contant_width($site_width){
                         $site_width -= $cap->rightsidebar_width;
                     }
                 }  elseif($component[2] == 'members') {
-                    $site_width -= $cap->rightsidebar_width;
+                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
+                		$site_width -= $cap->leftsidebar_width;
+                	}
+					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
+						$site_width -= $cap->rightsidebar_width;
+					}
                 } 
             } 
-            $site_width -= 40;
         }
     }
     return $site_width;

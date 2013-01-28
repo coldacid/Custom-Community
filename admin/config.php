@@ -485,8 +485,8 @@ function cap_get_options() {
 				__("Show header text",'cc'),
 				__("Show header text or not?",'cc'),
 				"header_text",
-				array(__('off','cc'), __('on','cc')),
-				__('off','cc')),
+				array(__('on','cc'), __('off','cc')),
+				__('on','cc')),
 			new ColorOption(
 				__("Header text colour",'cc'),
 				__("Change header font colour",'cc'),

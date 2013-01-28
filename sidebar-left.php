@@ -1,7 +1,7 @@
 <?php do_action( 'bp_before_sidebar' ) ?>
 
 <div id="leftsidebar" class="widgetarea">
-  <div class="paddersidebar">
+  <div class="paddersidebar left-sidebar-padder">
   <?php if(defined('BP_VERSION')){ ?>
       <?php if( ! dynamic_sidebar( 'leftsidebar' )) : ?>
       <?php widget_community_nav( 'leftsidebar' ); ?>
