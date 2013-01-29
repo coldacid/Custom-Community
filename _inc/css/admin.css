@@ -2,6 +2,11 @@
 Styles for admin part
 */
 
+
+.CodeMirror .CodeMirror-scroll {
+	height: auto;
+	min-height: 20px;
+}
 img.cc_image_preview {
 	padding: 1em 0;
 }

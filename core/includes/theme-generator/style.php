@@ -2347,7 +2347,7 @@ div.post div.post-content {
 	padding: 0px 5px 10px 15px;
 }
 .left-right-sidebar div.post div.post-content {
-	width: 82%;
+	width: 79%;
 }
 .search-result div.post div.post-content{
     width: 100%; 
