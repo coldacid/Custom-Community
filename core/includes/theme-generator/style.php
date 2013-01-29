@@ -2342,7 +2342,7 @@ div.post table td {border-top: 1px solid #<?php echo $body_bg_color;?>}
 
 div.post div.post-content {
 	margin-left: 20px;
-	width: 87.5%;
+	width: 86%;
 	float: left;
 	padding: 0px 5px 10px 15px;
 }
@@ -5298,6 +5298,11 @@ add_action('wp_head', 'cc_print_styles', 100);
 function get_contant_width($site_width){
     global $cap, $post;
     
+	if($cap->cc_responsive_enable){
+		$cap->rightsidebar_width = 225;
+		$cap->leftsidebar_width = 225;
+	}
+	
     if(!is_page()){
         if($cap->sidebar_position == __('left','cc')){
             $site_width -= $cap->leftsidebar_width;

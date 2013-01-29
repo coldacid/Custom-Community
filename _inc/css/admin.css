@@ -2,6 +2,16 @@
 Styles for admin part
 */
 
+img.cc_image_preview {
+	padding: 1em 0;
+}
+.ui-accordion-content {
+	padding-top: 0;
+}
+.ui-accordion-content select, 
+.ui-accordion-content input {
+	margin-bottom: 2em;
+}
 #config-tabs .text_option_teaxarea {
     width:100%;
     height:100%;

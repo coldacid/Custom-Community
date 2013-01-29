@@ -27,6 +27,8 @@ jQuery(document).ready(function(){
     //Hide Site Width option
     if(admin_params.responsive == "1"){
         jQuery('#cap_website_width').parent().hide().prev().hide();
+        jQuery('#cap_leftsidebar_width').hide().prev().hide().prev().hide();
+        jQuery('#cap_rightsidebar_width').hide().prev().hide().prev().hide();
     }
     
     jQuery('#cap_posts_lists_style_taxonomy, #cap_posts_lists_style_dates, #cap_posts_lists_style_author').change(function(){

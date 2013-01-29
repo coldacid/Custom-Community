@@ -92,18 +92,18 @@ class TextOption extends Option {
 	
 			if($this->accordion == 'on' || $this->accordion == 'start'){ ?>	
 				<?php if($this->accordion_name != 'off' && $this->accordion_name != __('off','cc') ) { ?>
-					<h3><a href="#"><?php echo $this->accordion_name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->accordion_name; ?></a></h3>
 					<div>
-					<p><b><?php echo $this->name; ?></b></p>
+					<p class="option-title"><b><?php echo $this->name; ?></b></p>
 				<?php } else {?>
-					<h3><a href="#"><?php echo $this->name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->name; ?></a></h3>
 					<div>
 				<?php }?>
 			<?php } else { ?>
-				<p><b><?php echo $this->name; ?></b></p>
+				<p class="option-title"><b><?php echo $this->name; ?></b></p>
 			<?php } ?>
-			<?php echo $this->desc.'<br />'; 
-			$commentWidth = 2;
+			<p class="desc"><?php echo $this->desc; ?></p> 
+			<?php $commentWidth = 2;
 			if ( $this->useTextArea ) :
 				$commentWidth = 1;
 				?>
@@ -143,17 +143,17 @@ class CheckboxGroupOptions extends Option{
     function WriteHtml() {
         if($this->accordion == 'on' || $this->accordion == 'start'){ ?>	
 				<?php if($this->accordion_name != 'off') { ?>
-					<h3><a href="#"><?php echo $this->accordion_name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->accordion_name; ?></a></h3>
 					<div>
-					<p><b><?php echo $this->name; ?></b></p>
+					<p class="option-title"><b><?php echo $this->name; ?></b></p>
 				<?php } else {?>
-					<h3><a href="#"><?php echo $this->name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->name; ?></a></h3>
 					<div>
 				<?php }?>
 			<?php } else { ?>
-				<p><b><?php echo $this->name; ?></b></p>
+				<p class="option-title"><b><?php echo $this->name; ?></b></p>
 			<?php } ?>
-				<?php echo $this->desc; ?></br>
+				<p class="desc"><?php echo $this->desc; ?></p>
 				<?php
 				
                 $value = get_option('custom_community_theme_options');
@@ -197,17 +197,17 @@ class DropdownOption extends Option {
 
 			if($this->accordion == 'on' || $this->accordion == 'start'){ ?>	
 				<?php if($this->accordion_name != 'off') { ?>
-					<h3><a href="#"><?php echo $this->accordion_name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->accordion_name; ?></a></h3>
 					<div>
-					<p><b><?php echo $this->name; ?></b></p>
+					<p class="option-title"><b><?php echo $this->name; ?></b></p>
 				<?php } else {?>
-					<h3><a href="#"><?php echo $this->name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->name; ?></a></h3>
 					<div>
 				<?php }?>
 			<?php } else { ?>
-				<p><b><?php echo $this->name; ?></b></p>
+				<p class="option-title"><b><?php echo $this->name; ?></b></p>
 			<?php } ?>
-				<?php echo $this->desc; ?></br>
+				<p class="desc"><?php echo $this->desc; ?></p>
 				<select name="custom_community_theme_options[<?php echo $this->id; ?>]" id="<?php echo $this->id; ?>">
 				<?php
 				
@@ -258,18 +258,18 @@ class DropdownCatOption extends Option {
 
 			if($this->accordion == 'on' || $this->accordion == 'start'){ ?>	
 				<?php if($this->accordion_name != 'off') { ?>
-					<h3><a href="#"><?php echo $this->accordion_name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->accordion_name; ?></a></h3>
 					<div>
-					<p><b><?php echo $this->name; ?></b></p>
+					<p class="option-title"><b><?php echo $this->name; ?></b></p>
 				<?php } else {?>
-					<h3><a href="#"><?php echo $this->name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->name; ?></a></h3>
 					<div>
 				<?php }?>
 			<?php } else { ?>
                 <div class="option-item <?php echo $this->id; ?>">
-                    <p><b><?php echo $this->name; ?></b></p>
+                    <p class="option-title"><b><?php echo $this->name; ?></b></p>
                 <?php } ?>
-                    <?php echo $this->desc; ?></br>
+                    <p class="desc"><?php echo $this->desc; ?></p>
                     <select name="custom_community_theme_options[<?php echo $this->id; ?>]" id="<?php echo $this->id; ?>">
                     <?php
 
@@ -354,17 +354,17 @@ class ColorOption extends Option
 
 			if($this->accordion == 'on' || $this->accordion == 'start'){ ?>	
 				<?php if($this->accordion_name != 'off') { ?>
-					<h3><a href="#"><?php echo $this->accordion_name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->accordion_name; ?></a></h3>
 					<div>
-					<p><b><?php echo $this->name; ?></b></p>
+					<p class="option-title"><b><?php echo $this->name; ?></b></p>
 				<?php } else {?>
-					<h3><a href="#"><?php echo $this->name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->name; ?></a></h3>
 					<div>
 				<?php }?>
 			<?php } else { ?>
-				<p><b><?php echo $this->name; ?></b></p>
+				<p class="option-title"><b><?php echo $this->name; ?></b></p>
 			<?php } ?>
-			<?php echo $this->desc.'<br />'; ?>
+			<p class="desc"><?php echo $this->desc; ?></p>
                 <input name="custom_community_theme_options[<?php echo $this->id; ?>]" id="<?php echo $this->id ?>" type="text" value="<?php echo htmlspecialchars(stripslashes($stdText)) ?>" size="40" />
 			<?php 
         	if($this->accordion == 'on' || $this->accordion == 'end'){ ?>
@@ -419,23 +419,23 @@ class FileOption extends Option
 		   
 			if($this->accordion == 'on' || $this->accordion == 'start'){ ?>	
 				<?php if($this->accordion_name != 'off') { ?>
-					<h3><a href="#"><?php echo $this->accordion_name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->accordion_name; ?></a></h3>
 					<div>
-					<p><b><?php echo $this->name; ?></b></p>
+					<p class="option-title"><b><?php echo $this->name; ?></b></p>
 				<?php } else {?>
-					<h3><a href="#"><?php echo $this->name; ?></a></h3>
+					<h3 class="option-title"><a href="#"><?php echo $this->name; ?></a></h3>
 					<div>
 				<?php }?>
 			<?php } else { ?>
-				<p><b><?php echo $this->name; ?></b></p>
+				<p class="option-title"><b><?php echo $this->name; ?></b></p>
 			<?php } ?>
-			<?php echo $this->desc.'<br />'; ?>
+			<p class="desc"><?php echo $this->desc; ?></p>
 			
 			<div class="option-inputs">
 
 				<label for="image1">
 				<input id="#upload_image<?php echo $this->id ?>" type="text" size="36" name="custom_community_theme_options[<?php echo $this->id; ?>]" value="<?php echo htmlspecialchars(stripslashes($stdText)) ?>" />
-				<input class="upload_image_button" type="button" value="<?php _e('Browse..','cc')?>" /><br></br>
+				<input class="upload_image_button" type="button" value="<?php _e('Browse..','cc')?>" />
 				<img class="cc_image_preview" id="image_<?php echo $this->id ?>" src="<?php echo htmlspecialchars($stdText);  ?>" />
 				
 				</label>

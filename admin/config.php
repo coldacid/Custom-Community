@@ -124,7 +124,9 @@ function cap_get_options() {
 				''),
 	        new BooleanOption(
 	                __('Responsive', CC_TRANSLATE_DOMAIN),
-	                __('Enable/disable responsive mode', CC_TRANSLATE_DOMAIN),
+	                __('Enable/disable responsive mode. <br><br>
+	                <b>Important Note:</b> When responsive mode is on, your <i>website width</i> and <i>sidebar width settings</i> will be inactive <br>
+	                as the responsive design takes automatically care of it.', CC_TRANSLATE_DOMAIN),
 	                'cc_responsive_enable'),
 			new ColorOption(
 				__("Container colour",'cc'),
