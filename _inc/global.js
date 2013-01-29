@@ -1169,7 +1169,11 @@ jq(document).ready( function() {
     
     jq('.allow-dirrect-links').click( function(){
         window.location = jq(this).attr('data-url');
-    })
+    });
+    
+    //add class to plugins pages
+    jq('#content').addClass('span8');
+    
 });
 
 /* Setup activity scope and filter based on the current cookie settings. */

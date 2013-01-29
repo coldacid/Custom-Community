@@ -357,6 +357,9 @@ function cc_widgets_init() {
     );
 }
 
+
+
+
 if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('bp_is_active')) {
 
     //* Add these code to your functions.php to allow Single Search page for all buddypress components*/

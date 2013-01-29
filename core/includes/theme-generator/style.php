@@ -5318,11 +5318,13 @@ function get_contant_width($site_width){
         if(isset($post)){
             $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
             
-            if( $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
+            if( ($tmp == 'default' && $cap->sidebar_position == __('left','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
+            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
                 $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
                 $site_width -= $cap->leftsidebar_width;
             }
-            if( $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
+            if( ($tmp == 'default' && $cap->sidebar_position == __('right','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
+            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
                 || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
                 $site_width -= $cap->rightsidebar_width;
             }
