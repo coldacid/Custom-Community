@@ -475,6 +475,22 @@ function cap_get_options() {
 				"bg_loginpage_backtoblog_fade_2",
 				"",
 				"end"),
+			new TextOption(
+				__("Add scripts to head",'cc'),
+				__("...for google fonts, analytics, etc. <br>
+				Here you can add stuff right before the end of the head tag.",'cc'),
+				"add_to_head",
+				"",
+				true,
+				true),
+			new TextOption(
+				__("Add scripts to footer",'cc'),
+				__("...for analytics, ads, etc. <br>
+				Here you can add stuff right before the end of the footer tag.",'cc'),
+				"add_to_footer",
+				"",
+				true,
+				true),
 			)),
 		new Group (__("Header",'cc'), "header",
 			array(

@@ -1,4 +1,26 @@
-<?php 
+<?php
+
+/**
+ * options "Add scripts to head" and "add scripts to footer"
+ *
+ * @package Custom Community
+ * @since 1.12
+ */
+// add to head function - hooks the stuff to bp_head
+function cc_cap_add_to_head() {
+	global $cap;
+	echo $cap->add_to_head;
+}
+add_action('bp_head', 'cc_cap_add_to_head', 20); 
+
+// add to footer function - hooks the stuff to wp_footer
+function cc_cap_add_to_footer() {
+	global $cap;
+	echo $cap->add_to_footer;
+}
+add_action('wp_footer', 'cc_cap_add_to_footer', 20); 
+
+
 /**
  * check if it's a child theme or parent theme and return the correct path
  *
