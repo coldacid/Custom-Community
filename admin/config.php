@@ -336,7 +336,7 @@ function cap_get_options() {
 				__("blog",'cc'),
 				""),
 	        new DropdownOption(
-	            'List Post Template (for magazine style) home page list page.',
+	            __('List Post Template (for magazine style) home page list page.','cc'), // Ole K H - added translation.
 				__("Choose a layout for the magazine style.",'cc'),
 				"magazine_style_home",
 				$magazine_styles,
@@ -628,7 +628,7 @@ function cap_get_options() {
 				"bg_menu_img_current",
 				""),
 			new DropdownOption(
-				__("Menu background image repeat &raquo current",'cc'),
+				__("Menu background image repeat &raquo; current",'cc'),
 				__("Repeat background image: x=horizontally, y=vertically",'cc'),
 				"bg_menu_img_current_repeat",
 				array(__('no repeat','cc'), 'x', 'y', 'x+y'),
@@ -1043,7 +1043,7 @@ function cap_get_options() {
 	        new DropdownOption(
 	            __('Allow direct post access', 'cc'),
 	            __('When small thumbnails are displayed to the right of a slideshow currently.
-	                When clicking on them you will be redirected to page of the post of this thumbnail.','cc'),
+	                When clicking on them you will be redirected to page of the post of this thumbnail.','cc'), // Ole K Hornnes, added 'cc'.
 	            'slideshow_direct_links',
 	            array(__('no', 'cc'), __('yes', 'cc')),
 	            __('no', 'cc')
