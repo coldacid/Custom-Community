@@ -71,7 +71,7 @@ if($cap->cc_responsive_enable){
 } else {
     $site_width = '1000';
 }
-get_contant_width($site_width);
+get_content_width($site_width);
 
 ?>
 #innerrim {
@@ -149,7 +149,7 @@ blockquote h4, blockquote h5, blockquote h6 {
     font-style:italic;
 }
 img.avatar {
-    border:1px solid #<?php echo $body_bg_color;?>;
+    border:1px solid #<?php echo $container_alt_bg_color;?>;
     float:left;
 }
 span.cc_blockquote {
@@ -218,17 +218,19 @@ position: relative;
     z-index: 9;
     margin-bottom: 50px;
 }
+div.row-fluid [class*="span"] {
+	min-height: 10px;
+}
 #header #search-bar {
-    position: absolute;
-    top: 27px;
-    right: 0;
-    width: 390px;
-    text-align: right;
+	margin-top: 25px;
+	float: right;
+	width: 390px;
+	text-align: right;
+	padding: 10px;
 }
 #logo{
-    position: absolute;
     padding: 10px;
-    top: 50px;
+    float: left;
 }
 #header div#logo h1, #header div#logo h4 {
     left: 20px;
@@ -594,7 +596,7 @@ div#content div#item-header {
     overflow:hidden;
 }
 div#item-header div#item-header-content {
-    width: 58%;
+    width: 53%;
     float: left;
     margin-left: 20px;
 }
@@ -744,11 +746,10 @@ div.widget ul.item-list li img.avatar {
     margin: 3px 10px 10px 0;
 }
 ul.item-list li div.item-title, ul.item-list li h4 {
-    float: left;
+    float: none;
     font-size: 1em;
     font-weight: normal;
-    margin: 0px 0 -5px 10px;
-    width: 47%;
+    margin: 0 0 0 10px;
 }
 div.widget ul.item-list li div.item-title, div.widget  ul.item-list li h4 {
     float:left;
@@ -763,7 +764,7 @@ ul.item-list li div.item-title span {
 ul.item-list li div.item-desc {
     margin: 0 0 0 10px;
     font-size: 0.6em;
-    float:left;
+    float: none;
     color: #<?php echo $font_color;?>;
 }
 
@@ -781,6 +782,12 @@ ul.item-list li div.action {
     margin-left:10px;
 }
 
+#groups-list .item-meta{
+    float: none;
+    margin-left: 10px;
+}
+
+
 ul.item-list li div.meta {
     color:#<?php echo $font_color;?>;
     font-size:1em;
@@ -792,6 +799,9 @@ ul.item-list li h5 span.small {
     font-size: 11px;
 }
 
+#groups-list div.item {
+	margin-left: 60px;
+}
 
 ul.item-list.displaymode-grid li,ul#groups-list.displaymode-grid li{
     display: inline-block;
@@ -863,7 +873,7 @@ div.item-list-tabs {
     background:none repeat scroll 0 0 transparent;
     border-bottom:4px solid #<?php echo $container_alt_bg_color;?>;
     clear:left;
-    margin: 0px 0px 15px;
+    margin: 0;
     overflow:hidden;
     padding-top:15px;
 }
@@ -976,9 +986,6 @@ div#item-nav ul li.loading a {
 #subnav a:hover{
     color:#<?php echo $link_color;?>;
 }
-/*div#subnav.item-list-tabs ul li {
-    margin-top:1px;
-}*/
 #groups-dir-list{
     clear: both;
 }
@@ -990,7 +997,7 @@ div.item-list-tabs#object-nav {
 div#subnav.item-list-tabs  {
     background:none repeat scroll 0 0 #<?php echo $container_alt_bg_color;?>;
     border-bottom: medium none;
-    margin: -20px 0 0 0;
+    margin: 0;
     min-height: 26px;
     padding: 10px 20px 0 10px;
     overflow: hidden;
@@ -1008,10 +1015,10 @@ div.item-list-tabs ul li.feed a {
 
 
 /*--A lot of sub menu items in BuddyPress menu--*/
-.item-list-tabs .next, .item-list-tabs .prev{
+.item-list-tabs .next, 
+.item-list-tabs .prev{
     display:none;
-    margin:0 4px;
-    padding:2px 6px 4px 6px;
+    padding:2px 6px 5px 6px;
     float:left;
     border:0;
     font:normal 18px Helvetica;
@@ -1026,18 +1033,23 @@ div.item-list-tabs ul li.feed a {
 }
 .item-list-tabs .next{
     float:right;
+    margin:0 0 0 4px;
 }
-.item-list-tabs .next:hover, .item-list-tabs .prev:hover{
+.item-list-tabs .prev{
+    margin:0 4px 0 0;
+}
+.item-list-tabs .next:hover, 
+.item-list-tabs .prev:hover{
     color: #<?php echo $font_color;?>;
     background-color:#<?php echo $container_alt_bg_color;?>;
     cursor: pointer;
 }
-.item-list-tabs div{
+.item-list-tabs div.bp-nav-wrap {
     overflow:hidden;
     text-align:left;
     margin:0;
     padding:0;
-    width: 100%;
+    width: 90%;
 }
 .item-list-tabs div ul{
     width:3000px;
@@ -1120,7 +1132,7 @@ body.forum #subnav ul li{
     margin-top: -6px !important;
 }
 div.profile{
-   margin-left: 10px;
+   margin: 20px;
 }
 
 /* > Group specific styles
@@ -1149,10 +1161,10 @@ div.pagination {
     background:none repeat scroll 0 0 #<?php echo $body_bg_color;?>;
     border-bottom:medium none;
     color:#<?php echo $font_color;?>;
-    font-size:11px;
-    height:16px;
-    margin:-20px 0 0 0;
-    padding:10px 20px;
+    font-size: 11px;
+    height: 16px;
+    margin: 0;
+    padding: 10px 20px;
 }
 
 div.pagination#user-pag, .friends div.pagination,
@@ -1614,17 +1626,16 @@ form#whats-new-form {
 }
 
 form#whats-new-form h5 {
-    margin: 0 0 0 10px;
+    margin: 0 0 5px 10px;
     font-weight: normal;
     font-size: 12px;
     color: #<?php echo $font_color;?>;
-    flat: left;
+    float: left;
     width: 80%;
 }
 
 form#whats-new-form #whats-new-avatar {
     float: left;
-    margin-right: 20px;
     width: 52px;
 }
 
@@ -1684,12 +1695,10 @@ ul.activity-list li.has-comments {
     position: relative;
     font-size: 11px;
     min-height: 35px;
-    padding: 12px 0 0 0;
+    padding: 10px 0;
 }
 .activity-list li.mini div.activity-meta {
-    float:left;
-    margin:8px 0;
-    position:relative;
+    margin: 5px 0 10px 0;
 }
 
 .activity-list li.mini div.activity-meta a {
@@ -1698,8 +1707,6 @@ ul.activity-list li.has-comments {
 
 .activity-list li.mini .activity-avatar img.avatar,
 .activity-list li.mini .activity-avatar img.FB_profile_pic {
-    width: 30px;
-    height: 30px;
     margin-left: 0;
 }
 .activity-list li.activity_comment .activity-avatar img.avatar, .activity-list li.activity_comment .activity-avatar img.FB_profile_pic {
@@ -1716,22 +1723,17 @@ body.activity-permalink .activity-list li .activity-avatar img.FB_profile_pic {
 }
 
 .activity-list li.mini .activity-content {
-    min-height:20px;
-    max-height:20px;
-    height:20px;
-    margin-right:0;
-    padding: 0 0 0 8px;
-    width: 70%;
+	overflow: auto;
+	margin-right: 0;
+	padding: 0 0 0 8px;
+	width: auto;
+	margin-left: 0px;
 }
 .activity-list li.mini .activity-content p {
     margin: 0;
     float: left;
 }
 
-.activity-list li.mini .activity-meta {
-    position: absolute;
-    right: 0;
-}
 body.activity-permalink .activity-list li.mini .activity-meta {
     position:absolute;
     right:5px;
@@ -1768,14 +1770,10 @@ body.activity-permalink .activity-list li.mini .activity-meta {
     overflow: hidden;
 }
 
-.activity-list .activity-avatar img {
-    width: 60px;
-    height: 60px;
-}
-body.activity-permalink .activity-list .activity-avatar img {
-    margin-top:22px;
-    width: 100px;
-    height: 100px;
+ul.item-list.activity-list li .activity-avatar img {
+width: 50px;
+height: 50px;
+margin: 0;
 }
 
 .activity-list .activity-content {
@@ -1783,10 +1781,9 @@ body.activity-permalink .activity-list .activity-avatar img {
     -webkit-border-radius:6px;
     border-radius:6px;
     background:none;
-    margin-bottom:8px;
-    margin-left:10px;
+	margin: 10px 0 10px 72px;
     min-height:15px;
-    padding-bottom:8px;
+    padding-bottom:10px;
 }
 
 body.activity-permalink .activity-list li .activity-content {
@@ -1807,10 +1804,18 @@ body.activity-permalink .activity-list li .activity-header > p {
 
 .activity-list .activity-content .activity-header,
 .activity-list .activity-content .comment-header {
-    font-size: 11px;
     color: #<?php echo $font_color;?>;
-    line-height: 170%;
+	line-height: 140%;
+	padding: 5px 2px 5px 2px;
+	min-height: 20px;
+	overflow: auto;
 }
+
+.activity-list li.mini .activity-content .activity-header,
+.activity-list li.mini .activity-content .comment-header {
+	padding-top: 2px;
+}
+
 .activity-list .activity-content .activity-header img.avatar {
     float: none !important;
     margin: 0 5px -8px 0 !important;
@@ -1846,11 +1851,6 @@ span.highlight:hover {
     color: inherit;
 }
 
-.activity-list .activity-content .activity-inner,
-.activity-list .activity-content blockquote {
-    margin: 15px 0 15px 5px;
-    overflow: hidden;
-}
 body.activity-permalink .activity-content .activity-inner,
 body.activity-permalink .activity-content blockquote {
     margin-top: 5px;
@@ -1884,16 +1884,23 @@ body.activity-permalink .activity-content blockquote {
 
 /* - additional to activity- */
 
-.activity-list .activity-content .activity-inner, .activity-list .activity-content blockquote {
-    -moz-border-radius:0;
-    -webkit-border-radius:0;
-    border-radius:0;
-    background:none repeat scroll 0 0 transparent;
-    border-top:1px solid #<?php echo $body_bg_color;?>;
-    color:#<?php echo $font_color;?>;
-    margin:10px 10px 10px 0;
-    overflow:hidden;
-    padding:4px 0;
+.activity-list .activity-content .activity-inner, 
+.activity-list .activity-content blockquote {
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    background: none repeat scroll 0 0 #<?php echo $details_hover_bg_color;?>;
+    border: 1px solid #<?php echo $container_alt_bg_color;?>;
+    color: #<?php echo $font_color;?>;
+    margin: 3px 0 15px 0;
+    overflow: hidden;
+    padding: 10px 20px;
+}
+
+.activity-list .activity-avatar {
+	margin: 10px;
+	overflow: auto;
+	float: left;
 }
 
 .activity-list .activity-content .comment-header {
@@ -1906,10 +1913,7 @@ body.activity-permalink .activity-content blockquote {
 .activity-header a:hover {
     color:#<?php echo $font_color;?>;
 }
-div.activity-meta {
-    clear:left;
-    margin:0 0 3px 3px;
-}
+
 .activity-list div.activity-meta a {
     -moz-border-radius:4px;
     -webkit-border-radius:4px;
@@ -1939,8 +1943,8 @@ div.activity-meta {
 -------------------------------------------------------------- */
 
 div.activity-meta {
-    clear:left;
-    margin:0 0 0 65px;
+    clear: left;
+    margin: 0;
 }
 
 div.activity-comments {
@@ -1970,7 +1974,6 @@ div.activity-comments ul, div.activity-comments ul li {
 }
 
 div.activity-comments ul {
-    background: none repeat scroll 0 0 #<?php echo $container_alt_bg_color;?>;
     border-radius: 0 0 0 0;
     clear: left;
     margin-left: 2%;
@@ -1978,13 +1981,13 @@ div.activity-comments ul {
 
 
 div.activity-comments ul li {
+    background: none repeat scroll 0 0 #<?php echo $details_hover_bg_color;?>;
+    border: 1px solid #<?php echo $container_alt_bg_color;?>;
     -moz-border-radius:6px 6px 6px 6px;
     -webkit-border-radius:6px;
     border-radius:6px;
-    background:none;
-    margin-bottom:8px;
-    padding:10px 0 10px 0;
-    border-top: 1px solid #<?php echo $body_bg_color;?>;
+    margin-bottom: 10px;
+    padding: 10px;
     margin-left: 1%;
 }
 
@@ -1995,10 +1998,6 @@ body.activity-permalink div.activity-comments ul li {
 
 div.activity-comments ul li p:last-child {
     margin-bottom: 0;
-}
-
-div.activity-comments > ul > li:first-child {
-    border-top: none;
 }
 
 div.activity-comments ul li:last-child {
@@ -4389,6 +4388,7 @@ h3, h4, h5, h6, h3 a, h4 a, h5 a, h6 a {
 body.home div.post div.post-content, div.comment-content,
 body.home.bubble div.post div.post-content, body.bubble div.comment-content {
     margin-left: 0;
+    width: 95%;
 }
 
 body.home div.post div.author-box,
@@ -4404,6 +4404,7 @@ standard wordpress archive pages: hide avatar**/
 body.archive div.post div.post-content, div.comment-content,
 body.archive.bubble div.post div.post-content, body.bubble div.comment-content {
     margin-left: 0;
+    width: 95%;
 }
 
 body.archive div.post div.author-box,
@@ -5157,14 +5158,14 @@ div.item-list-tabs {
     width: 100%;
 }
 #activity-filter-select{
-    width: 30%;
+    width: auto;
 }
 .row-fluid .span8, .span8 {
     width: 75%;
 }
 
 .row-fluid .span8 {
-    width: <?php echo get_contant_width($site_width) . $units;?>
+    width: <?php echo get_content_width($site_width) . $units;?>
 } 
 
 /*
@@ -5200,7 +5201,7 @@ div.item-list-tabs {
     width: 100% !important;
 }
 body #content #groups-displaymode-select.span4, body #content #groups-order-select.span5{
-    width: 25%;
+    width: 27%;
     float: right;
 }
 .container-fluid{
@@ -5295,14 +5296,14 @@ add_action('wp_head', 'cc_print_styles', 100);
 /**
  * Get content width
  */
-function get_contant_width($site_width){
+function get_content_width($site_width){
     global $cap, $post;
     
 	if($cap->cc_responsive_enable){
 		$cap->rightsidebar_width = 225;
 		$cap->leftsidebar_width = 225;
 	}
-	
+		
     if(!is_page()){
         if($cap->sidebar_position == __('left','cc')){
             $site_width -= $cap->leftsidebar_width;
@@ -5332,8 +5333,8 @@ function get_contant_width($site_width){
             $component = explode('-', $detect->tk_get_page_type());
             
             if(!empty($component[2])){	
-                if($component[2] == 'groups') {
-                    if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
+                if($component[2] == 'groups' && bp_is_group()) {
+                	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
                         || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
                         $site_width -= $cap->leftsidebar_width;
                     } 
@@ -5342,19 +5343,28 @@ function get_contant_width($site_width){
                         $site_width -= $cap->rightsidebar_width;
                     };
 
-                } elseif($component[2] == 'profile') {
+                } elseif($component[2] == 'profile' || bp_is_user()) {
 
-                    if( ($cap->bp_profile_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
+                    if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
+                    	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
+                    	|| $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
                         || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
-                        $site_width -= $cap->leftsidebar_width;
+                        	$site_width -= $cap->leftsidebar_width;
                     } 
                     if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
-                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') ) 
-                        || ($cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ) 
-                        && ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') )){
-                        $site_width -= $cap->rightsidebar_width;
+                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc')) 
+                        || $cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc') 
+                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
+							$site_width -= $cap->rightsidebar_width;
                     }
                 }  elseif($component[2] == 'members') {
+                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
+                		$site_width -= $cap->leftsidebar_width;
+                	}
+					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
+						$site_width -= $cap->rightsidebar_width;
+					}
+                } else {
                 	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
                 		$site_width -= $cap->leftsidebar_width;
                 	}
