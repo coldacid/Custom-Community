@@ -448,9 +448,12 @@
    #innerrim {
         max-width: 100%;
         min-width: 100%;
+        width: 100%;
      }
     #access {
-        margin: 0;
+		margin-left: 0.9765%;
+		margin-right: 0.9765%;
+		width: 98.04%
     }
   .row:before,
   .row:after {

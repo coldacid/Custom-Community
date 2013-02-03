@@ -26,13 +26,13 @@ body .row-fluid .cc_slider .span8{
 textarea{
     max-width: 95%;
 }
-body .row-fluid.left-right-sidebar .span8, body .row-fluid.left-right-template .span8 {
+.row-fluid.left-right-sidebar .span8, 
+.row-fluid.left-right-template .span8, 
+.row-fluid .span8.left-right-template {
     width: 62%;
 }
-.row-fluid.left-right-sidebar .span8, 
-.row-fluid .span8.left-right-template {
-    width: 57%;
-}
+
+
 /* Tablet Landscape */
 @media screen and (max-width: 1024px) {
     
@@ -55,10 +55,10 @@ body .row-fluid.left-right-sidebar .span8, body .row-fluid.left-right-template .
         right: 22%;
     }
     .row-fluid .span8{
-        width: 76%;
+        width: 799px;
     }
     .row-fluid.left-right-sidebar .span8{
-        width: 55%;
+        width: 516px;
     }
     .row-fluid.left-right-sidebar .span11{
         width: 89%;
@@ -71,7 +71,7 @@ body .row-fluid.left-right-sidebar .span8, body .row-fluid.left-right-template .
         width: 50%;
     }
     #access .menu-header, div.menu {
-        margin-left: 0;
+        margin-left: 0.9765%;
     }
     .ui-tabs-nav.span4{
         width: 235px;
