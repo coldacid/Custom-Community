@@ -1113,7 +1113,7 @@ jq(document).ready( function() {
     if(screen.width > 1024){
     var selector_nav_wrap = '.item-list-tabs[role="navigation"]:not("#subnav"), .item-list-tabs#object-nav';
     
-    jq(selector_nav_wrap).prepend('<button class="prev">&lt;</button><button class="next">&gt;</button>').find('ul').wrap('<div>');
+    jq(selector_nav_wrap).prepend('<button class="prev">&lt;</button><button class="next">&gt;</button>').find('ul').wrap('<div class="bp-nav-wrap">');
     
 	// Enable or leave the keys
 	jq(selector_nav_wrap).each(function(){
