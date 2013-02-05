@@ -56,8 +56,9 @@ jQuery(document).ready(function(){
         }
     });
     jQuery('#cap_posts_lists_style_taxonomy, #cap_posts_lists_style_dates, #cap_posts_lists_style_author, #cap_posts_lists_style_home').trigger('change');
-    if(typeof CodeMirror != 'undefined'){
-        var editor = CodeMirror.fromTextArea(document.getElementById("cap_overwrite_css"), {});
+    var texarea = document.getElementById("cap_overwrite_css");
+    if(typeof CodeMirror != 'undefined' && texarea){
+        var editor = CodeMirror.fromTextArea(texarea, {});
     }
     
     jQuery('#cap_overwrite_css').focus(function(){

@@ -577,7 +577,7 @@ function top_level_settings() {
                     $groups = cap_get_options();
                     foreach( $groups as $group ) :
                     $role_section = substr($group->id, 4) . "_min_role";
-                    if(empty($cap->$role_section) || current_user_can($cap->$role_section)){
+                    if(current_user_can($cap->$role_section)){
                         ?>
                             <li><a href='#<?php echo $group->id; ?>'><?php echo $group->name; ?></a></li>
                         <?php
@@ -595,7 +595,7 @@ function top_level_settings() {
 			foreach( $groups as $group ) :
                  $id = $group->id;
                  $role_section = substr($id, 4) . "_min_role";
-                 if(empty($cap->$role_section) || current_user_can($cap->$role_section)){
+                 if(current_user_can($cap->$role_section)){
                         ?>
                             <div id="<?php echo $id;?>">
                                 <?php 
@@ -615,25 +615,26 @@ function top_level_settings() {
 			</p>
 			
 		</form>
-        
-        <!--Manage options-->
-        <fieldset class="import-export">
-            <legend><?php _e('Managing settings data', CC_TRANSLATE_DOMAIN)?></legend>
-            <form enctype="multipart/form-data" method="post">
-                <p class="submit alignleft">
-                    <input type="file" name="file" />
-                </p>
-                <p class="submit alignleft">
-                    <input name="action" type="submit" value="<?php _e('Import','cc');?>" />
-                </p>
-                <p class="submit alignleft">
-                    <input name="action" type="submit" value="<?php _e('Export','cc');?>" />
-                </p>
-                <p class="submit alignright">
-                    <input name="action" type="submit" value="<?php _e('Reset All Settings','cc');?>" />
-                </p>
-		</form>
-        </fieldset>
+        <?php if(current_user_can('switch_themes')):?>
+            <!--Manage options-->
+            <fieldset class="import-export">
+                <legend><?php _e('Managing settings data', CC_TRANSLATE_DOMAIN)?></legend>
+                <form enctype="multipart/form-data" method="post">
+                    <p class="submit alignleft">
+                        <input type="file" name="file" />
+                    </p>
+                    <p class="submit alignleft">
+                        <input name="action" type="submit" value="<?php _e('Import','cc');?>" />
+                    </p>
+                    <p class="submit alignleft">
+                        <input name="action" type="submit" value="<?php _e('Export','cc');?>" />
+                    </p>
+                    <p class="submit alignright">
+                        <input name="action" type="submit" value="<?php _e('Reset All Settings','cc');?>" />
+                    </p>
+            </form>
+            </fieldset>
+        <?php endif;?>
 		<div class="clear"></div>
         <?php /*?>
 		<h2><?php _e('Preview (updated when options are saved)','cc');?></h2>

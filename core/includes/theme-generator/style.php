@@ -5160,6 +5160,13 @@ div.item-list-tabs {
 #activity-filter-select{
     width: auto;
 }
+.row-fluid #cc_sliderslidertop .span8, div.cc_slider .featured .ui-tabs-panel a{
+    width: 76%;
+}
+.row-fluid #cc_sliderslidertop .info.span8{
+    width: 100%;
+}
+
 .row-fluid .span8, .span8 {
     width: 75%;
 }
@@ -5329,50 +5336,50 @@ function get_content_width($site_width){
                 || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
                 $site_width -= $cap->rightsidebar_width;
             }
-            $detect = new TK_WP_Detect();
-            $component = explode('-', $detect->tk_get_page_type());
+//            $detect = new TK_WP_Detect();
+//            $component = explode('-', $detect->tk_get_page_type());
             
-            if(!empty($component[2])){	
-                if($component[2] == 'groups' && bp_is_group()) {
-                	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
-                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
-                        $site_width -= $cap->leftsidebar_width;
-                    } 
-                    if($cap->bp_groups_sidebars == 'default' || $cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  
-                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
-                        $site_width -= $cap->rightsidebar_width;
-                    };
-
-                } elseif($component[2] == 'profile' || bp_is_user()) {
-
-                    if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
-                    	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
-                    	|| $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
-                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
-                        	$site_width -= $cap->leftsidebar_width;
-                    } 
-                    if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
-                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc')) 
-                        || $cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc') 
-                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
-							$site_width -= $cap->rightsidebar_width;
-                    }
-                }  elseif($component[2] == 'members') {
-                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
-                		$site_width -= $cap->leftsidebar_width;
-                	}
-					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
-						$site_width -= $cap->rightsidebar_width;
-					}
-                } else {
-                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
-                		$site_width -= $cap->leftsidebar_width;
-                	}
-					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
-						$site_width -= $cap->rightsidebar_width;
-					}
-                } 
-            } 
+//            if(!empty($component[2])){
+//                if($component[2] == 'groups' && bp_is_group()) {
+//                	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
+//                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
+//                        $site_width -= $cap->leftsidebar_width;
+//                    } 
+//                    if($cap->bp_groups_sidebars == 'default' || $cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  
+//                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
+//                        $site_width -= $cap->rightsidebar_width;
+//                    };
+//
+//                } elseif($component[2] == 'profile' || bp_is_user()) {
+//
+//                    if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
+//                    	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
+//                    	|| $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
+//                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
+//                        	$site_width -= $cap->leftsidebar_width;
+//                    } 
+//                    if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
+//                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc')) 
+//                        || $cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc') 
+//                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
+//							$site_width -= $cap->rightsidebar_width;
+//                    }
+//                }  elseif($component[2] == 'members') {
+//                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
+//                		$site_width -= $cap->leftsidebar_width;
+//                	}
+//					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
+//						$site_width -= $cap->rightsidebar_width;
+//					}
+//                } else {
+//                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
+//                		$site_width -= $cap->leftsidebar_width;
+//                	}
+//					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
+//						$site_width -= $cap->rightsidebar_width;
+//					}
+//                } 
+//            } 
         }
     }
     return $site_width;
