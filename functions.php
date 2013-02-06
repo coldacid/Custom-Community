@@ -673,13 +673,20 @@ function slider($atts, $content = null) {
     $tmp .= 'margin: 0 0 1px 0;' . chr(13);
     $tmp .= '}' . chr(13);
 
-    if ($slider_nav == 'off') {
+    if ($slider_nav == 'off') { 
         $tmp .= '#featured' . $id . ' ul.ui-tabs-nav {
                     visibility: hidden;
                 }
                 #featured' . $id . ' { 
                     background: none;
                     padding:0
+                }';
+        $tmp .= 'div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
+                    width: 100%
+                }';
+    } else {
+        $tmp .= 'div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
+                    width: 76%
                 }';
     }
 

@@ -558,6 +558,7 @@ div#content {
     border-radius:6px;
     margin: 0;
     float:left;
+    position: relative;
 }
 
 div#content .padder {
@@ -5160,7 +5161,7 @@ div.item-list-tabs {
 #activity-filter-select{
     width: auto;
 }
-.row-fluid #cc_sliderslidertop .span8, div.cc_slider .featured .ui-tabs-panel a{
+.row-fluid #cc_sliderslidertop .span8{
     width: 76%;
 }
 .row-fluid #cc_sliderslidertop .info.span8{

@@ -57,7 +57,7 @@ class CC_Theme_Generator{
 		add_filter('body_class',array( $this, 'posts_lists_body_class'), 10 );
 
 		// helper functions
-		add_action( 'blog_post_entry', array( $this, 'excerpt_on' ), 2 );
+		add_action( 'init', array( $this, 'excerpt_on' ));
 		
 		// groups
 		add_action( 'bp_before_group_home_content', array( $this, 'before_group_home_content' ), 2 );
@@ -616,7 +616,7 @@ class CC_Theme_Generator{
 	 */	
 	function excerpt_on(){
 		global $cap;
-	
+        
 		if($cap->excerpt_on != 'content'){
 			add_filter('excerpt_length', 'cc_excerpt_length');
 			the_excerpt();
