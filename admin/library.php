@@ -638,7 +638,7 @@ function top_level_settings() {
 		<div class="clear"></div>
         <?php /*?>
 		<h2><?php _e('Preview (updated when options are saved)','cc');?></h2>
-		<iframe src="<?php echo home_url( '?preview=true' ); ?>" width="100%" height="600" ></iframe>
+		<iframe src="<?php echo site_url( '?preview=true' ); ?>" width="100%" height="600" ></iframe>
          * 
          */?>
 	</div>

@@ -197,7 +197,7 @@ class CC_Theme_Generator{
 			<div id="blog-description"><?php bloginfo('description'); ?></div>
 			
 			<?php if($cap->logo){ ?>
-			<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?>"></img></a>
+			<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php bloginfo('description'); ?>"></img></a>
 			<?php } ?>
 			</div>
 		<?php else: ?>
@@ -205,7 +205,7 @@ class CC_Theme_Generator{
 			<h4><a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?></a></h4>
 			<div id="blog-description"><?php bloginfo('description'); ?></div>
 			<?php if($cap->logo){ ?>
-			<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?>"></img></a>
+			<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php bloginfo('description'); ?>"></img></a>
 			<?php } ?>
 			</div>
 		<?php endif;
@@ -436,7 +436,7 @@ class CC_Theme_Generator{
 		<?php } ?>
 		<?php if($cap->my_credits_footer != '' ){ ?>
 			<br />
-			<div class="credits"><?php echo $cap->my_credits_footer; ?></div>
+            <div class="credits"><?php echo stripslashes($cap->my_credits_footer); ?></div>
 		<?php } ?>
 	<?php 
 	}
@@ -452,7 +452,7 @@ class CC_Theme_Generator{
 	 */	
 	function sidebar_left(){
 		global $cap, $post;
-		
+//		var_dump($this, );
         if(isset($post)){
             $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
             if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php')
@@ -460,7 +460,7 @@ class CC_Theme_Generator{
 
                 if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
                     $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-                    $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
+                    $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc')){
                     locate_template( array( 'sidebar-left.php' ), true );
                     return;		
                 }
@@ -523,7 +523,7 @@ class CC_Theme_Generator{
                 return;
             if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'right-sidebar.php' 
                 || $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
-                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
+                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
                 locate_template( array( 'sidebar.php' ), true );
                 return;		
             }

@@ -134,7 +134,7 @@ if (!function_exists('cc_admin_header_image')) :
             else
                 $style = ' style="color:#' . get_theme_mod('header_textcolor', HEADER_TEXTCOLOR) . ';"';
             ?>
-            <h1><a id="name"<?php echo $style; ?> onclick="return false;" href="<?php echo home_url('/'); ?>"><?php bloginfo('name'); ?></a></h1>
+            <h1><a id="name"<?php echo $style; ?> onclick="return false;" href="<?php echo site_url('/'); ?>"><?php bloginfo('name'); ?></a></h1>
             <div id="desc"<?php echo $style; ?>><?php bloginfo('description'); ?></div>
             <img src="<?php esc_url(header_image()); ?>" alt="" />
         </div>
@@ -647,13 +647,7 @@ function slider($atts, $content = null) {
         $category_name = '0';
     }
     
-    if (empty($category__in)) {
-        $category__in = array();
-        $categories = get_categories();
-        foreach ($categories as $category) {
-            $category__in[] = $category->term_id;
-        }
-    } else if (!is_array($category__in)) {
+    if (!is_array($category__in)) {
         $category__in = explode(',', $category__in);
     }
     

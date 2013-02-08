@@ -1166,6 +1166,7 @@ div.pagination {
     height: 16px;
     margin: 0;
     padding: 10px 20px;
+    text-align: right;
 }
 
 div.pagination#user-pag, .friends div.pagination,
@@ -3083,7 +3084,7 @@ div.cc_slider ul.ui-tabs-nav {
     width: 25%;
 }
 div.cc_slider ul.ui-tabs-nav li{
-    padding: 0px 2px 1px 13px;
+    padding: 0px 2px 0px 13px;
     font-size:12px;
     color:#<?php echo $font_color;?>;
     height: 62px;
@@ -3104,7 +3105,7 @@ div.cc_slider ul.ui-tabs-nav li span{
 }
 div.cc_slider li.ui-tabs-nav-item a{
     display:block;
-    height:60px;
+    height:100%;
     color:#<?php echo $font_color;?> !important;
     background:#<?php echo $container_bg_color;?>;
     font-weight: normal;
@@ -3215,6 +3216,7 @@ div.post img {
 .list-posts-all {
     width:100%;
     margin-bottom:25px;
+    clear: both;
 }
 
 
@@ -3351,6 +3353,7 @@ div.posts-img-over-content {
     float:left;
     padding:20px 0 0;
     width:33%;
+    min-height: 300px;
 }
 
 div.posts-img-over-content img.wp-post-image {

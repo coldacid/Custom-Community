@@ -336,21 +336,15 @@ function cc_list_posts($atts,$content = null) {
         case 'over':
             $img_position = 'posts-img-over-content';
             break;
-        case 'under':
+        case 'under': 
             $img_position = 'posts-img-under-content';
             break;
         case 'mouse_over':
             $img_position = 'boxgrid';
             break;
         }
-        
-   if (empty($category__in)) {
-        $category__in = array();
-        $categories = get_categories();
-        foreach ($categories as $category) {
-            $category__in[] = $category->term_id;
-        }
-    } else if (!is_array($category__in)) {
+
+    if (!is_array($category__in)) {
         $category__in = explode(',', $category__in);
     }
 
@@ -366,7 +360,7 @@ function cc_list_posts($atts,$content = null) {
         'year'           => $year,
         'monthnum'       => $monthnum,
         'category__in'   => $category__in,
-        'category_name'   => $category_name,
+        'category_name'  => $category_name,
         'posts_per_page' => $amount,
         'paged'          => $paged
     );
@@ -388,7 +382,7 @@ function cc_list_posts($atts,$content = null) {
                 $tmp .= '<a href="'. get_permalink().'" title="'. get_the_title().'"><img src="'.$thePath[0].'" /></a>';
                 $tmp .= '<div class="cover boxcaption">';
                 $tmp .= '<h3><a href="'. get_permalink().'" title="'. get_the_title().'">'. get_the_title().'</a></h3>';
-                $tmp .= '<p class="hidden-phone"><a href="'. get_permalink().'" title="'. get_the_title().'">'.substr(get_the_excerpt(), 0, 100).'...</a></p>';
+                $tmp .= '<p class="hidden-phone"><a href="'. get_permalink().'" title="'. get_the_title().'">'.  substr(strip_tags(get_the_excerpt()), 0, 100).'...</a></p>';
                 $tmp .= '</div>';
                 $tmp .= '</div>'; 
             } else {

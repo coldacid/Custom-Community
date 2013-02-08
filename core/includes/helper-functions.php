@@ -314,8 +314,8 @@ function cc_slidertop(){
 		if( $cc_page_options["cc_page_slider_style"] != '' ){
 			$slider_style = $cc_page_options["cc_page_slider_style"];
 		}
-		if( $cc_page_options["cc_page_slider_caption"] != '' ){
-			$caption = $cc_page_options["cc_page_slider_caption"];
+		if( $cc_page_options["cc_page_slider_caption"] != '' && $cc_page_options["cc_page_slider_caption"] == '1'){
+			$caption = 'off';
 		}
 		if( $cc_page_options["cc_page_slider_amount"]  != '' ){
 			$slideshow_amount = $cc_page_options["cc_page_slider_amount"];

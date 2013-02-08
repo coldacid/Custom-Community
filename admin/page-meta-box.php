@@ -198,9 +198,9 @@ function cc_page_meta_add($id){
 	}
 	
 	if (isset($_POST['cc_page_slider_caption']) && $_POST['cc_page_slider_caption'] == "1") {
-	 	update_post_meta($id,"_cc_page_slider_caption",1);
+	 	update_post_meta($id,"_cc_page_slider_caption", '1');
 	}else{
-	 	update_post_meta($id,"_cc_page_slider_caption",0);
+	 	update_post_meta($id,"_cc_page_slider_caption", '0');
 	}
 	if (isset($_POST['cc_page_slider_style']) === true) {
 	    update_post_meta($id,"_cc_page_slider_style",$_POST["cc_page_slider_style"]);

@@ -138,7 +138,7 @@ function bp_dtheme_activity_template_loader() {
 			bp_activity_clear_new_mentions( $bp->loggedin_user->id );
 			break;
 		default:
-			$feed_url = home_url( bp_get_activity_root_slug() . '/feed/' );
+			$feed_url = site_url( bp_get_activity_root_slug() . '/feed/' );
 			break;
 	}
 
