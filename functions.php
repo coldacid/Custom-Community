@@ -530,7 +530,7 @@ function cc_get_pro_version() {
  * Fix ...[]
  */
 function cc_replace_read_more($text) {
-    return ' <a class="read-more-link" href="' . get_permalink() . '"><br />' . __("read more...", "cc") . '</a>';
+    return ' <a class="read-more-link" href="' . get_permalink() . '"><br />' . __('...read more', 'cc') . '</a>';
 }
 
 add_filter('excerpt_more', 'cc_replace_read_more');
@@ -827,10 +827,11 @@ function slider($atts, $content = null) {
             } else {
                 $ftrdimgs = get_the_post_thumbnail($post->ID, 'slider-thumbnail');
             }
+            $title = mb_substr(get_the_title(), 0, 65);
             if ($allow_direct_link == __('yes', 'cc')) {
-                $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '" class="allow-dirrect-links" data-url="' . get_permalink($post->ID) . '">' . $ftrdimgs . '<span>' . get_the_title() . '</span></a>';
+                $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '" class="allow-dirrect-links" data-url="' . get_permalink($post->ID) . '">' . $ftrdimgs . '<span>' . $title . '</span></a>';
             } else {
-                $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '<span>' . get_the_title() . '</span></a>';
+                $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '<span>' . $title . '</span></a>';
             }
             $tmp .='<li class="ui-tabs-nav-item ui-tabs-selected" id="nav-fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '</li>' . chr(13);
             $i++;

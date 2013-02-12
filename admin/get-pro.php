@@ -1,6 +1,6 @@
 <?php function get_pro(){ 
 
-	if( defined('is_pro') ): 	
+	if( defined('is_pro') && current_user_can('edit_theme_options')): 	
 		return; 
 
 	else: ?>

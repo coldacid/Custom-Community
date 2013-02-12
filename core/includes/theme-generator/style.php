@@ -548,6 +548,9 @@ div#sidebar div.item-options a.selected,
 div#leftsidebar div.item-options a.selected, div.widgetarea {
     color:#<?php echo $font_color;?>;
 }
+div.widget div.textwidget{
+    padding: 0 10px 0 0;
+}
 
 /* > Content
 -------------------------------------------------------------- */
@@ -803,6 +806,12 @@ ul.item-list li h5 span.small {
 #groups-list div.item {
 	margin-left: 60px;
 }
+.widget_bp_groups_widget #groups-list div.item {
+	margin-left: 0;
+}
+div.widget.widget_bp_groups_widget ul.item-list li .item{
+    width: 90%;
+}
 
 ul.item-list.displaymode-grid li,ul#groups-list.displaymode-grid li{
     display: inline-block;
@@ -955,10 +964,10 @@ div.item-list-tabs ul li.selected a, div.item-list-tabs ul li.current a {
 .item-list-tabs .span3{
     text-align: right;
 }
-ul li.loading a {
-    background-image: url(<?php echo get_template_directory_uri() ?>/images/ajax-loader.gif );
-    background-position: 92% 50%;
-    background-repeat: no-repeat;
+ul li.loading a, ul div.loading a {
+    background-image: url(<?php echo get_template_directory_uri() ?>/images/ajax-loader.gif ) !important;
+    background-position: 95% 50% !important;
+    background-repeat: no-repeat !important;
     padding-right: 30px !important;
     z-index: 1000;
 }
@@ -3715,11 +3724,13 @@ colour of the vertical lines  **/
 body background colour, image and repeat  **/
 
 body {
-    <?php if($cap->bg_body_color){?>
+    <?php if($cap->bg_body_color != ''){?>
         background-color: <?php if($cap->bg_body_color != 'transparent') {?>#<?php } ?><?php echo $cap->bg_body_color; ?>;
     <?php } ?>
-    <?php if($cap->bg_body_img){?>
-        background-image:url(<?php echo $cap->bg_body_img?>);
+    <?php if($cap->bg_body_img != ''){
+        $url = strpos($cap->bg_body_img, 'http') !== FALSE ? $cap->bg_body_img : site_url('/' . $cap->bg_body_img);
+        ?>
+        background-image:url(<?php echo $url?>);
     <?php } ?>
     <?php
     switch ($cap->bg_body_img_repeat){

@@ -110,5 +110,4 @@ get_header(); ?>
 
 		</div><!-- .padder -->
 	</div><!-- #content -->
-
 <?php get_footer(); ?>

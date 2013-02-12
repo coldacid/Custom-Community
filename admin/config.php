@@ -421,8 +421,8 @@ function cap_get_options() {
 			new DropdownOption(
 				'<span class="blog-items">' . __("Show / hide avatars in blog display",'cc') . '</span>',
 				'<span class="blog-items">'.  __("Show or hide the avatars in the post listing. <br>
-				This option is for categories, tags and archives pages, showing your articles.",'cc'),
-				"posts_lists_hide_avatar" . '</span>',
+				This option is for categories, tags and archives pages, showing your articles.",'cc'). '</span>',
+				"posts_lists_hide_avatar" ,
 				array(__('show','cc'), __('hide','cc')),
 				__("show",'cc'),
 				"",

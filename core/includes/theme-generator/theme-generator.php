@@ -57,7 +57,7 @@ class CC_Theme_Generator{
 		add_filter('body_class',array( $this, 'posts_lists_body_class'), 10 );
 
 		// helper functions
-		add_action( 'init', array( $this, 'excerpt_on' ));
+		add_action( 'blog_post_entry', array( $this, 'excerpt_on' ), 2);
 		
 		// groups
 		add_action( 'bp_before_group_home_content', array( $this, 'before_group_home_content' ), 2 );

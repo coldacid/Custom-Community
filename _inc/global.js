@@ -177,7 +177,6 @@ jq(document).ready( function() {
         var filter = jq(this).val();
 
         bp_activity_request(scope, filter);
-
         return false;
     });
 
@@ -736,7 +735,7 @@ jq(document).ready( function() {
         }
 
     });
-
+    
     /**** New Forum Directory Post **************************************/
 
     /* Hit the "New Topic" button on the forums directory page */
@@ -1346,10 +1345,13 @@ function bp_init_objects(objects) {
         }
 
         if ( null != jq.cookie('bp-' + objects[i] + '-scope') && jq('div.' + objects[i]).length ) {
-            jq('div.item-list-tabs li').each( function() {
-                jq(this).removeClass('selected');
-            });
-            jq('div.item-list-tabs li#' + objects[i] + '-' + jq.cookie('bp-' + objects[i] + '-scope') + ', div.item-list-tabs#object-nav li.current').addClass('selected');
+            jq('div.item-list-tabs li').removeClass('selected');
+            var set_seleted_class_object = jq('div.item-list-tabs li#' + objects[i] + '-' + jq.cookie('bp-' + objects[i] + '-scope') + ', div.item-list-tabs#object-nav li.current')
+            if(set_seleted_class_object.size() > 0){
+                set_seleted_class_object.addClass('selected');
+            } else {
+                jq('div.item-list-tabs li#' + objects[i] + '-all, div.item-list-tabs#object-nav li.current').addClass('selected');
+            }
         }
     });
 }
@@ -1375,11 +1377,17 @@ function bp_filter_request( object, filter, scope, target, search_terms, page, e
     jq.cookie( 'bp-' + object + '-extras', extras, {
         path: '/'
     } );
-
+//    console.log(object, filter, scope, target, search_terms, page, extras)
     /* Set the correct selected nav and filter */
     jq('div.item-list-tabs li').removeClass('selected');
     
-    jq('div.item-list-tabs li#' + object + '-' + scope + ', div.item-list-tabs#object-nav li.current').addClass('selected');
+    var current_tab = jq('div.item-list-tabs li#' + object + '-' + scope + ', div.item-list-tabs#object-nav li.current');
+    
+    if(current_tab.size() > 0){
+        current_tab.addClass('selected');
+    } else {
+        jq('div.item-list-tabs li#' + object + '-all').addClass('selected');
+    }
     jq('div.item-list-tabs li.selected').addClass('loading');
     jq('div.item-list-tabs select option[value="' + filter + '"]').prop( 'selected', true );
 
@@ -1432,9 +1440,7 @@ function bp_displaymode_request( object, displaymode, scope, target, search_term
     } );
 
     /* Set the correct selected nav and displymode */
-    jq('div.item-list-tabs li').each( function() {
-        //		jq(this).removeClass('selected');
-        });
+    jq('div.item-list-tabs li').removeClass('selected');
     jq('div.item-list-tabs li#' + object + '-' + scope + ', div.item-list-tabs#object-nav li.current').addClass('selected');
     jq('div.item-list-tabs li.selected').addClass('loading');
     jq('div.item-list-tabs select option[value="' + displaymode + '"]').prop( 'selected', true );

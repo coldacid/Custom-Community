@@ -346,14 +346,12 @@ function cc_slidertop(){
 		}
 		if( $cap->slideshow_caption != '' ){
 			switch ($cap->slideshow_caption) {
-				case __('on','cc'):
-				case 'on':
-					$caption = 'on';
-					break;
 				case __('off','cc'):
 				case 'off':
 					$caption = 'off';
 					break;
+				case __('on','cc'):
+				case 'on':
 				default:
 					$caption = 'on';
 					break;
