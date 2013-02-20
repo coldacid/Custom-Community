@@ -39,9 +39,9 @@
                 }
             });
             if(have_block_view){
-                $('.blog-items').show();
+                $('.blog-items').show().parent().next().show();
             } else {
-                $('.blog-items').hide();
+                $('.blog-items').hide().parent().next().hide();
             }
         });
         $('#cap_posts_lists_style_home').change(function(){
