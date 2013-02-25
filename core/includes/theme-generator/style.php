@@ -441,7 +441,7 @@ div#sidebar .widget_search, div.widgetarea .widget_search {
     margin-top: 0;
 }
 div#sidebar .widget_search input[type=text], div.widgetarea .widget_search input[type=text]{
-    width: 110px;
+    width: 50%;
     padding: 2px;
 }
 
@@ -2517,7 +2517,12 @@ div.comment-content {
 #comments span.title, #trackbacks span.title {
     color: #<?php echo $font_color;?>;
 }
-
+#comments label{
+    margin-right: 10px;
+}
+#comments .comment-form-comment label{
+    display: block
+}
 div.post ol.commentlist,
 div.page ol.commentlist {
     list-style: none outside none;
@@ -2749,7 +2754,7 @@ div.widget_pages ul li {
     padding-top:4px;
 }
 div.widget_tag_cloud div {
-    padding:8px 10px 8px 0;
+    padding:8px 10px 8px 10px;
 }
 div.widget ul.children,
 div.widget ul.children ul {
@@ -3730,7 +3735,7 @@ body {
     <?php if($cap->bg_body_img != ''){
         $url = strpos($cap->bg_body_img, 'http') !== FALSE ? $cap->bg_body_img : site_url('/' . $cap->bg_body_img);
         ?>
-        background-image:url(<?php echo $url?>);
+        background-image:url(<?php echo stripslashes($url)?>);
     <?php } ?>
     <?php
     switch ($cap->bg_body_img_repeat){
@@ -3785,7 +3790,7 @@ div#container, body.activity-permalink div#container {
     <?php } ?>
 
     <?php if($cap->bg_container_img){?>
-        background-image:url(<?php echo $cap->bg_container_img?>);
+        background-image:url(<?php echo stripslashes($cap->bg_container_img); ?>);
         <?php
                 switch ($cap->bg_container_img_repeat)
                 {
@@ -3830,7 +3835,7 @@ adapting footer widgets to container background colour, image, repeat and corner
 
     <?php if($cap->bg_container_img && !$cap->bg_footer_img){?>
         div#footer .cc-widget, div#header .cc-widget , #footer .cc-widget-right, #header .cc-widget-right {
-            background-image:url(<?php echo $cap->bg_container_img?>);
+        background-image:url(<?php echo stripslashes($cap->bg_container_img); ?>);
                 <?php switch ($cap->bg_container_img_repeat) {
                     case __('no repeat','cc'):
                         echo 'background-repeat: no-repeat;';
@@ -3872,7 +3877,7 @@ footer WIDGETS and header WIDGETS - height, bg_color, image and repeat  **/
         background-color: <?php if($cap->bg_footer_color != __('transparent','cc') && $cap->bg_footer_color != 'transparent') {?>#<?php echo $cap->bg_footer_color; } else { echo 'transparent';}?> !important;
     <?php } ?>
     <?php if($cap->bg_footer_img) {?>
-        background-image:url(<?php echo $cap->bg_footer_img;?>);
+        background-image:url(<?php echo stripslashes($cap->bg_footer_img);?>);
         <?php
         switch ($cap->bg_footer_img_repeat){
         case __('no repeat','cc'):
@@ -3905,7 +3910,7 @@ footer - height, color, image and repeat  **/
         background-color: <?php if($cap->bg_footerall_color != __('transparent','cc') && $cap->bg_footerall_color != 'transparent') {?>#<?php echo $cap->bg_footerall_color; } else { echo 'transparent';}?>;
     <?php } ?>
     <?php if($cap->bg_footerall_img) {?>
-        background-image:url(<?php echo $cap->bg_footerall_img;?>);
+        background-image:url(<?php echo stripslashes($cap->bg_footerall_img);?>);
         <?php
         switch ($cap->bg_footerall_img_repeat)
         {
@@ -4514,7 +4519,7 @@ header height / navigation position **/
 header image, repeat  **/
 
 #header {
-    background-image:url(<?php echo $cap->header_img?>);
+background-image:url(<?php echo stripslashes($cap->header_img)?>);
         <?php
         switch ($cap->header_img_repeat)
         {
@@ -4800,7 +4805,7 @@ menu background colour, border-bottom, image and repeat  **/
     border-bottom: 1px solid #<?php echo $cap->menu_underline?>;
 <?php } ?>
 <?php if($cap->bg_menu_img){?>
-    background-image:url(<?php echo $cap->bg_menu_img?>);
+    background-image:url(<?php echo stripslashes($cap->bg_menu_img)?>);
 <?php } ?>
 
 <?php
@@ -4868,7 +4873,7 @@ menu background colour, image and repeat of current  **/
 #access ul li.current_page_item, #access ul li.current-menu-item, #access li.selected {
     background-color: <?php if ( $cap->bg_menue_link_color_current != 'transparent' &&  $cap->bg_menue_link_color_current != __('transparent','cc')  ) {echo '#', $cap->bg_menue_link_color_current;} else { echo 'transparent';}?>;
     <?php if($cap->bg_menu_img_current){?>
-    background-image:url(<?php echo $cap->bg_menu_img_current?>);
+    background-image:url(<?php echo stripslashes($cap->bg_menu_img_current)?>);
     <?php } ?>
     <?php if($cap->bg_menu_img_current) {
         switch ($cap->bg_menu_img_current_repeat) {
@@ -4922,7 +4927,7 @@ menu background colour drop down menu item hover  **/
     }
 
     div.v_line_left {
-        margin-left: <?php echo $cap->leftsidebar_width ?>px;
+        margin-left: <?php echo $cap->leftsidebar_width + 20 ?>px;
     }
 
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
@@ -4941,7 +4946,7 @@ left sidebar background colour  **/
 div#leftsidebar {
     <?php if ( $cap->bg_leftsidebar_color != "" ) {?>background-color: #<?php echo $cap->bg_leftsidebar_color;} ?>;
     <?php if($cap->bg_leftsidebar_img != ""){?>
-        background-image:url(<?php echo $cap->bg_leftsidebar_img ?>);
+    background-image:url(<?php echo stripslashes($cap->bg_leftsidebar_img) ?>);
         <?php switch ($cap->bg_leftsidebar_img_repeat)
                 {
                 case 'no repeat':
@@ -4974,7 +4979,7 @@ div#leftsidebar {
 
 
     div.v_line_right {
-        right: <?php echo $cap->rightsidebar_width ?>px;
+        right: <?php echo $cap->rightsidebar_width +20 ?>px;
     }
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
     $old = $cap->rightsidebar_width;$wdth = $old - 41;?>
@@ -4995,7 +5000,7 @@ right sidebar background colour  **/
 div#sidebar {
     <?php if ( $cap->bg_rightsidebar_color != "" ) {?>background-color: #<?php echo $cap->bg_rightsidebar_color;} ?>;
     <?php if($cap->bg_rightsidebar_img != ""){?>
-        background-image:url(<?php echo $cap->bg_rightsidebar_img ?>);
+    background-image:url(<?php echo stripslashes($cap->bg_rightsidebar_img) ?>);
         <?php switch ($cap->bg_rightsidebar_img_repeat)
                 {
                 case 'no repeat':
@@ -5039,7 +5044,7 @@ div#leftsidebar h3.widgettitle, div#sidebar h3.widgettitle, div.widgetarea h3.wi
     background-color: #<?php echo $cap->bg_widgettitle_color?>;
 <?php } ?>
 <?php if($cap->bg_widgettitle_img){?>
-    background-image:url(<?php echo $cap->bg_widgettitle_img?>);
+    background-image:url(<?php echo stripslashes($cap->bg_widgettitle_img)?>);
 <?php } ?>
 <?php
         switch ($cap->bg_widgettitle_img_repeat)
@@ -5270,7 +5275,7 @@ div{
 	<?php
 	get_css();
 	if($cap->overwrite_css){
-		echo $cap->overwrite_css;
+		echo stripslashes($cap->overwrite_css);
 	}
 	?>
 	</style>
@@ -5346,7 +5351,7 @@ function get_content_width($site_width){
                 $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
                 $site_width -= $cap->leftsidebar_width;
             }
-            if( ($tmp == 'default' && $cap->sidebar_position == __('right','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
+            if( empty($tmp) || ($tmp == 'default' && $cap->sidebar_position == __('right','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
             	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
                 || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
                 $site_width -= $cap->rightsidebar_width;

@@ -138,7 +138,7 @@ if (!function_exists('cc_admin_header_image')) :
             <div id="desc"<?php echo $style; ?>><?php bloginfo('description'); ?></div>
             <img src="<?php esc_url(header_image()); ?>" alt="" />
         </div>
-    <?php
+        <?php
     }
 
 endif;
@@ -357,9 +357,6 @@ function cc_widgets_init() {
     );
 }
 
-
-
-
 if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('bp_is_active')) {
 
     //* Add these code to your functions.php to allow Single Search page for all buddypress components*/
@@ -394,546 +391,549 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
         <div class="memberss-search-result search-result">
             <h2 class="content-title"><?php _e("Members Results", "cc"); ?></h2>
         <?php locate_template(array('members/members-loop.php'), true); ?>
-        <?php global $members_template;
+        <?php
+        global $members_template;
         if ($members_template->total_member_count > 1 && !empty($_REQUEST['search-terms'])):
             ?>
                 <a href="<?php echo bp_get_root_domain() . '/' . BP_MEMBERS_SLUG . '/?s=' . $_REQUEST['search-terms'] ?>" ><?php echo sprintf(__("View all %d matched Members", 'cc'), $members_template->total_member_count); ?></a>
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
-        <?php
-    }
+            <?php
+        }
 
-    //Hook Member results to search page
-    add_action("advance-search", "cc_show_member_search", 10); //the priority defines where in page this result will show up(the order of member search in other searchs)
+        //Hook Member results to search page
+        add_action("advance-search", "cc_show_member_search", 10); //the priority defines where in page this result will show up(the order of member search in other searchs)
 
-    function cc_show_groups_search() {
-        ?>
+        function cc_show_groups_search() {
+            ?>
         <div class="groups-search-result search-result">
             <h2 class="content-title"><?php _e("Group Search", "cc"); ?></h2>
-            <?php locate_template(array('groups/groups-loop.php'), true); ?>
-        <?php if (!empty($_REQUEST['search-terms'])): ?>
+        <?php locate_template(array('groups/groups-loop.php'), true); ?>
+            <?php if (!empty($_REQUEST['search-terms'])): ?>
                 <a href="<?php echo bp_get_root_domain() . '/' . BP_GROUPS_SLUG . '/?s=' . $_REQUEST['search-terms'] ?>" ><?php _e("View All matched Groups", "cc"); ?></a>
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
-        <?php
-        //endif;
-    }
+            <?php
+            //endif;
+        }
 
-    //Hook Groups results to search page
-    if (bp_is_active('groups'))
-        add_action("advance-search", "cc_show_groups_search", 10);
+        //Hook Groups results to search page
+        if (bp_is_active('groups'))
+            add_action("advance-search", "cc_show_groups_search", 10);
 
-    /**
-     *
-     * Show blog posts in search
-     */
-    function cc_show_site_blog_search() {
-        ?>
+        /**
+         *
+         * Show blog posts in search
+         */
+        function cc_show_site_blog_search() {
+            ?>
         <div class="blog-search-result search-result">
 
             <h2 class="content-title"><?php _e("Blog Search", "cc"); ?></h2>
 
         <?php locate_template(array('search-loop.php'), true); ?>
-        <?php if (!empty($_REQUEST['search-terms'])): ?>
+            <?php if (!empty($_REQUEST['search-terms'])): ?>
                 <a href="<?php echo bp_get_root_domain() . '/?s=' . $_REQUEST['search-terms'] ?>" ><?php _e("View All matched Posts", "cc"); ?></a>
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
-        <?php
-    }
+            <?php
+        }
 
-    //Hook Blog Post results to search page
-    add_action("advance-search", "cc_show_site_blog_search", 10);
+        //Hook Blog Post results to search page
+        add_action("advance-search", "cc_show_site_blog_search", 10);
 
-    //show forums search
-    function cc_show_forums_search() {
-        ?>
+        //show forums search
+        function cc_show_forums_search() {
+            ?>
         <div class="forums-search-result search-result">
             <h2 class="content-title"><?php _e("Forums Search", "cc"); ?></h2>
         <?php locate_template(array('forums/forums-loop.php'), true); ?>
-        <?php if (!empty($_REQUEST['search-terms'])): ?>
+            <?php if (!empty($_REQUEST['search-terms'])): ?>
                 <a href="<?php echo bp_get_root_domain() . '/' . BP_FORUMS_SLUG . '/?s=' . $_REQUEST['search-terms'] ?>" ><?php _e("View All matched forum posts", "cc"); ?></a>
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
-        <?php
-    }
+            <?php
+        }
 
-    //Hook Forums results to search page
-    if (bp_is_active('forums') && bp_is_active('groups') && ( function_exists('bp_forums_is_installed_correctly')))
-        add_action("advance-search", "cc_show_forums_search", 20);
+        //Hook Forums results to search page
+        if (bp_is_active('forums') && bp_is_active('groups') && ( function_exists('bp_forums_is_installed_correctly')))
+            add_action("advance-search", "cc_show_forums_search", 20);
 
-    //show blogs search result
+        //show blogs search result
 
-    function cc_show_blogs_search() {
+        function cc_show_blogs_search() {
 
-        if (!is_multisite())
-            return;
-        ?>
+            if (!is_multisite())
+                return;
+            ?>
         <div class="blogs-search-result search-result">
             <h2 class="content-title"><?php _e("Blogs Search", "cc"); ?></h2>
         <?php locate_template(array('blogs/blogs-loop.php'), true); ?>
-        <?php if (!empty($_REQUEST['search-terms'])): ?>
+            <?php if (!empty($_REQUEST['search-terms'])): ?>
                 <a href="<?php echo bp_get_root_domain() . '/' . BP_BLOGS_SLUG . '/?s=' . $_REQUEST['search-terms'] ?>" ><?php _e("View All matched Blogs", "cc"); ?></a>
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
-        <?php
+            <?php
+        }
+
+        //Hook Blogs results to search page if blogs comonent is active
+        if (bp_is_active('blogs'))
+            add_action("advance-search", "cc_show_blogs_search", 10);
+
+        //modify the query string with the search term
+        function cc_global_search_qs() {
+            if (empty($_REQUEST['search-terms']))
+                return;
+
+            return "search_terms=" . $_REQUEST['search-terms'];
+        }
+
+        function cc_is_advance_search() {
+            global $bp;
+            if ($bp->current_component == BP_SEARCH_SLUG)
+                return true;
+            return false;
+        }
+
+        remove_action('bp_init', 'bp_core_action_search_site', 7);
     }
-
-    //Hook Blogs results to search page if blogs comonent is active
-    if (bp_is_active('blogs'))
-        add_action("advance-search", "cc_show_blogs_search", 10);
-
-    //modify the query string with the search term
-    function cc_global_search_qs() {
-        if (empty($_REQUEST['search-terms']))
-            return;
-
-        return "search_terms=" . $_REQUEST['search-terms'];
-    }
-
-    function cc_is_advance_search() {
-        global $bp;
-        if ($bp->current_component == BP_SEARCH_SLUG)
-            return true;
-        return false;
-    }
-
-    remove_action('bp_init', 'bp_core_action_search_site', 7);
-}
 
 //load current displaymode template - loop-list.php or loop-grid.php
-function cc_get_displaymode($object) {
-    $_BP_COOKIE = &$_COOKIE;
-    if (isset($_BP_COOKIE['bp-' . $object . '-displaymode'])) {
-        get_template_part("{$object}/{$object}-loop", $_BP_COOKIE['bp-' . $object . '-displaymode']);
-    } else {
-        get_template_part("{$object}/{$object}-loop", 'list');
+    function cc_get_displaymode($object) {
+        $_BP_COOKIE = &$_COOKIE;
+        if (isset($_BP_COOKIE['bp-' . $object . '-displaymode'])) {
+            get_template_part("{$object}/{$object}-loop", $_BP_COOKIE['bp-' . $object . '-displaymode']);
+        } else {
+            get_template_part("{$object}/{$object}-loop", 'list');
+        }
     }
-}
 
 //check if displaymode grid
-function cc_is_displaymode_grid($object) {
-    $_BP_COOKIE = &$_COOKIE;
-    return ( isset($_BP_COOKIE['bp-' . $object . '-displaymode']) && $_BP_COOKIE['bp-' . $object . '-displaymode'] == 'grid');
-}
-
-/**
- * Get pro version
- */
-function cc_get_pro_version() {
-    $pro_enabler = get_template_directory() . DIRECTORY_SEPARATOR . '_pro' . DIRECTORY_SEPARATOR . 'pro-enabler.php';
-    if (file_exists($pro_enabler)) {
-        require_once $pro_enabler;
+    function cc_is_displaymode_grid($object) {
+        $_BP_COOKIE = &$_COOKIE;
+        return ( isset($_BP_COOKIE['bp-' . $object . '-displaymode']) && $_BP_COOKIE['bp-' . $object . '-displaymode'] == 'grid');
     }
-}
 
-/**
- * Fix ...[]
- */
-function cc_replace_read_more($text) {
-    return ' <a class="read-more-link" href="' . get_permalink() . '"><br />' . __('...read more', 'cc') . '</a>';
-}
+    /**
+     * Get pro version
+     */
+    function cc_get_pro_version() {
+        $pro_enabler = get_template_directory() . DIRECTORY_SEPARATOR . '_pro' . DIRECTORY_SEPARATOR . 'pro-enabler.php';
+        if (file_exists($pro_enabler)) {
+            require_once $pro_enabler;
+        }
+    }
 
-add_filter('excerpt_more', 'cc_replace_read_more');
+    /**
+     * Fix ...[]
+     */
+    function cc_replace_read_more($text) {
+        return ' <a class="read-more-link" href="' . get_permalink() . '"><br />' . __('...read more', 'cc') . '</a>';
+    }
 
-/**
- * Display the rate for us message
- */
-function cc_add_rate_us_notice() {
-    $hide_message = get_option('cc_hide_activation_message', false);
-    if (!$hide_message) {
-        echo '<div class="update-nag cc-rate-it">
+    add_filter('excerpt_more', 'cc_replace_read_more');
+
+    /**
+     * Display the rate for us message
+     */
+    function cc_add_rate_us_notice() {
+        $hide_message = get_option('cc_hide_activation_message', false);
+        if (!$hide_message) {
+            echo '<div class="update-nag cc-rate-it">
                 ' . cc_get_add_rate_us_message() . '<a href="#" class="dismiss-activation-message">' . __('Dismiss', 'cc') . '</a>
             </div>';
+        }
     }
-}
 
-function cc_get_add_rate_us_message() {
-    return 'Please rate for <a class="go-to-wordpress-repo" href="http://wordpress.org/extend/themes/custom-community" target="_blank">Custom Community</a> theme on WordPress.org';
-}
-
-/**
- * Ajax processor for show/hide Please rate for
- */
-add_action('wp_ajax_dismiss_activation_message', 'cc_dismiss_activation_message');
-
-function cc_dismiss_activation_message() {
-    echo update_option('cc_hide_activation_message', $_POST['value']);
-    die();
-}
-
-/**
- * Ajax processor for show/hide Please info for
- */
-add_action('wp_ajax_cc_dismiss_info_messages', 'cc_dismiss_info_messages');
-
-function cc_dismiss_info_messages() {
-    echo update_option($_POST['action'], $_POST['value']);
-    die();
-}
-
-/**
- * Add css
- */
-function cc_add_styles() {
-    global $cap;
-    if ($cap->cc_responsive_enable) {
-        wp_enqueue_style('bootstrap', get_template_directory_uri() . '/_inc/css/bootstrap-responsive.css');
-        wp_enqueue_style('custom', get_template_directory_uri() . '/_inc/css/custom-responsive.css');
+    function cc_get_add_rate_us_message() {
+        return 'Please rate for <a class="go-to-wordpress-repo" href="http://wordpress.org/extend/themes/custom-community" target="_blank">Custom Community</a> theme on WordPress.org';
     }
-}
 
-add_action('wp_head', 'cc_add_styles', 10);
+    /**
+     * Ajax processor for show/hide Please rate for
+     */
+    add_action('wp_ajax_dismiss_activation_message', 'cc_dismiss_activation_message');
 
-/**
- * Add class span%2 for menu items
- * @param string $items
- * @param array $args
- * @return string items with new class
- */
-function cc_add_spanclass($items, $args) {
-
-    $items = explode('</li>', $items);
-    $newitems = array();
-    // loop through the menu items, and add the new link at the right position
-    foreach ($items as $item) {
-        $newitems[] = str_replace('class="', 'class="span2 ', $item);
+    function cc_dismiss_activation_message() {
+        echo update_option('cc_hide_activation_message', $_POST['value']);
+        die();
     }
-    // finally put all the menu items back together into a string using the ending <li> tag and return
-    $newitems = implode('</li>', $newitems);
 
-    return $newitems;
-}
+    /**
+     * Ajax processor for show/hide Please info for
+     */
+    add_action('wp_ajax_cc_dismiss_info_messages', 'cc_dismiss_info_messages');
+
+    function cc_dismiss_info_messages() {
+        echo update_option($_POST['action'], $_POST['value']);
+        die();
+    }
+
+    /**
+     * Add css
+     */
+    function cc_add_styles() {
+        global $cap;
+        if ($cap->cc_responsive_enable) {
+            wp_enqueue_style('bootstrap', get_template_directory_uri() . '/_inc/css/bootstrap-responsive.css');
+            wp_enqueue_style('custom', get_template_directory_uri() . '/_inc/css/custom-responsive.css');
+        }
+    }
+
+    add_action('wp_head', 'cc_add_styles', 10);
+
+    /**
+     * Add class span%2 for menu items
+     * @param string $items
+     * @param array $args
+     * @return string items with new class
+     */
+    function cc_add_spanclass($items, $args) {
+
+        $items = explode('</li>', $items);
+        $newitems = array();
+        // loop through the menu items, and add the new link at the right position
+        foreach ($items as $item) {
+            $newitems[] = str_replace('class="', 'class="span2 ', $item);
+        }
+        // finally put all the menu items back together into a string using the ending <li> tag and return
+        $newitems = implode('</li>', $newitems);
+
+        return $newitems;
+    }
 
 //add_filter('wp_list_pages', 'cc_add_spanclass', 10, 2);
 //add_filter('wp_nav_menu_items', 'cc_add_spanclass', 10, 2);
 
-/**
- * Slider functions, used in slideshow parts
- * @global object $post post object
- * @global type $cc_js
- * @global type $cap
- * @global type $post
- * @param type $atts
- * @param type $content
- * @return type
- */
-function slider($atts, $content = null) {
-    global $post, $cc_js, $cap;
-    extract(shortcode_atts(array(
-                'amount' => '4',
-                'category__in' => array(),
-                'category_name' => '',
-                'page_id' => '',
-                'post_type' => 'post',
-                'orderby' => 'DESC',
-                'slider_nav' => 'on',
-                'caption' => 'on',
-                'caption_height' => '',
-                'caption_top' => '',
-                'caption_width' => '',
-                'reflect' => '',
-                'width' => '',
-                'height' => '',
-                'id' => '',
-                'background' => '',
-                'slider_nav_color' => '',
-                'slider_nav_hover_color' => '',
-                'slider_nav_selected_color' => '',
-                'slider_nav_font_color' => '',
-                'time_in_ms' => '5000',
-                'allow_direct_link' => __('no', 'cc')
-                    ), $atts));
-    if($category_name == 'all-categories'){
-        $category_name = '0';
-    }
-    
-    if (!is_array($category__in)) {
-        $category__in = explode(',', $category__in);
-    }
-    
+    /**
+     * Slider functions, used in slideshow parts
+     * @global object $post post object
+     * @global type $cc_js
+     * @global type $cap
+     * @global type $post
+     * @param type $atts
+     * @param type $content
+     * @return type
+     */
+    function slider($atts, $content = null) {
+        global $post, $cc_js, $cap;
+        extract(shortcode_atts(array(
+                    'amount' => '4',
+                    'category__in' => array(),
+                    'category_name' => '',
+                    'page_id' => '',
+                    'post_type' => 'post',
+                    'orderby' => 'DESC',
+                    'slider_nav' => 'on',
+                    'caption' => 'on',
+                    'caption_height' => '',
+                    'caption_top' => '',
+                    'caption_width' => '',
+                    'reflect' => '',
+                    'width' => '',
+                    'height' => '',
+                    'id' => '',
+                    'background' => '',
+                    'slider_nav_color' => '',
+                    'slider_nav_hover_color' => '',
+                    'slider_nav_selected_color' => '',
+                    'slider_nav_font_color' => '',
+                    'time_in_ms' => '5000',
+                    'allow_direct_link' => __('no', 'cc')
+                        ), $atts));
 
-    if ($page_id != '' && $post_type == 'post') {
-        $post_type = 'page';
-    }
 
-    if ($page_id != '') {
-        $page_id = explode(',', $page_id);
-    }
 
-    $tmp = chr(13);
+        if ($page_id != '' && $post_type == 'post') {
+            $post_type = 'page';
+        }
+        //pages haven't categories
+        if ($post_type == 'page') {
+            $category_name = '';
+            $category__in = array();
+        }
 
-    $tmp .= '<style type="text/css">' . chr(13);
-    $tmp .= 'div.post img {' . chr(13);
-    $tmp .= 'margin: 0 0 1px 0;' . chr(13);
-    $tmp .= '}' . chr(13);
+        if ($page_id != '') {
+            $page_id = explode(',', $page_id);
+        }
 
-    if ($slider_nav == 'off') { 
-        $tmp .= '#featured' . $id . ' ul.ui-tabs-nav {
+        $tmp = chr(13);
+
+        $tmp .= '<style type="text/css">' . chr(13);
+        $tmp .= 'div.post img {' . chr(13);
+        $tmp .= 'margin: 0 0 1px 0;' . chr(13);
+        $tmp .= '}' . chr(13);
+
+        if ($slider_nav == 'off') {
+            $tmp .= '#featured' . $id . ' ul.ui-tabs-nav {
                     visibility: hidden;
                 }
                 #featured' . $id . ' { 
                     background: none;
                     padding:0
                 }';
-        $tmp .= 'div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
+            $tmp .= 'div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
                     width: 100%
                 }';
-    } else {
-        $tmp .= 'div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
+        } else {
+            $tmp .= 'div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
                     width: 76%
                 }';
-    }
+        }
 
-    if ($width != "") {
-        $tmp .= '#featured' . $id . ' ul.ui-tabs-nav {' . chr(13);
-        $tmp .= 'left:' . $width . 'px;' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
-    
-    if ($caption_height != "") {
-        $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
-        $tmp .= 'height:' . $caption_height . 'px;' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($width != "") {
+            $tmp .= '#featured' . $id . ' ul.ui-tabs-nav {' . chr(13);
+            $tmp .= 'left:' . $width . 'px;' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($caption_width != "") {
-        $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
-        $tmp .= 'width:' . $caption_width . 'px;' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($caption_height != "") {
+            $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
+            $tmp .= 'height:' . $caption_height . 'px;' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($caption_top != "") {
-        $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
-        $tmp .= 'top:' . $caption_top . 'px;' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($caption_width != "") {
+            $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
+            $tmp .= 'width:' . $caption_width . 'px;' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($background != '') {
-        $tmp .= '#featured' . $id . '{' . chr(13);
-        $tmp .= 'background: #' . $background . ';' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($caption_top != "") {
+            $tmp .= '#featured' . $id . ' .ui-tabs-panel .info{' . chr(13);
+            $tmp .= 'top:' . $caption_top . 'px;' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($width != '' || $height != '' || $slider_nav == 'off') {
-        $tmp .= '#featured' . $id . '{' . chr(13);
-        $tmp .= 'width:' . $width . 'px;' . chr(13);
-        $tmp .= 'height:' . $height . 'px;' . chr(13);
-        $tmp .= '}' . chr(13);
-        $tmp .= '#featured' . $id . ' .ui-tabs-panel{' . chr(13);
-        $tmp .= 'width:' . $width . 'px; height:' . $height . 'px;' . chr(13);
-        $tmp .= 'background:none; position:relative;' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($background != '') {
+            $tmp .= '#featured' . $id . '{' . chr(13);
+            $tmp .= 'background: #' . $background . ';' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($slider_nav_color != '') {
-        $tmp .= '#featured' . $id . ' li.ui-tabs-nav-item a{' . chr(13);
-        $tmp .= '    background: none repeat scroll 0 0 #' . $slider_nav_color . ';' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
-    if ($slider_nav_hover_color != '') {
-        $tmp .= '#featured' . $id . ' li.ui-tabs-nav-item a:hover{' . chr(13);
-        $tmp .= '    background: none repeat scroll 0 0 #' . $slider_nav_hover_color . ';' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($width != '' || $height != '' || $slider_nav == 'off') {
+            $tmp .= '#featured' . $id . '{' . chr(13);
+            $tmp .= 'width:' . $width . 'px;' . chr(13);
+            $tmp .= 'height:' . $height . 'px;' . chr(13);
+            $tmp .= '}' . chr(13);
+            $tmp .= '#featured' . $id . ' .ui-tabs-panel{' . chr(13);
+            $tmp .= 'width:' . $width . 'px; height:' . $height . 'px;' . chr(13);
+            $tmp .= 'background:none; position:relative;' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($slider_nav_selected_color != '') {
-        $tmp .= '#featured' . $id . ' .ui-tabs-selected {' . chr(13);
-        $tmp .= 'padding-left:0;' . chr(13);
-        $tmp .= '}' . chr(13);
-        $tmp .= '#featured' . $id . ' .ui-tabs-selected a{' . chr(13);
-        $tmp .= '    background: none repeat scroll 0 0 #' . $slider_nav_selected_color . ' !important;' . chr(13);
-        $tmp .= 'padding-left:0;' . chr(13);
-        $tmp .= '}' . chr(13);
-    }
+        if ($slider_nav_color != '') {
+            $tmp .= '#featured' . $id . ' li.ui-tabs-nav-item a{' . chr(13);
+            $tmp .= '    background: none repeat scroll 0 0 #' . $slider_nav_color . ';' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
+        if ($slider_nav_hover_color != '') {
+            $tmp .= '#featured' . $id . ' li.ui-tabs-nav-item a:hover{' . chr(13);
+            $tmp .= '    background: none repeat scroll 0 0 #' . $slider_nav_hover_color . ';' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    if ($slider_nav_font_color != '') {
-        $tmp .= '#featured' . $id . ' ul.ui-tabs-nav li span{' . chr(13);
-        $tmp .= 'color:#' . $slider_nav_font_color . chr(13);
-        $tmp .= '}' . chr(13);
-    }
-    $tmp .= '</style>' . chr(13);
+        if ($slider_nav_selected_color != '') {
+            $tmp .= '#featured' . $id . ' .ui-tabs-selected {' . chr(13);
+            $tmp .= 'padding-left:0;' . chr(13);
+            $tmp .= '}' . chr(13);
+            $tmp .= '#featured' . $id . ' .ui-tabs-selected a{' . chr(13);
+            $tmp .= '    background: none repeat scroll 0 0 #' . $slider_nav_selected_color . ' !important;' . chr(13);
+            $tmp .= 'padding-left:0;' . chr(13);
+            $tmp .= '}' . chr(13);
+        }
 
-    $args = array(
-        'orderby' => $orderby,
-        'post_type' => $post_type,
-        'post__in' => $page_id,
-        'category__in' => $category__in,
-        'category_name'  => $category_name,
-        'posts_per_page' => $amount
-    );
+        if ($slider_nav_font_color != '') {
+            $tmp .= '#featured' . $id . ' ul.ui-tabs-nav li span{' . chr(13);
+            $tmp .= 'color:#' . $slider_nav_font_color . chr(13);
+            $tmp .= '}' . chr(13);
+        }
+        $tmp .= '</style>' . chr(13);
 
-    remove_all_filters('posts_orderby');
-    query_posts($args);
-    if (have_posts()) {
-        $shortcodeclass = '';
-        if ($id == "top")
-            $shortcodeclass = "cc_slider_shortcode";
+        $args = array(
+            'orderby' => $orderby,
+            'post_type' => $post_type,
+            'post__in' => $page_id,
+            'category__in' => $category__in,
+            'category_name' => $category_name,
+            'posts_per_page' => $amount
+        );
 
-        $tmp .='<div id="cc_slider' . $id . '" class="cc_slider hidden-phone span12' . $shortcodeclass . '">' . chr(13);
-        $tmp .='<div id="featured' . $id . '" class="featured">' . chr(13);
+        remove_all_filters('posts_orderby');
+        query_posts($args);
+        if (have_posts()) {
+            $shortcodeclass = '';
+            if ($id == "top")
+                $shortcodeclass = "cc_slider_shortcode";
 
-        $i = 1;
-        $slider_class = $slider_nav == 'off' ? 'span12' : 'span8';
-        while (have_posts()) : the_post();
-            global $post;
-            $url = get_permalink();
-            $theme_fields = get_post_custom_values('my_url');
-            if (isset($theme_fields[0])) {
-                $url = $theme_fields[0];
-            }
-            $tmp .='<div id="fragment-' . $id . '-' . $i . '" class="ui-tabs-panel '.$slider_class.'">' . chr(13);
+            $tmp .='<div id="cc_slider' . $id . '" class="cc_slider hidden-phone span12' . $shortcodeclass . '">' . chr(13);
+            $tmp .='<div id="featured' . $id . '" class="featured">' . chr(13);
 
-            if ($width != '' || $height != '') {
-                $ftrdimg = get_the_post_thumbnail($post->ID, array($width + 10, $height), "class={$reflect}");
-                if (empty($ftrdimg)) {
-                    if ($cap->slideshow_img) {
-                        $ftrdimg = '<img src="' . $cap->slideshow_img . '" />';
-                    } else {
-                        $ftrdimg = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg-1006x250.jpg" />';
-                    }
+            $i = 1;
+            $slider_class = $slider_nav == 'off' ? 'span12' : 'span8';
+            while (have_posts()) : the_post();
+                global $post;
+                $url = get_permalink();
+                $theme_fields = get_post_custom_values('my_url');
+                if (isset($theme_fields[0])) {
+                    $url = $theme_fields[0];
                 }
-            } else {
-                $ftrdimg = get_the_post_thumbnail($post->ID, array(756, 250), "");
-                if (empty($ftrdimg)) {
-                    if ($cap->slideshow_img) {
-                        $ftrdimg = '<img src="' . $cap->slideshow_img . '" width="756" height="250"/>';
-                    } else {
-                        $ftrdimg = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg.jpg" />';
+                $tmp .='<div id="fragment-' . $id . '-' . $i . '" class="ui-tabs-panel ' . $slider_class . '">' . chr(13);
+
+                if ($width != '' || $height != '') {
+                    $ftrdimg = get_the_post_thumbnail($post->ID, array($width + 10, $height), "class={$reflect}");
+                    if (empty($ftrdimg)) {
+                        if ($cap->slideshow_img) {
+                            $ftrdimg = '<img src="' . $cap->slideshow_img . '" />';
+                        } else {
+                            $ftrdimg = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg-1006x250.jpg" />';
+                        }
                     }
-                }
-            }
-
-            $tmp .='    <a class="reflect" href="' . $url . '">' . $ftrdimg . '</a>' . chr(13);
-
-            if ($caption == 'on') {
-                $tmp .=' <div class="info span8" >' . chr(13);
-                $tmp .='    <h2><a href="' . $url . '" >' . get_the_title() . '</a></h2>' . chr(13);
-                $tmp .='    <p>' . get_the_excerpt() . '</p>' . chr(13);
-                $tmp .=' </div>' . chr(13);
-            }
-            $tmp .='</div>' . chr(13);
-            $i++;
-        endwhile;
-
-        $tmp .='<ul class="ui-tabs-nav span4 offset1">' . chr(13);
-        $i = 1;
-        while (have_posts()) : the_post();
-            if (get_the_post_thumbnail($post->ID, 'slider-thumbnail') == '') {
-                if (!empty($cap->slideshow_small_img) || $cap->slideshow_small_img != '') {
-                    $ftrdimgs = '<img src="' . $cap->slideshow_small_img . '" width="80" height="50"/>';
                 } else {
-                    $ftrdimgs = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg-80x50.jpg" />';
+                    $ftrdimg = get_the_post_thumbnail($post->ID, array(756, 250), "");
+                    if (empty($ftrdimg)) {
+                        if ($cap->slideshow_img) {
+                            $ftrdimg = '<img src="' . $cap->slideshow_img . '" width="756" height="250"/>';
+                        } else {
+                            $ftrdimg = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg.jpg" />';
+                        }
+                    }
                 }
-            } else {
-                $ftrdimgs = get_the_post_thumbnail($post->ID, 'slider-thumbnail');
-            }
-            $title = mb_substr(get_the_title(), 0, 65);
-            if ($allow_direct_link == __('yes', 'cc')) {
-                $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '" class="allow-dirrect-links" data-url="' . get_permalink($post->ID) . '">' . $ftrdimgs . '<span>' . $title . '</span></a>';
-            } else {
-                $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '<span>' . $title . '</span></a>';
-            }
-            $tmp .='<li class="ui-tabs-nav-item ui-tabs-selected" id="nav-fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '</li>' . chr(13);
-            $i++;
-        endwhile;
-        $tmp .='</ul>' . chr(13);
 
-        $tmp .= '</div></div>' . chr(13);
-    } else {
-        $tmp .='<div id="cc_slider_prev" class="cc_slider">' . chr(13);
-        $tmp .='<div id="featured_prev" class="featured">' . chr(13);
-        $tmp .='<h2 class="center">' . __('Empty Slideshow', 'cc') . '</h2>' . chr(13);
-        $tmp .='<p class="center">' . __('Something went wrong here. Some help: <br>Check your theme settings and write a post with an featured image! <br> Have a look how to setup your <a href="http://support.themekraft.com/entries/21647926-slideshow" target="_blank">Slideshow</a> or check out our <a href="http://themekraft/support" target="_blank">Support</a> if you still get stuck.', 'cc') . '</p>' . chr(13);
-        $tmp .='</div></div>' . chr(13);
+                $tmp .='    <a class="reflect" href="' . $url . '">' . $ftrdimg . '</a>' . chr(13);
+
+                if ($caption == 'on') {
+                    $tmp .=' <div class="info span8" >' . chr(13);
+                    $tmp .='    <h2><a href="' . $url . '" >' . get_the_title() . '</a></h2>' . chr(13);
+                    $tmp .='    <p>' . get_the_excerpt() . '</p>' . chr(13);
+                    $tmp .=' </div>' . chr(13);
+                }
+                $tmp .='</div>' . chr(13);
+                $i++;
+            endwhile;
+
+            $tmp .='<ul class="ui-tabs-nav span4 offset1">' . chr(13);
+            $i = 1;
+            while (have_posts()) : the_post();
+                if (get_the_post_thumbnail($post->ID, 'slider-thumbnail') == '') {
+                    if (!empty($cap->slideshow_small_img) || $cap->slideshow_small_img != '') {
+                        $ftrdimgs = '<img src="' . $cap->slideshow_small_img . '" width="80" height="50"/>';
+                    } else {
+                        $ftrdimgs = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg-80x50.jpg" />';
+                    }
+                } else {
+                    $ftrdimgs = get_the_post_thumbnail($post->ID, 'slider-thumbnail');
+                }
+                $title = mb_substr(get_the_title(), 0, 65);
+                if ($allow_direct_link == __('yes', 'cc')) {
+                    $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '" class="allow-dirrect-links" data-url="' . get_permalink($post->ID) . '">' . $ftrdimgs . '<span>' . $title . '</span></a>';
+                } else {
+                    $ftrdimgs = '<a href="#fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '<span>' . $title . '</span></a>';
+                }
+                $tmp .='<li class="ui-tabs-nav-item ui-tabs-selected" id="nav-fragment-' . $id . '-' . $i . '">' . $ftrdimgs . '</li>' . chr(13);
+                $i++;
+            endwhile;
+            $tmp .='</ul>' . chr(13);
+
+            $tmp .= '</div></div>' . chr(13);
+        } else {
+            $tmp .='<div id="cc_slider_prev" class="cc_slider">' . chr(13);
+            $tmp .='<div id="featured_prev" class="featured">' . chr(13);
+            $tmp .='<h2 class="center">' . __('Empty Slideshow', 'cc') . '</h2>' . chr(13);
+            $tmp .='<p class="center">' . __('Something went wrong here. Some help: <br>Check your theme settings and write a post with an featured image! <br> Have a look how to setup your <a href="http://support.themekraft.com/entries/21647926-slideshow" target="_blank">Slideshow</a> or check out our <a href="http://themekraft/support" target="_blank">Support</a> if you still get stuck.', 'cc') . '</p>' . chr(13);
+            $tmp .='</div></div>' . chr(13);
+        }
+        wp_reset_query();
+
+        // js vars
+        $cc_js['slideshow'][] = array(
+            'id' => $id,
+            'time_in_ms' => $time_in_ms
+        );
+
+        return $tmp . chr(13);
     }
-    wp_reset_query();
 
-    // js vars
-    $cc_js['slideshow'][] = array(
-        'id' => $id,
-        'time_in_ms' => $time_in_ms
-    );
+    /**
+     * Get class by sidebar position settings in Themes Options
+     */
+    function cc_get_class_by_sidebar_position() {
+        global $cap, $post;
+        if(empty($post)){
+            return FALSE;
+        }
+            
+        $class = '';
+        $tmp = get_post_meta($post->ID, '_wp_page_template', true);
 
-    return $tmp . chr(13);
-}
-
-/**
- * Get class by sidebar position settings in Themes Options
- */
-function cc_get_class_by_sidebar_position() {
-    global $cap, $post;
-    $class = '';
-    $tmp = get_post_meta($post->ID, '_wp_page_template', true);
-
-    switch ($cap->sidebar_position) {
-        case "left and right": $class = 'left-right-sidebar';
-            break;
-        case 'full-width' : $class = 'full-width';
-            break;
-    };
-    switch ($tmp) {
-        case '_pro/tpl-search-right-and-left-sidebar.php': $class .= ' left-right-template';
-            break;
-        case 'tpl-search-full-width.php': $class .= ' full-search-width';
-            break;
+        switch ($cap->sidebar_position) {
+            case "left and right": $class = 'left-right-sidebar';
+                break;
+            case 'full-width' : $class = 'full-width';
+                break;
+        };
+        switch ($tmp) {
+            case '_pro/tpl-search-right-and-left-sidebar.php': $class .= ' left-right-template';
+                break;
+            case 'tpl-search-full-width.php': $class .= ' full-search-width';
+                break;
+        }
+        switch ($cap->archive_template) {
+            case __("left and right", 'cc'): $class .= ' archive-width';
+        }
+        return $class;
     }
-    switch ($cap->archive_template) {
-        case __("left and right", 'cc'): $class .= ' archive-width';
-    }
-    return $class;
-}
 
-/**
- * Add info before tabs in Theme Options
- */
-function cc_add_settins_info($tab_id) {
-    if ('cap_slideshow' == $tab_id) {
-        $show = get_option('cc_dismiss_info_messages', FALSE);
-        if (empty($show)) {
-            _e('<p class="slideshow_info">
+    /**
+     * Add info before tabs in Theme Options
+     */
+    function cc_add_settins_info($tab_id) {
+        if ('cap_slideshow' == $tab_id) {
+            $show = get_option('cc_dismiss_info_messages', FALSE);
+            if (empty($show)) {
+                _e('<p class="slideshow_info">
                     <button type="button" class="close" data-dismiss="alert">x</button>
                     Slideshow settings of the single pages are stronger and will overwrite the global slideshow settings
                 </p>', CC_TRANSLATE_DOMAIN);
+            }
         }
     }
-}
 
-add_action('cc_before_settings_tab', 'cc_add_settins_info');
+    add_action('cc_before_settings_tab', 'cc_add_settins_info');
 
-/**
- * Add rotate function to jquery iu 1.9 
- */
-function cc_add_rotate_tabs() {
-    wp_enqueue_script('cc_rotate', get_template_directory_uri() . '/_inc/js/jquery-ui-tabs-rotate.js', array('jquery', 'jquery-ui-tabs'));
-}
+    /**
+     * Add rotate function to jquery iu 1.9 
+     */
+    function cc_add_rotate_tabs() {
+        wp_enqueue_script('cc_rotate', get_template_directory_uri() . '/_inc/js/jquery-ui-tabs-rotate.js', array('jquery', 'jquery-ui-tabs'));
+    }
 
-add_action('wp_enqueue_scripts', 'cc_add_rotate_tabs');
+    add_action('wp_enqueue_scripts', 'cc_add_rotate_tabs');
 
-/**
- * Enqueue theme javascript safely for admin console
- *
- * @see http://codex.wordpress.org/Function_Reference/wp_enqueue_script
- * @since 1.9.1
- */
-function admin_dtheme_enqueue_scripts() {
-    global $cap;
-    $cap = new autoconfig();
-    //add for imadiatly view settings after save options
-    $responsive = !empty($_POST) && !empty($_POST['custom_community_theme_options']) ?
-            $_POST['custom_community_theme_options']['cap_cc_responsive_enable'] == __('Enabled', 'cc') ? 1 : 0  : $cap->cc_responsive_enable;
+    /**
+     * Enqueue theme javascript safely for admin console
+     *
+     * @see http://codex.wordpress.org/Function_Reference/wp_enqueue_script
+     * @since 1.9.1
+     */
+    function admin_dtheme_enqueue_scripts() {
+        global $cap;
+        $cap = new autoconfig();
+        //add for imadiatly view settings after save options
+        $responsive = !empty($_POST) && !empty($_POST['custom_community_theme_options']) ?
+                $_POST['custom_community_theme_options']['cap_cc_responsive_enable'] == __('Enabled', 'cc') ? 1 : 0  : $cap->cc_responsive_enable;
 
-    // Enqueue the global JS - Ajax will not work without it
-    wp_register_script( 'autogrow-textarea', get_template_directory_uri()."/admin/js/jquery.autogrow-textarea.js", array(), true );
-    wp_enqueue_script('cc-theme-admin-js', get_template_directory_uri() . '/_inc/js/admin.js', array('jquery', 'autogrow-textarea'));
-    wp_localize_script('cc-theme-admin-js', 'admin_params', array(
-        'ajax_url' => site_url('/wp-admin/admin-ajax.php'),
-        'blog' => __('blog', 'cc'),
-        'flux_slider' => __('flux slider', 'cc'),
-        'default_slider' => __('default', 'cc'),
-        'responsive' => $responsive
-        )
-    );
+        // Enqueue the global JS - Ajax will not work without it
+        wp_register_script('autogrow-textarea', get_template_directory_uri() . "/admin/js/jquery.autogrow-textarea.js", array(), true);
+        wp_enqueue_script('cc-theme-admin-js', get_template_directory_uri() . '/_inc/js/admin.js', array('jquery', 'autogrow-textarea'));
+        wp_localize_script('cc-theme-admin-js', 'admin_params', array(
+            'ajax_url' => site_url('/wp-admin/admin-ajax.php'),
+            'blog' => __('blog', 'cc'),
+            'flux_slider' => __('flux slider', 'cc'),
+            'default_slider' => __('default', 'cc'),
+            'responsive' => $responsive
+                )
+        );
+    }
 
-}
-
-add_action('admin_enqueue_scripts', 'admin_dtheme_enqueue_scripts');
+    add_action('admin_enqueue_scripts', 'admin_dtheme_enqueue_scripts');

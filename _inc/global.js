@@ -741,7 +741,7 @@ jq(document).ready( function() {
     /* Hit the "New Topic" button on the forums directory page */
     jq('a.show-hide-new').click( function() {
         if ( !jq('div#new-topic-post').length )
-            return false;
+            return true;
 
         if ( jq('div#new-topic-post').is(":visible") )
             jq('div#new-topic-post').slideUp(200);
