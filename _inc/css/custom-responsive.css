@@ -1,41 +1,12 @@
 /*
     Custom CSS for responsive theme
 */
-body.bubble #outerrim div.post div.post-content, #blog-search #outerrim div.post-content {
-    margin-left: 25px;
-    width: 90%;
-    float:left;
+.row-fluid .cc_slider.span12{
+    width: 95%;
 }
-.cc_slider.hidden-phone.span12{
-    margin-left: 0;
-}
-body #header .row-fluid .span4, 
-body #content .row-fluid .span4, 
-body #footer .row-fluid .span4{
-    width: 32%;
-}
-body .row-fluid .cc_slider .span8{
-    width: 75%;
-}
-.row-fluid .span8{
-    width: 81%;
-}
-.row-fluid.full-width .span8{
-    width: 100%;
-}
-textarea{
-    max-width: 95%;
-}
-.row-fluid.left-right-sidebar .span8, 
-.row-fluid.left-right-template .span8, 
-.row-fluid .span8.left-right-template {
-    width: 62%;
-}
-
-
 /* Tablet Landscape */
 @media screen and (max-width: 1024px) {
-    
+
     ul.item-list li .item-avatar img.avatar{
         margin-top: 0;
     }
@@ -57,7 +28,7 @@ textarea{
     .row-fluid .span8{
         width: 799px;
     }
-    .row-fluid.left-right-sidebar .span8{
+    #container .row-fluid.left-right-sidebar .span8{
         width: 516px;
     }
     .row-fluid.left-right-sidebar .span11{
@@ -78,6 +49,9 @@ textarea{
     }
 }
 @media screen and (max-width: 768px) {
+    #community-nav ul li{
+        display: inline-block;
+    }
     .boxgrid{
         width: 160px;
         height: 115px;
@@ -99,7 +73,7 @@ textarea{
         width: 100%;
         margin: 0;
     }
-    div#content{
+    #container div#content{
         float: none;
         width: 96%;
         margin: 0 2%;
@@ -189,12 +163,12 @@ textarea{
     html{
         margin-top: 0 !important;
     }
-    div#content .left-menu{
+    #container div#content .left-menu{
         float: none;
         width: 100%;
         overflow: hidden;
     }
-    div#content .main-column{
+    #container div#content .main-column{
         margin: 0;
     }
     div#invite-list{

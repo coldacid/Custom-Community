@@ -137,17 +137,18 @@ function cap_defaults_init() {
 add_action('admin_print_scripts', 'cc_activation_function');
 
 function cc_activation_function() {
-    global $pagenow;
-    //this is hack for inserting default options when theme activated
-    if (is_admin() && $pagenow == 'themes.php' && isset($_GET['activated']) && $_GET['activated'] == 'true') {
-        $option = get_option('custom_community_theme_options');
-        if (empty($option)) {
-            cap_defaults_init();
-        }
+    if(is_admin() ){
+        cc_init_global_settings();
     }
     if (!defined('is_pro')) {
         add_action('admin_notices', 'cc_add_rate_us_notice');
     }
+}
+function cc_init_global_settings(){
+    $option = get_option('custom_community_theme_options');
+        if (empty($option)) {
+            cap_defaults_init();
+        }
 }
 
 function show_page_for_user() {

@@ -71,7 +71,6 @@ if($cap->cc_responsive_enable){
 } else {
     $site_width = '1000';
 }
-get_content_width($site_width);
 
 ?>
 #innerrim {
@@ -4413,7 +4412,7 @@ body.home.bubble div.post div.post-content, body.bubble div.comment-content {
 
 body.home div.post div.author-box,
 body.home.bubble div.post div.author-box {
-    display: none;
+    display: none !important;
 }
 <?php } ?>
 
@@ -4429,7 +4428,7 @@ body.archive.bubble div.post div.post-content, body.bubble div.comment-content {
 
 body.archive div.post div.author-box,
 body.archive.bubble div.post div.author-box {
-    display: none;
+    display: none !important;
 }
 <?php } ?>
 
@@ -4927,7 +4926,7 @@ menu background colour drop down menu item hover  **/
     }
 
     div.v_line_left {
-        margin-left: <?php echo $cap->leftsidebar_width + 20 ?>px;
+        margin-left: <?php echo $cap->leftsidebar_width ?>px;
     }
 
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
@@ -4979,7 +4978,7 @@ div#leftsidebar {
 
 
     div.v_line_right {
-        right: <?php echo $cap->rightsidebar_width +20 ?>px;
+        right: <?php echo $cap->rightsidebar_width ?>px;
     }
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
     $old = $cap->rightsidebar_width;$wdth = $old - 41;?>
@@ -5191,8 +5190,8 @@ div.item-list-tabs {
     width: 75%;
 }
 
-.row-fluid .span8 {
-    width: <?php echo get_content_width($site_width) . $units;?>
+#container .row-fluid .span8, .row-fluid .span8{
+    width: <?php echo get_content_width($site_width) . $units;?>;
 } 
 
 /*
@@ -5325,7 +5324,7 @@ add_action('wp_head', 'cc_print_styles', 100);
  */
 function get_content_width($site_width){
     global $cap, $post;
-    
+   
 	if($cap->cc_responsive_enable){
 		$cap->rightsidebar_width = 225;
 		$cap->leftsidebar_width = 225;
@@ -5344,62 +5343,70 @@ function get_content_width($site_width){
     } else {
         
         if(isset($post)){
+            $width_change = FALSE;
             $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
-            
+            if($tmp == 'full-width.php'){
+                return $site_width;
+            }
             if( ($tmp == 'default' && $cap->sidebar_position == __('left','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
             	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
                 $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
                 $site_width -= $cap->leftsidebar_width;
+                $width_change = TRUE;
             }
-            if( empty($tmp) || ($tmp == 'default' && $cap->sidebar_position == __('right','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
+            if( ($tmp == 'default' && $cap->sidebar_position == __('right','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
             	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
                 || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
                 $site_width -= $cap->rightsidebar_width;
+                $width_change = TRUE;
             }
-//            $detect = new TK_WP_Detect();
-//            $component = explode('-', $detect->tk_get_page_type());
+            if($width_change){
+                return $site_width;
+            }
+            $detect = new TK_WP_Detect();
+            $component = explode('-', $detect->tk_get_page_type());
             
-//            if(!empty($component[2])){
-//                if($component[2] == 'groups' && bp_is_group()) {
-//                	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
-//                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
-//                        $site_width -= $cap->leftsidebar_width;
-//                    } 
-//                    if($cap->bp_groups_sidebars == 'default' || $cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  
-//                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
-//                        $site_width -= $cap->rightsidebar_width;
-//                    };
-//
-//                } elseif($component[2] == 'profile' || bp_is_user()) {
-//
-//                    if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
-//                    	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
-//                    	|| $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
-//                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
-//                        	$site_width -= $cap->leftsidebar_width;
-//                    } 
-//                    if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
-//                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc')) 
-//                        || $cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc') 
-//                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
-//							$site_width -= $cap->rightsidebar_width;
-//                    }
-//                }  elseif($component[2] == 'members') {
-//                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
-//                		$site_width -= $cap->leftsidebar_width;
-//                	}
-//					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
-//						$site_width -= $cap->rightsidebar_width;
-//					}
-//                } else {
-//                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
-//                		$site_width -= $cap->leftsidebar_width;
-//                	}
-//					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
-//						$site_width -= $cap->rightsidebar_width;
-//					}
-//                } 
-//            } 
+            if(!empty($component[2])){
+                if($component[2] == 'groups' && bp_is_group()) {
+                	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
+                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
+                        $site_width -= $cap->leftsidebar_width;
+                    } 
+                    if($cap->bp_groups_sidebars == 'default' || $cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  
+                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
+                        $site_width -= $cap->rightsidebar_width;
+                    };
+
+                } elseif($component[2] == 'profile' || bp_is_user()) {
+
+                    if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
+                    	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
+                    	|| $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
+                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
+                        	$site_width -= $cap->leftsidebar_width;
+                    } 
+                    if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
+                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc')) 
+                        || $cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc') 
+                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
+							$site_width -= $cap->rightsidebar_width;
+                    }
+                }  elseif($component[2] == 'members') {
+                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
+                		$site_width -= $cap->leftsidebar_width;
+                	}
+					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
+						$site_width -= $cap->rightsidebar_width;
+					}
+                } else {
+                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
+                		$site_width -= $cap->leftsidebar_width;
+                	}
+					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
+						$site_width -= $cap->rightsidebar_width;
+					}
+                } 
+            } 
         }
     }
     return $site_width;
