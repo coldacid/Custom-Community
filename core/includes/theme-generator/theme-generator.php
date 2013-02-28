@@ -452,19 +452,16 @@ class CC_Theme_Generator{
 	 */	
 	function sidebar_left(){
 		global $cap, $post;
-//		var_dump($this, );
-        if(isset($post)){
-            $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
-            if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php')
-                return;
+        $tmp = !empty($post) ? get_post_meta( $post->ID, '_wp_page_template', true ) : '';
+        if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php')
+            return;
 
-                if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
-                    $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-                    $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc')){
-                    locate_template( array( 'sidebar-left.php' ), true );
-                    return;		
-                }
-        }
+            if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
+                $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
+                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc')){
+                locate_template( array( 'sidebar-left.php' ), true );
+                return;		
+            }
 		$component = explode('-',$this->detect->tk_get_page_type());
         if(!empty($component[2])){	
 		
@@ -516,17 +513,15 @@ class CC_Theme_Generator{
 	function sidebar_right(){
 		global $cap, $post;
         
-        if(isset($post)){
-            $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
+        $tmp = !empty($post) ? get_post_meta( $post->ID, '_wp_page_template', true ) : '';
 
-            if( $tmp == 'full-width.php' || $tmp =='tpl-search-full-width.php' || $tmp == 'left-sidebar.php' || $tmp == '_pro/tpl-left-sidebar.php')
-                return;
-            if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'right-sidebar.php' 
-                || $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
-                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
-                locate_template( array( 'sidebar.php' ), true );
-                return;		
-            }
+        if( $tmp == 'full-width.php' || $tmp =='tpl-search-full-width.php' || $tmp == 'left-sidebar.php' || $tmp == '_pro/tpl-left-sidebar.php')
+            return;
+        if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'right-sidebar.php' 
+            || $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
+            || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
+            locate_template( array( 'sidebar.php' ), true );
+            return;		
         }
 
         $component = explode('-',$this->detect->tk_get_page_type());

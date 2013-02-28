@@ -71,7 +71,6 @@ if($cap->cc_responsive_enable){
 } else {
     $site_width = '1000';
 }
-
 ?>
 #innerrim {
     width: <?php echo $site_width . $units;?>;
@@ -550,7 +549,15 @@ div#leftsidebar div.item-options a.selected, div.widgetarea {
 div.widget div.textwidget{
     padding: 0 10px 0 0;
 }
-
+#header .widgetarea:first-child, 
+#footer .widgetarea:first-child{
+    margin-left: 0;
+}
+#header .row-fluid .span4,
+#footer .row-fluid .span4,
+#content .row-fluid .span4{
+    margin-left: 20px;
+}
 /* > Content
 -------------------------------------------------------------- */
 
@@ -5348,13 +5355,13 @@ function get_content_width($site_width){
             if($tmp == 'full-width.php'){
                 return $site_width;
             }
-            if( ($tmp == 'default' && $cap->sidebar_position == __('left','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
+            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('left','cc') || $cap->sidebar_position == __('left and right','cc'))) ||
             	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
                 $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
                 $site_width -= $cap->leftsidebar_width;
                 $width_change = TRUE;
             }
-            if( ($tmp == 'default' && $cap->sidebar_position == __('right','cc')) || ($tmp == 'default' && $cap->sidebar_position == __('left and right','cc')) ||
+            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('right','cc') ||  $cap->sidebar_position == __('left and right','cc'))) ||
             	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
                 || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
                 $site_width -= $cap->rightsidebar_width;
@@ -5365,7 +5372,6 @@ function get_content_width($site_width){
             }
             $detect = new TK_WP_Detect();
             $component = explode('-', $detect->tk_get_page_type());
-            
             if(!empty($component[2])){
                 if($component[2] == 'groups' && bp_is_group()) {
                 	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  

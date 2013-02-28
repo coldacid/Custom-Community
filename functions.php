@@ -645,10 +645,10 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
 
 
         if ($page_id != '' && $post_type == 'post') {
-            $post_type = 'page';
+            $post_type = array('page', 'post');
         }
         //pages haven't categories
-        if ($post_type == 'page') {
+        if (!empty($page_id)){
             $category_name = '';
             $category__in = array();
         }
