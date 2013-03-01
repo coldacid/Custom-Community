@@ -150,7 +150,7 @@
  }
  
 function cc_page_meta_add($id){
-    if(!empty($_POST) && !empty($_POST['action']) && $_POST['action'] == 'inline-save')
+    if(!empty($_POST) && !empty($_POST['action']) && ($_POST['action'] == 'inline-save' || $_POST['action'] == 'autosave'))
     return;
     
 	if (isset($_POST['cc_page_slider_on']) && $_POST['cc_page_slider_on'] == "1") {

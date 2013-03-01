@@ -16,6 +16,7 @@ function get_css(){
     if($cap->menu_x == ""){
         $cap->menu_x = 'left';
     }
+    $cc_post_options=cc_get_post_meta();
     $switch_css = cc_switch_css();
     extract($switch_css);
 ?>
@@ -2362,6 +2363,11 @@ div.post div.post-content {
 	float: left;
 	padding: 0px 5px 10px 15px;
 }
+<?php if(is_single() && !empty($cc_post_options) && $cc_post_options['cc_post_template_avatar'] == '1'):?>
+    div.post div.post-content{
+        width: 97%;
+    }
+<?php endif;?>
 .left-right-sidebar div.post div.post-content {
 	width: 79%;
 }
