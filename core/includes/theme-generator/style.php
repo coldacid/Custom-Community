@@ -95,13 +95,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 h1 {color:#<?php echo $font_color;?>;margin-bottom: 25px;line-height: 170%}
 h2 {color:#<?php echo $font_color;?>; margin-top: -8px;margin-bottom: 25px;line-height: 170%}
-h3 {color:#<?php echo $font_color;?>}
+h3 {color:#<?php echo $font_color;?>;margin-bottom:15px;}
 h1, h1 a, h1 a:hover, h1 a:focus {font-size: 28px}
 h2, h2 a, h2 a:hover, h2 a:focus {font-size: 24px}
-h3, h3 a, h3 a:hover, h3 a:focus {font-size: 1.5em; margin-top: 3px;}
+h3, h3 a, h3 a:hover, h3 a:focus {font-size: 21px; margin-top: 3px;}
 h4, h4 a, h4 a:hover, h4 a:focus {font-size: 16px;margin-bottom: 15px}
-h5, h5 a, h5 a:hover, h5 a:focus {font-size: 14px;margin-bottom: 0}
-h6, h6 a, h6 a:hover, h6 a:focus {font-size: 12px;margin-bottom: 0}
+h5, h5 a, h5 a:hover, h5 a:focus {font-size: 14px;margin-bottom: 10px}
+h6, h6 a, h6 a:hover, h6 a:focus {font-size: 12px;margin-bottom: 10px}
 a {font-style:normal;color: #<?php echo $link_color;?>;text-decoration: none;padding: 1px 0}
 a:hover, a:active {color: #<?php echo $font_color;?>}
 a:focus {outline: none}
