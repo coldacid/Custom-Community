@@ -153,6 +153,10 @@ function cc_init_global_settings(){
 
 function show_page_for_user() {
     global $req_cap_to_edit;
+    if(current_user_can('switch_themes')){
+        $req_cap_to_edit = 'switch_themes';
+        return TRUE;
+    }
     $cap = new autoconfig();
     $have_theme_settins_tab = FALSE;
     $groups = cap_get_options();

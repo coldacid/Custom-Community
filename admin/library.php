@@ -577,14 +577,14 @@ function top_level_settings() {
                     $groups = cap_get_options();
                     foreach( $groups as $group ) :
                     $role_section = substr($group->id, 4) . "_min_role";
-                    if(current_user_can(strtolower($cap->$role_section))){
+                    if(current_user_can('switch_themes') || current_user_can(strtolower($cap->$role_section))){
                         ?>
                             <li><a href='#<?php echo $group->id; ?>'><?php echo $group->name; ?></a></li>
                         <?php
                     }
 				endforeach;
 				
-				if(!defined('is_pro') && current_user_can('edit_theme_options')){
+				if(!defined('is_pro') && current_user_can('switch_themes')){
 					$cap_getpro = 'Get the Pro';
 					echo " <li><a href='#cap_getpro'>$cap_getpro</a></li>";
 				}
@@ -595,7 +595,7 @@ function top_level_settings() {
 			foreach( $groups as $group ) :
                  $id = $group->id;
                  $role_section = substr($id, 4) . "_min_role";
-                 if(current_user_can(strtolower($cap->$role_section))){
+                 if(current_user_can('switch_themes') || current_user_can(strtolower($cap->$role_section))){
                         ?>
                             <div id="<?php echo $id;?>">
                                 <?php 
