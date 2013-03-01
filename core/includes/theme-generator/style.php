@@ -1175,7 +1175,7 @@ div.profile{
 -------------------------------------------------------------- */
 
 div.pagination {
-    background:none repeat scroll 0 0 #<?php echo $body_bg_color;?>;
+    background: transparent;
     border-bottom:medium none;
     color:#<?php echo $font_color;?>;
     font-size: 11px;
@@ -1212,6 +1212,9 @@ div.pagination .pagination-links a:hover {
 div#pag-bottom {
     background:none repeat scroll 0 0 transparent;
     margin-top:0;
+}
+#pag-top { 
+	margin-bottom: 20px;
 }
 
 /* > Error / Success Messages
