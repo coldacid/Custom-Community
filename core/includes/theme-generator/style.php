@@ -3382,7 +3382,7 @@ div.posts-img-over-content {
     float:left;
     padding:20px 0 0;
     width:33%;
-    min-height: 300px;
+    min-height: 350px;
 }
 
 div.posts-img-over-content img.wp-post-image {
@@ -3401,11 +3401,9 @@ div.posts-img-over-content h3 {
     max-width:222px;
     padding-top:8px;
     border-top:1px solid #<?php echo $body_bg_color;?>;
+    line-height: 150%;
 }
 
-
-div.posts-img-over-content a{
-}
 
 div.posts-img-over-content p{
     padding-right:20px;
@@ -3420,6 +3418,7 @@ div.posts-img-under-content {
     float:left;
     padding:20px 0 0;
     width:242px;
+    min-height: 350px;
 }
 
 div.posts-img-under-content img.wp-post-image {
@@ -3438,9 +3437,7 @@ div.posts-img-under-content h3 {
     max-width:222px;
     padding-top:8px;
     border-top:1px solid #<?php echo $body_bg_color;?>;
-}
-
-div.posts-img-under-content a{
+    line-height: 150%;
 }
 
 div.posts-img-under-content p {
