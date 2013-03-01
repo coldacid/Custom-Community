@@ -590,7 +590,7 @@ div#content .main-column {
 }
 div#content  div.cc_slider{
     margin-left: 0px;
-    background: #EDEDED;
+    background: #<?php echo $container_alt_bg_color;?>;
 }
 .achievements #content, .single-bp_doc #content{
     width: 75%;
@@ -3068,6 +3068,7 @@ div.cc_slider {
     overflow: hidden;
     margin-left: 0;
     margin-top: -1px;
+    border-radius: 6px;
 }
 div.cc_slider.cc_slider_shortcode {
     margin-bottom: 12px;
@@ -3156,7 +3157,6 @@ div.cc_slider ul.ui-tabs-nav li.ui-tabs-active a{
 div.cc_slider .featured .ui-tabs-panel{
     height: 250px;
     overflow:hidden;
-    background:#<?php echo $container_bg_color;?>;
     position:relative;
     padding:0;
     border: medium none;
@@ -3826,7 +3826,7 @@ div#container, body.activity-permalink div#container {
         -webkit-border-radius: 0px;
         border-radius: 0px;
         }
-        div#leftsidebar, div#sidebar {
+        div#leftsidebar, div#sidebar, div.cc_slider {
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
         border-radius: 0px;

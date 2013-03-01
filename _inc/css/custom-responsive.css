@@ -1,8 +1,9 @@
 /*
     Custom CSS for responsive theme
 */
-.row-fluid .cc_slider.span12{
-    width: 95%;
+.row-fluid .cc_slider.span12 {
+	width: 100%;
+	margin: 0;
 }
 /* Tablet Landscape */
 @media screen and (max-width: 1024px) {
