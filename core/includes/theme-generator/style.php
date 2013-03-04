@@ -3201,23 +3201,19 @@ div.cc_slider .featured .info p{
 div.cc_slider .featured .info a{
     color:#<?php echo $body_bg_color;?>;color:#<?php echo $body_bg_color;?> !important;
     padding-left:0;
-}
-div.cc_slider .featured .info a:hover{
+    display: inline;
 }
 div.cc_slider .featured .ui-tabs-hide{
     display:none;
 }
-
 div.cc_slider .ui-tabs {
     padding: 0;
     position: relative;
 }
-
 div.cc_slider .ui-corner-all {
     border: medium none;
     border-radius: 0 0 0 0;
 }
-
 div.cc_slider .ui-widget-header {
     background: none repeat scroll 0 0 transparent;
     border: medium none;
