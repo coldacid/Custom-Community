@@ -1662,7 +1662,7 @@ form#whats-new-form #whats-new-avatar {
 
 form#whats-new-form #whats-new-content {
    float: left;
-   width: 80%;
+   width: 90%;
    margin-left: 10px;
 }
 
@@ -4976,21 +4976,25 @@ div#leftsidebar {
 }
 <?php } ?>
 
-<?php if ( $cap->rightsidebar_width != "") {?>
+<?php if ( $cap->rightsidebar_width != "" ) {?>
     /** ***
-    right sidebar width  **/
+    right sidebar width  **/ 
+    
+    <?php if($cap->cc_responsive_enable) {
+		$cap->rightsidebar_width = 225;
+		$cap->leftsidebar_width = 225;
+	} ?>
 
-    div#sidebar {
+    div#sidebar { 
         width: <?php echo $cap->rightsidebar_width ?>px;
         margin-left: -<?php echo$cap->rightsidebar_width ?>px;
     }
-
 
     div.v_line_right {
         right: <?php echo $cap->rightsidebar_width ?>px;
     }
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
-    $old = $cap->rightsidebar_width;$wdth = $old - 41;?>
+    $old = $cap->rightsidebar_width;$wdth = $old - 41; ?>
 
     div#sidebar h3.widgettitle, #leftsidebar .widgettitle{
         width: <?php echo $wdth ?>px;
@@ -5199,8 +5203,8 @@ div.item-list-tabs {
     width: 75%;
 }
 
-#container .row-fluid .span8, .row-fluid .span8{
-    width: <?php echo get_content_width($site_width) . $units;?>;
+#container .row-fluid .span8, .row-fluid .span8 {
+	width: <?php echo get_content_width($site_width) . $units;?>;
 } 
 
 /*
@@ -5334,7 +5338,7 @@ add_action('wp_head', 'cc_print_styles', 100);
 function get_content_width($site_width){
     global $cap, $post;
    
-	if($cap->cc_responsive_enable){
+	if($cap->cc_responsive_enable) {
 		$cap->rightsidebar_width = 225;
 		$cap->leftsidebar_width = 225;
 	}
