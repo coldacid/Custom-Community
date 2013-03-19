@@ -805,7 +805,7 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
                 if ($caption == 'on') {
                     $tmp .=' <div class="info span8" >' . chr(13);
                     $tmp .='    <h2><a href="' . $url . '" >' . get_the_title() . '</a></h2>' . chr(13);
-                    $tmp .='    <p>' . get_the_excerpt() . '</p>' . chr(13);
+                    $tmp .='    <p>' . mb_substr(strip_tags(get_the_excerpt()), 0, 300) . '</p>' . chr(13);
                     $tmp .=' </div>' . chr(13);
                 }
                 $tmp .='</div>' . chr(13);
@@ -906,6 +906,7 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
      */
     function cc_add_rotate_tabs() {
         wp_enqueue_script('cc_rotate', get_template_directory_uri() . '/_inc/js/jquery-ui-tabs-rotate.js', array('jquery', 'jquery-ui-tabs'));
+        wp_enqueue_script( 'dtheme-ajax-js', get_template_directory_uri() . '/_inc/global.js', array( 'jquery' ) );
     }
 
     add_action('wp_enqueue_scripts', 'cc_add_rotate_tabs');
@@ -937,3 +938,33 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
     }
 
     add_action('admin_enqueue_scripts', 'admin_dtheme_enqueue_scripts');
+    
+    /**
+     * Edit readmore links urls
+     * @param string $link
+     * @return string $link without  
+     */
+    function cc_remove_more_link_scroll( $link ) {
+        $link = preg_replace( '|#more-[0-9]+|', '', $link );
+        return $link;
+    }
+    add_filter( 'the_content_more_link', 'cc_remove_more_link_scroll' );
+    
+
+    function get_posts_titles($title, $post_id){
+        global $cap, $post;
+        if(empty($cap->titles_post_types) || in_array($post->post_type, $cap->titles_post_types)){
+
+                $is_title_hidden = get_post_meta($post_id, '_cc_hide_title', TRUE);
+                $is_title_hidden_global = $cap->show_titles_all_pages;
+                if(($is_title_hidden_global == __('yes', 'cc')) 
+                        || ($is_title_hidden == 'no')){
+                $center_title = get_post_meta($post_id, '_cc_center_title', TRUE); 
+                $center_title_global = $cap->titles_center;
+                ?>
+                <h2 class="pagetitle <?php if($center_title_global == __('yes', 'cc') || (!empty($center_title) && $center_title == 'yes')) echo 'title-center'?>"><?php echo $title; ?></h2>
+            <?php 
+            }
+        }
+
+    }

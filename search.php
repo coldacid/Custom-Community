@@ -51,7 +51,7 @@
 						</div>
 
 					</div>
-
+                    <div class="clear"></div>
 					<?php do_action( 'bp_after_blog_post' ) ?>
 
 				<?php endwhile; ?>

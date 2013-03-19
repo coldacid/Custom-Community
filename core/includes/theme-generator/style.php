@@ -1151,7 +1151,9 @@ body.forum #subnav ul li{
 div.profile{
    margin: 20px;
 }
-
+#container table.forum{
+    margin: 0;
+} 
 /* > Group specific styles
 -------------------------------------------------------------- */
 #item-actions li{
@@ -1221,7 +1223,7 @@ div#pag-bottom {
 -------------------------------------------------------------- */
 
 div#message {
-    margin: 15px 0;
+    padding: 15px 0;
     background: #<?php echo $container_alt_bg_color; ?>;
     border: #ececec;
 }
@@ -2294,7 +2296,7 @@ ul#friend-list li div.item-meta {
 /* > WordPress Blog Styles
 -------------------------------------------------------------- */
 
-div.post {
+div.post, #blog-search div.page {
     margin:2px 0 0px 0;
     overflow: hidden;
 }
@@ -2371,7 +2373,7 @@ div.post div.post-content {
         width: 97%;
     }
 <?php endif;?>
-.left-right-sidebar div.post div.post-content {
+.left-right-sidebar div.post div.post-content, .left-right-sidebar div.page div.post-content {
 	width: 79%;
 }
 .search-result div.post div.post-content{
@@ -2383,7 +2385,9 @@ div.post div.post-content {
 #activate-page.page #activation-form, #register-page #signup_form{
     margin-left: 0;
 }
-div.post p.date, div.post p.postmetadata, div.comment-meta {
+div.post p.date, 
+div.page p.date, 
+div.post p.postmetadata, div.comment-meta {
     color: #<?php echo $font_color;?>;
     font-size: 12px;
     padding: 3px 0;
@@ -2409,7 +2413,16 @@ div.post p.postmetadata {
     clear: left;
     overflow: hidden;
 }
-
+div.postmetadata span{
+    display: inline-block;
+}
+.hentry{
+    padding: 10px;
+}
+.activity-comments .hidden{
+    display:none;
+    visibility: inherit;
+}
 div.post .tags {float: left}
 div.post .comments {float: right}
 
@@ -3176,7 +3189,10 @@ div.cc_slider .featured .ui-tabs-panel .info{
     background: url(<?php echo get_template_directory_uri() ?>/images/slideshow/transparent-bg.png);
     margin-left: 0;
     width:100%;
-    border-radius: 0 0 0 6px;
+    border-radius: 0 0 6px 6px;
+}
+.cover.boxcaption{
+    text-align: justify;
 }
 div.cc_slider .featured .info h2 > a{
     font-size:18px;
@@ -4445,7 +4461,9 @@ body.archive.bubble div.post div.author-box {
 /** ***
 standard wordpress home page: bubble style**/
 
-body.bubble div.post h2.posttitle, #blog-search div.post h2.posttitle {
+body.bubble div.post h2.posttitle, 
+#blog-search div.page h2.posttitle, 
+#blog-search div.post h2.posttitle {
     line-height: 120%;
     margin: 0 0 12px;
 }
@@ -4480,7 +4498,9 @@ body.bubble div.post div.post-content, #blog-search div.post-content{
     margin-bottom:10px;
     float: left;
 }
-body.bubble div.post p.date, #blog-search div.post p.date{
+body.bubble div.post p.date, 
+#blog-search div.page p.date, 
+#blog-search div.post p.date{
     border-top: 1px solid #<?php echo $container_bg_color;?>;
     border-bottom: 1px solid #<?php echo $container_bg_color;?>;
 }
@@ -5267,6 +5287,14 @@ html {
 
 div#content.span8.full-with { width: 100%; }
 
+
+#item-header span.activity, #item-header h2{
+    display: table-row-group;
+}
+div#item-actions {
+    left: 55%;
+    top: 10px;
+}
 /** ***   
 overwrite css area adding  **/
 <?php
@@ -5343,7 +5371,7 @@ function get_content_width($site_width){
 		$cap->leftsidebar_width = 225;
 	}
 		
-    if(!is_page()){
+    if((!is_page() || is_page('search') || is_search()) && !is_archive()){ 
         if($cap->sidebar_position == __('left','cc')){
             $site_width -= $cap->leftsidebar_width;
         } else if($cap->sidebar_position == __('right','cc')){
@@ -5353,29 +5381,18 @@ function get_content_width($site_width){
         } else if($cap->sidebar_position == __('left and right','cc')){
             $site_width = $site_width - $cap->rightsidebar_width - $cap->leftsidebar_width;
         }
+    } elseif (is_archive()) {
+        
+         if(is_archive() && ($cap->archive_template == 'left' || $cap->archive_template == 'left and right' || $cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc'))){
+               $site_width -= $cap->leftsidebar_width;
+           } else if($cap->archive_template == "right" || $cap->archive_template == "left and right" || $cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc')){
+               $site_width -= $cap->rightsidebar_width;
+           }
+           
     } else {
         
         if(isset($post)){
-            $width_change = FALSE;
-            $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
-            if($tmp == 'full-width.php'){
-                return $site_width;
-            }
-            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('left','cc') || $cap->sidebar_position == __('left and right','cc'))) ||
-            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
-                $site_width -= $cap->leftsidebar_width;
-                $width_change = TRUE;
-            }
-            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('right','cc') ||  $cap->sidebar_position == __('left and right','cc'))) ||
-            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
-                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
-                $site_width -= $cap->rightsidebar_width;
-                $width_change = TRUE;
-            }
-            if($width_change){
-                return $site_width;
-            }
+            
             $detect = new TK_WP_Detect();
             $component = explode('-', $detect->tk_get_page_type());
             if(!empty($component[2])){
@@ -5417,8 +5434,29 @@ function get_content_width($site_width){
 					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
 						$site_width -= $cap->rightsidebar_width;
 					}
-                } 
-            } 
+                }
+                return $site_width;
+            }
+            $width_change = FALSE;
+            $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
+            if($tmp == 'full-width.php'){
+                return $site_width;
+            }
+            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('left','cc') || $cap->sidebar_position == __('left and right','cc'))) ||
+            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
+                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
+                $site_width -= $cap->leftsidebar_width;
+                $width_change = TRUE;
+            }
+            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('right','cc') ||  $cap->sidebar_position == __('left and right','cc'))) ||
+            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
+                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
+                $site_width -= $cap->rightsidebar_width;
+                $width_change = TRUE;
+            }
+            if($width_change){
+                return $site_width;
+            }
         }
     }
     return $site_width;

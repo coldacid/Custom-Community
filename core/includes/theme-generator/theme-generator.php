@@ -193,19 +193,19 @@ class CC_Theme_Generator{
 		global $cap;	
 			if(is_home()): ?>
 			<div id="logo">
-			<h1><a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?></a></h1>
+			<h1><a href="<?php echo home_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?></a></h1>
 			<div id="blog-description"><?php bloginfo('description'); ?></div>
 			
 			<?php if($cap->logo){ ?>
-			<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php bloginfo('description'); ?>"></img></a>
+			<a href="<?php echo home_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php bloginfo('description'); ?>"></img></a>
 			<?php } ?>
 			</div>
 		<?php else: ?>
 			<div id="logo">
-			<h4><a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?></a></h4>
+			<h4><a href="<?php echo home_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php if(defined('BP_VERSION')){ bp_site_name(); } else { bloginfo('name'); } ?></a></h4>
 			<div id="blog-description"><?php bloginfo('description'); ?></div>
 			<?php if($cap->logo){ ?>
-			<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php bloginfo('description'); ?>"></img></a>
+			<a href="<?php echo home_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><img src="<?php echo $cap->logo?>" alt="<?php bloginfo('description'); ?>"></img></a>
 			<?php } ?>
 			</div>
 		<?php endif;
@@ -226,7 +226,7 @@ class CC_Theme_Generator{
 			if($cap->menue_disable_home == true){ ?>
 				<ul>
 					<li id="nav-home"<?php if ( is_home() ) : ?> class="span2 current-menu-item"<?php endif; ?>>
-						<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php _e( 'Home', 'cc' ) ?></a>
+						<a href="<?php echo home_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php _e( 'Home', 'cc' ) ?></a>
 					</li>
 				</ul>
 			<?php } ?>
@@ -234,7 +234,7 @@ class CC_Theme_Generator{
 			<ul>
 			<?php if($cap->menue_disable_home == true){ ?>
 				<li id="nav-home"<?php if ( is_front_page() ) : ?> class="span2 current-menu-item"<?php endif; ?>>
-					<a href="<?php echo site_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php _e( 'Home', 'cc' ) ?></a>
+					<a href="<?php echo home_url() ?>" title="<?php _e( 'Home', 'cc' ) ?>"><?php _e( 'Home', 'cc' ) ?></a>
 				</li>
 			<?php }?>
 				<?php if($cap->menue_enable_community == true){ ?>
@@ -297,15 +297,12 @@ class CC_Theme_Generator{
 
 		if(defined('BP_VERSION')){ 
 			if($cap->enable_slideshow_home == 'all' || $cap->enable_slideshow_home == __('all','cc') 
-				|| ($cap->enable_slideshow_home == 'home' || $cap->enable_slideshow_home == __('home','cc') ) && is_home() 
 				|| ($cap->enable_slideshow_home  == 'home' || $cap->enable_slideshow_home  == __('home','cc') ) && is_front_page() 
 				|| ($cap->enable_slideshow_home == 'home' || $cap->enable_slideshow_home == __('home','cc') ) && bp_is_component_front_page( 'activity' ) 
 				|| is_page() && isset($cc_page_options) && isset($cc_page_options['cc_page_slider_on']) && $cc_page_options['cc_page_slider_on'] == 1){
 				echo cc_slidertop(); // located under wp/templatetags
 			}
 		} elseif(($cap->enable_slideshow_home == 'all' || $cap->enable_slideshow_home == __('all','cc') ) 
-			|| ($cap->enable_slideshow_home == 'home' || $cap->enable_slideshow_home == __('home','cc') ) 
-			&& is_home() 
 			|| ($cap->enable_slideshow_home == 'home' || $cap->enable_slideshow_home == __('home','cc') ) 
 			&& is_front_page() 
 			|| is_page() 
@@ -451,18 +448,21 @@ class CC_Theme_Generator{
 	 * @since 1.8.3
 	 */	
 	function sidebar_left(){
-		global $cap, $post;
+        global $cap, $post;
+        
         $tmp = !empty($post) ? get_post_meta( $post->ID, '_wp_page_template', true ) : '';
         if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php')
             return;
 
-            if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
-                $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc')){
-                locate_template( array( 'sidebar-left.php' ), true );
-                return;		
-            }
-		$component = explode('-',$this->detect->tk_get_page_type());
+        if( is_single() && ($tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
+            $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
+            $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' 
+            || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc'))){
+            locate_template( array( 'sidebar-left.php' ), true );
+            return;		
+        }
+            
+        $component = explode('-',$this->detect->tk_get_page_type());
         if(!empty($component[2])){	
 		
 			if($component[2] == 'groups' && !empty($component[3])) {
@@ -475,6 +475,7 @@ class CC_Theme_Generator{
 					&& ($cap->bp_groups_sidebars == "default" || $cap->bp_groups_sidebars == __("default",'cc') )){
 					locate_template( array( 'sidebar-left.php' ), true );
 				}
+                return ;
 			} elseif($component[2] == 'profile' && !empty($component[3])) {
 			
 				if($cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
@@ -486,20 +487,26 @@ class CC_Theme_Generator{
 					&& ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') )){
 					locate_template( array( 'sidebar-left.php' ), true );
 				}
+                return ;
 			} else if($cap->sidebar_position == "left" || $cap->sidebar_position == __("left",'cc') 
 				|| $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ){
 				locate_template( array( 'sidebar-left.php' ), true );
+                return ;
 			}  
 		} elseif(empty($component[2]) && !is_archive()){
 			if($cap->sidebar_position == "left" || $cap->sidebar_position == __("left",'cc')  
 				|| $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ){
 				locate_template( array( 'sidebar-left.php' ), true );
-			}    
-	  	} else {
-             if($cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc')){
-                locate_template( array( 'sidebar-left.php' ), true );
-            }
-        }
+			}
+                return ;
+            } 
+           if(is_archive() && ($cap->archive_template == 'left' || $cap->archive_template == 'left and right' || $cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc'))){
+               locate_template( array( 'sidebar-left.php' ), true );
+               return ;
+           } else if($cap->archive_template == "right"  || $cap->archive_template == __("right",'cc')){
+                return;
+           }
+        
 	}
 
 	/**
@@ -511,30 +518,33 @@ class CC_Theme_Generator{
 	 * @since 1.8.3
 	 */	
 	function sidebar_right(){
-		global $cap, $post;
-        
-        $tmp = !empty($post) ? get_post_meta( $post->ID, '_wp_page_template', true ) : '';
+            
+            global $cap, $post;
 
-        if( $tmp == 'full-width.php' || $tmp =='tpl-search-full-width.php' || $tmp == 'left-sidebar.php' || $tmp == '_pro/tpl-left-sidebar.php')
-            return;
-        if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'right-sidebar.php' 
-            || $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
-            || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
-            locate_template( array( 'sidebar.php' ), true );
-            return;		
-        }
+            $tmp = !empty($post) ? get_post_meta( $post->ID, '_wp_page_template', true ) : '';
+
+            if( $tmp == 'full-width.php' || $tmp =='tpl-search-full-width.php' || $tmp == 'left-sidebar.php' || $tmp == '_pro/tpl-left-sidebar.php')
+                return;
+            if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'right-sidebar.php' 
+                || $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
+                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
+                locate_template( array( 'sidebar.php' ), true );
+                return;		
+            }
+        
 
         $component = explode('-',$this->detect->tk_get_page_type());
-		if(!empty($component[2])){	
+		if(!empty($component[2])){
 			if($component[2] == 'groups' && !empty($component[3])) {
 				if($cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  || $cap->bp_groups_sidebars == 'left and right' || $cap->bp_groups_sidebars == __('left and right','cc')  ){
-					locate_template( array( 'groups/single/group-sidebar-right.php' ), true );
+                    locate_template( array( 'groups/single/group-sidebar-right.php' ), true );
 				} elseif(($cap->bp_groups_sidebars == "default" || $cap->bp_groups_sidebars == __("default",'cc') ) 
 					&& ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') ) 
 					|| ($cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ) 
 					&& ($cap->bp_groups_sidebars == "default" || $cap->bp_groups_sidebars == __("default",'cc') )){
 					locate_template( array( 'sidebar.php' ), true );
 				}
+                return;
 			} elseif($component[2] == 'profile' && !empty($component[3])) {
 				if($cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc')  
 					|| $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
@@ -545,20 +555,27 @@ class CC_Theme_Generator{
 					&& ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') )){
 					locate_template( array( 'sidebar.php' ), true );
 				}
+                return;
 			} else if($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc')  
 				|| $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ){
 				locate_template( array( 'sidebar.php' ), true );
+                return;
 			}     
 		} elseif(empty($component[2]) && !is_archive()) {
 			if($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc')  
-                || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ){
+                        || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc') ){
 				locate_template( array( 'sidebar.php' ), true );
-			}    
-  		} else {
-            if($cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc')){
-                locate_template( array( 'sidebar.php' ), true );
-            }
-        }
+                return;
+                    }    
+  		}
+            
+                if(is_archive() && ($cap->archive_template == "right" || $cap->archive_template == "left and right" || $cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc'))){
+                    locate_template( array( 'sidebar.php' ), true );
+                    return;
+                } else if($cap->archive_template == "left"  || $cap->archive_template == __("left",'cc')){
+                    return;
+                }
+        
 		
 	}
 	

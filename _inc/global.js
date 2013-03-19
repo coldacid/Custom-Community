@@ -1312,6 +1312,8 @@ jq(document).ready( function() {
     //add class to plugins pages
     jq('#content').addClass('span8');
     
+    jq('#container #container').removeAttr('id');
+    
 });
 
 /* Setup activity scope and filter based on the current cookie settings. */

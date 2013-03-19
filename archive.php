@@ -26,7 +26,14 @@ get_header(); ?>
                     if($magazine_style){
                         $args['img_position'] = cc_get_magazine_style($magazine_style);
                     }
-            } ?>
+            } 
+            if(is_tag()){
+                $args['tag'] = get_query_var('tag');
+            }
+            if(is_author()){
+                $args['author'] = get_query_var('author');
+            }
+            ?>
             
             <header class="page-header">
                 <h3 class="page-title">

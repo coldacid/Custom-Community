@@ -43,7 +43,14 @@ function cap_get_options() {
 		$option[$i]['id'] = $category->term_id;
 		$i++;
 	}
-
+    
+    $post_types = array();
+    $post_types_raw = get_post_types(array('public' => true));
+    foreach ($post_types_raw as $post_type){
+        $post_type_item = array('id' => $post_type, 'name' => str_replace('_', ' ', ucfirst($post_type)));
+        array_push($post_types, $post_type_item);
+    }
+    
 	$option_categories = $option;
     $magazine_styles = array(
                             __('img-mouse-over', 'cc'),
@@ -205,7 +212,31 @@ function cap_get_options() {
 				__("Title colour",'cc'),
 				__("Change title colour",'cc'),
 				"title_color",
-				"","end"),
+				"", ''),
+                        new DropdownOption(
+                                 __("Show titles at all pages",'cc'),
+				__("Global setting for show titles at all pages",'cc'),
+				"show_titles_all_pages",
+				array(__('yes','cc'), __('no','cc')),
+				__("yes",'cc'),
+                                ''
+                        ),
+                        new DropdownOption(
+                            __("Center title",'cc'),
+                            __("Global setting for on/off center text position for title",'cc'),
+                            "titles_center",
+                            array(__('no','cc'), __('yes','cc')),
+                            __("no",'cc'), 
+                            ''
+                        ),
+                        new CheckboxGroupOptions(
+                            __("Center title",'cc'),
+                            __("Global setting for on/off center text position for title",'cc'),
+                            "titles_post_types",
+                            $post_types,
+                            '',
+                            "end"
+                        ),
 			new DropdownOption(
 				__("Subtitle font style",'cc'),
 				__("Change the subtitle font style (h3-h6)",'cc'),
@@ -226,6 +257,7 @@ function cap_get_options() {
 				__("Change subtitle colour",'cc'),
 				"subtitle_color",
 				"","end"),
+            
 			new DropdownOption(
 				__("Show excerpts",'cc'),
 				__("Just for category and archive views: use excerpts or show full content of your posts",'cc'),
@@ -344,8 +376,8 @@ function cap_get_options() {
 				""
 	            ),
 			new DropdownOption(
-				'<span class="blog-item-home">' .__("Last 3 Posts on home",'cc') . '</span>',
-				'<span class="blog-item-home">' . __("Display last 3 posts. <br> ",'cc') . '</span>',
+				__("Last 3 Posts on home",'cc'),
+				__("Display last 3 posts. <br> ",'cc'),
 				"default_homepage_last_posts",
 				array(__('show','cc'), __('hide','cc')),
 				__("show",'cc'),

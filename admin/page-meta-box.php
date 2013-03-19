@@ -43,7 +43,7 @@
         if(!empty($cc_page_options['cc_page_allow_direct_link']) && $cc_page_options['cc_page_allow_direct_link'] == __('yes', 'cc')){
             $is_allowed_direct_link = __('yes', 'cc');
         }
-        if(!empty($cc_page_options['cc_hide_title']) && $cc_page_options['cc_hide_title'] == __('yes', 'cc')){
+        if(empty($cc_page_options['cc_hide_title']) || $cc_page_options['cc_hide_title'] == __('yes', 'cc')){
             $is_title_hidden = __('yes', 'cc');
         }
         if(!empty($cc_page_options['cc_center_title']) && $cc_page_options['cc_center_title'] == __('yes', 'cc')){

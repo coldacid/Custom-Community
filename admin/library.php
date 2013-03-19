@@ -546,6 +546,7 @@ function top_level_settings() {
 		$options = get_option('custom_community_theme_options');
 		$options = array_merge((array)$options, $_POST['custom_community_theme_options']);
         $options['cap_slideshow_cat'] = !empty($_POST['custom_community_theme_options']['cap_slideshow_cat']) ? serialize($options['cap_slideshow_cat']) : serialize(array());
+        $options['cap_titles_post_types'] = !empty($_POST['custom_community_theme_options']['cap_titles_post_types']) ? serialize($options['cap_titles_post_types']) : serialize(array());
 		update_option('custom_community_theme_options', $options);
 		$cap = new autoconfig();
 		do_action('cc_after_theme_settings_saved');

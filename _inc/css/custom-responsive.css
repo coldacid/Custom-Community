@@ -36,7 +36,7 @@
         width: 799px;
     }
     #container .row-fluid.left-right-sidebar .span8{
-        width: 516px;
+        width: 575px;
     }
     .row-fluid.left-right-sidebar .span11{
         width: 89%;
@@ -77,7 +77,7 @@
     }
     #sidebar.span4, #leftsidebar.widgetarea, div#leftsidebar h3.widgettitle{
         float: none;
-        width: 100%;
+        width: 97.5%;
         margin: 0;
     }
     #container div#content{
@@ -109,7 +109,7 @@
         width: 92%;
     }
     #sidebar .widget .widgettitle{
-        width: 100%;
+        width: 97.5%;
     }
     body #header .row-fluid .span4, 
     body #content .row-fluid .span4, 
@@ -120,6 +120,16 @@
     #blog-search #outerrim div.post-content{
         margin-left: 3px;
         width: 98%;
+    }
+    #access {
+        position: static;
+        margin-bottom: 0px;
+    }
+    div.menu ul{
+        float: none;
+    }
+    .widget {
+        margin-left: 20px;
     }
 }
 @media screen and (max-width: 480px) {
@@ -220,11 +230,7 @@
     div.widget ul#groups-list li{
         min-height: 45px;
     }
-    #header .row-fluid h3.widgettitle, 
-    #content .row-fluid h3.widgettitle, 
-    #footer .row-fluid .span4 h3.widgettitle {
-        width: 96%;
-    }
+    
 }
 @media screen and (max-width: 320px) {
     #group-dir-search.dir-search, div.dir-search {
@@ -260,11 +266,21 @@
     #content ul.item-list li div.action{
         width: 95%;
     }
+    #header .row-fluid h3.widgettitle, 
+    #content .row-fluid h3.widgettitle, 
+    #footer .row-fluid .span4 h3.widgettitle {
+        width: 89%;
+    }
 }
 @media screen and (max-width: 240px) {
     .boxgrid {
         width: 115px;
         height: 83px;
+    }
+    #header .row-fluid h3.widgettitle, 
+    #content .row-fluid h3.widgettitle, 
+    #footer .row-fluid .span4 h3.widgettitle {
+        width: 85%;
     }
 }
 img { max-width: 100%; }

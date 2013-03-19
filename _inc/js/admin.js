@@ -50,9 +50,9 @@
                 have_block_view = true;
             }
             if(have_block_view){
-                $('.blog-item-home, #cap_default_homepage_hide_avatar, #cap_default_homepage_last_posts, #cap_default_homepage_style, #cap_default_homepage_hide_date').show().parent().parent('p').show()
+                $('.blog-item-home, #cap_default_homepage_hide_avatar, #cap_default_homepage_style, #cap_default_homepage_hide_date').show().parent().parent('p').show()
             } else {
-                $('.blog-item-home, #cap_default_homepage_hide_avatar, #cap_default_homepage_last_posts, #cap_default_homepage_style, #cap_default_homepage_hide_date').hide().parent().parent('p').hide()
+                $('.blog-item-home, #cap_default_homepage_hide_avatar, #cap_default_homepage_style, #cap_default_homepage_hide_date').hide().parent().parent('p').hide()
             }
         });
         $('#cap_posts_lists_style_taxonomy, #cap_posts_lists_style_dates, #cap_posts_lists_style_author, #cap_posts_lists_style_home').trigger('change');

@@ -323,6 +323,7 @@ function cc_list_posts($atts,$content = null) {
         'orderby'       => '',
         'order'         => '',
         'year'          => '',
+        'tag'           => '',
         'monthnum'      => ''
     ), $atts));
 
@@ -362,6 +363,7 @@ function cc_list_posts($atts,$content = null) {
         'category__in'   => $category__in,
         'category_name'  => $category_name,
         'posts_per_page' => $amount,
+        'tag'            => $tag,
         'paged'          => $paged
     );
 
@@ -382,7 +384,7 @@ function cc_list_posts($atts,$content = null) {
                 $tmp .= '<a href="'. get_permalink().'" title="'. get_the_title().'"><img src="'.$thePath[0].'" /></a>';
                 $tmp .= '<div class="cover boxcaption">';
                 $tmp .= '<h3><a href="'. get_permalink().'" title="'. get_the_title().'">'. get_the_title().'</a></h3>';
-                $tmp .= '<p class="hidden-phone"><a href="'. get_permalink().'" title="'. get_the_title().'">'.  substr(strip_tags(get_the_excerpt()), 0, 100).'...</a></p>';
+                $tmp .= '<p class="hidden-phone"><a href="'. get_permalink().'" title="'. get_the_title().'">'.  mb_substr(strip_tags(get_the_excerpt()), 0, 90).'...</a></p>';
                 $tmp .= '</div>';
                 $tmp .= '</div>'; 
             } else {
@@ -390,7 +392,7 @@ function cc_list_posts($atts,$content = null) {
                 if($img_position != 'posts-img-under-content') $tmp .= '<a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_post_thumbnail().'</a>';
                 $tmp .= '<h3><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h3>';
                 if($height != 'auto'){ $height = str_replace('px','',$height).'px'; }
-                $tmp .= '<p style="height:'.$height.';">'. get_the_excerpt().'</p>';
+                $tmp .= '<p style="height:'.$height.';">'. mb_substr(get_the_excerpt(), 0, 100).'</p>';
                 if($img_position == 'posts-img-under-content') $tmp .= '<a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_post_thumbnail().'</a>';
                 $tmp .= '</div>';
                 if($img_position == 'posts-img-left-content-right' || $img_position == 'posts-img-right-content-left') $tmp .= '<div class="clear"></div>';    

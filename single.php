@@ -50,8 +50,9 @@
 							<?php if ($single_class != false){ ?>
 								<div class="<?php echo $single_class ?>">
 							<?php } ?>
-			
-							<h2 class="posttitle"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e( 'Permanent Link to', 'cc' ) ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+                                    
+                            <?php get_posts_titles(get_the_title(), get_the_ID()); ?>
+
 							<?php if($cc_post_options['cc_post_template_date'] != '1') {?>
 								<p class="date"><?php the_time('F j, Y') ?> <em><?php _e( 'in', 'cc' ) ?> <?php the_category(', ') ?> <?php if(defined('BP_VERSION')){  printf( __( ' by %s', 'cc' ), bp_core_get_userlink( $post->post_author ) ); }?></em></p>
 							<?php } ?> 
