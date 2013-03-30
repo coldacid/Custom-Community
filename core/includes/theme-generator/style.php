@@ -26,7 +26,7 @@ function get_css(){
 body {
     background: none #<?php echo $body_bg_color;?>;
     color:#<?php echo $font_color;?>;
-    font-family:Arial,Tahoma,Verdana,sans-serif;
+    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size:12px;
     line-height:170%;
     margin:0 auto;
@@ -72,7 +72,11 @@ if($cap->cc_responsive_enable){
 } else {
     $site_width = '1000';
 }
+//get_content_width($site_width);die;
 ?>
+#container .row-fluid .span8, .row-fluid .span8 {
+	width: <?php echo get_content_width($site_width) . $units;?>;
+} 
 #innerrim {
     width: <?php echo $site_width . $units;?>;
     float: none;
@@ -120,13 +124,13 @@ p:last-child {margin-bottom: 0}
 sub {
     line-height: 100%;
     font-size: 60%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     vertical-align:bottom;
 }
 sup {
     line-height: 100%;
     font-size: 60%;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     vertical-align:top;
 }
 hr {
@@ -343,13 +347,10 @@ body.activity-permalink div#container {
 
 /* > Sidebar
 -------------------------------------------------------------- */
+
 #sidebar-me, #sidebar-login-form {
     margin: 0 0 20px 10px;
 }
-
-/*.right-sidebar-padder {padding: 30px 15px 30px 20px}*/
-
-/*.left-sidebar-padder {padding:30px 15px 30px 20px}*/
 
 div#sidebar {
     -moz-background-clip:border;
@@ -404,7 +405,7 @@ div#leftsidebar h3.widgettitle, div#sidebar h3.widgettitle, div.widgetarea h3.wi
     margin:0 8px 12px 0px;
     padding:5px 10px;
     width:182px;
-    font-family: arial, helvetica, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 div#leftsidebar h3.widgettitle a, div#sidebar h3.widgettitle a, div.widgetarea h3.widgettitle a {
@@ -413,7 +414,7 @@ div#leftsidebar h3.widgettitle a, div#sidebar h3.widgettitle a, div.widgetarea h
     background-color: transparent;
     text-decoration: none;
     font-size:12px;
-    font-family: arial, helvetica, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 div#leftsidebar h3.widgettitle a:hover, div#leftsidebar h3.widgettitle a:focus,
 div#sidebar h3.widgettitle a:hover, div#sidebar h3.widgettitle a:focus,
@@ -606,12 +607,29 @@ div#content div#item-header {
     margin-top:0;
     overflow:hidden;
 }
+.full-width div#item-header div#item-header-content{
+    width: 70%;
+}
+<?php if(bp_current_action() != 'forum'):
+    if($cap->cc_responsive_enable) {
+		$rightsidebar_width = 225;
+    } else {
+        $rightsidebar_width = $cap->rightsidebar_width;
+    }
+?>
 div#item-header div#item-header-content {
-    width: 53%;
+    width: auto; 
+    max-width: 70%;
     float: left;
     margin-left: 20px;
 }
-
+<?php endif; ?>
+#container #content.added-by-plugins{
+    width: calc(100% - <?php echo ($rightsidebar_width)?>px);
+    width: -webkit-calc(100% - <?php echo ($rightsidebar_width)?>px);
+    width: -moz-calc(100% - <?php echo ($rightsidebar_width)?>px);
+    width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
+}
 div#item-header h2 {
     font-size: 28px;
     margin: -5px 0 15px 0;
@@ -637,7 +655,12 @@ div#item-header span.activity, div#item-header h2 span.highlight {
     color:#<?php echo $font_color;?>;
 }
 
-div#item-header h2 span.highlight {font-size: 16px;color:#<?php echo $font_color;?>}
+div#item-header h2 span.highlight {
+	font-size: 16px;
+	color:#<?php echo $font_color;?>
+	padding-left: 10px;
+}
+
 div#item-header h2 span.highlight span {
     position: relative;
     top: -2px;
@@ -1014,7 +1037,7 @@ div.item-list-tabs#object-nav {
 div#subnav.item-list-tabs  {
     background:none repeat scroll 0 0 #<?php echo $container_alt_bg_color;?>;
     border-bottom: medium none;
-    margin: 0;
+    margin: 0 0 20px 0;
     min-height: 26px;
     padding: 10px 20px 0 10px;
     overflow: hidden;
@@ -1040,7 +1063,7 @@ div.item-list-tabs ul li.feed a {
     border:0;
     font:normal 18px Helvetica;
     color: #<?php echo $link_color;?>;
-    background: none repeat scroll 0 0 #<?php echo $container_bg_color;?>;
+    background: transparent;
     -moz-border-radius-topleft: 6px;
     -moz-border-radius-topright: 6px;
     -webkit-border-top-left-radius: 6px;
@@ -1058,7 +1081,7 @@ div.item-list-tabs ul li.feed a {
 .item-list-tabs .next:hover, 
 .item-list-tabs .prev:hover{
     color: #<?php echo $font_color;?>;
-    background-color:#<?php echo $container_alt_bg_color;?>;
+    background: #<?php echo $container_alt_bg_color;?>;
     cursor: pointer;
 }
 .item-list-tabs div.bp-nav-wrap {
@@ -1144,6 +1167,7 @@ div.dir-search input[type=text] {
 
 body.forum #subnav{
     padding-top: 10px !important;
+    margin-left: -10px;
 }
 body.forum #subnav ul li{
     margin-top: -6px !important;
@@ -1274,8 +1298,8 @@ a.comment-edit-link, a.comment-reply-link, a.button, input[type="submit"], input
     border-top: none;
     border-left: none;
     color: #<?php echo $container_bg_color;?>;
-    font-family: arial, sans-serif;
-    font-size: 12px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
     cursor: pointer;
     font-weight: normal;
     padding: 3px 5px;
@@ -1293,7 +1317,7 @@ ul.button-nav li a:hover, div.generic-button a:hover, ul.button-nav li a:focus, 
     border-width:medium 1px 1px medium;
     color:#<?php echo $container_bg_color;?>;
     cursor:pointer;
-    font-size:12px;
+    font-size:13px;
     font-weight:normal;
     padding:3px 5px;
     text-decoration:none;
@@ -1633,14 +1657,9 @@ table#message-threads tr .thread-options{
 -------------------------------------------------------------- */
 
 form#whats-new-form {
-    margin-bottom: 3px;
-    border-bottom: 1px solid #<?php echo $body_bg_color;?>;
+    margin-bottom: 10px;
     overflow: hidden;
-    padding-bottom: 20px;
-}
-#item-body form#whats-new-form {
-    margin-top: 20px;
-    border: none;
+    padding-bottom: 10px;
 }
 
 .home-page form#whats-new-form {
@@ -1648,13 +1667,29 @@ form#whats-new-form {
     padding-bottom: 0;
 }
 
+form#whats-new-form span.marker {
+	-moz-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	background: none repeat scroll 0 0 #<?php echo $container_alt_bg_color;?>;
+	height: 15px;
+	margin: 18px 0 0 14px;
+	position: absolute;
+	width: 15px;
+}
+
 form#whats-new-form h5 {
-    margin: 0 0 5px 10px;
-    font-weight: normal;
-    font-size: 12px;
-    color: #<?php echo $font_color;?>;
-    float: left;
-    width: 80%;
+margin: 0 5px 0 20px;
+font-style: italic;
+font-size: 17px;
+color: #<?php echo $font_color;?>;
+background: #<?php echo $container_alt_bg_color;?>;
+float: left;
+padding: 15px 28px;
+line-height: 22px;
+font-weight: normal;
+border-radius: 6px;
 }
 
 form#whats-new-form #whats-new-avatar {
@@ -1664,8 +1699,8 @@ form#whats-new-form #whats-new-avatar {
 
 form#whats-new-form #whats-new-content {
    float: left;
-   width: 90%;
-   margin-left: 10px;
+   width: 100%;
+   margin: 10px 10px 0 0;
 }
 
 form#whats-new-form #whats-new-textarea {
@@ -1770,12 +1805,11 @@ body.activity-permalink .activity-list li.mini .activity-meta {
 }
 
 .activity-list li .activity-inreplyto {
-    display:none;
     background:none;
     color:#<?php echo $font_color;?>;
     font-size:11px;
     margin-bottom:15px;
-    margin-left:80px;
+    margin-left:20px;
     padding-left:0;
 }
 .activity-list li .activity-inreplyto > p {
@@ -1949,7 +1983,6 @@ body.activity-permalink .activity-content blockquote {
     padding:4px 8px;
     font-size:11px;
     text-decoration: none;
-    font-family: arial, sans-serif;
 }
 .activity-list div.activity-meta a:hover,
 .activity-list div.activity-meta a:focus {
@@ -2237,6 +2270,12 @@ ul#topic-post-list li div.poster-meta {
     margin-bottom: 10px;
     color: #<?php echo $font_color;?>;
 }
+body.forum .pagination{
+    padding-left: 0;
+}
+body.forum div.pagination .pag-count{
+    margin-left: 0;
+}
 
 ul#topic-post-list li div.post-content {
     margin-left: 54px;
@@ -2251,8 +2290,9 @@ div.admin-links {
 }
 div#topic-meta div.admin-links {
     bottom: 0;
-    margin-top: -52px;
+    margin-top: -35px;
     right: 0;
+    margin-right: 10px;
 }
 
 div#topic-meta {
@@ -3109,14 +3149,22 @@ div.cc_slider .featured .ui-tabs-panel a{
     display: block;
     width: 100%;
 }
-div.cc_slider .featured .ui-tabs-panel a img{
+div.cc_slider .featured .ui-tabs-panel a .no-image{
     width: 100%;
+}
+div.cc_slider .featured .ui-tabs-panel a img{
     <?php if ( $cap->slideshow_style == "default" ) { ?>
     	border-radius: 6px 0 0 6px;
     <?php } else { ?>
     	border-radius: 6px;
     <?php } ?>	
 }
+<?php if($cap->stretch_big_image == '' || $cap->stretch_big_image == __('default', 'cc') || $cap->stretch_big_image == __('on', 'cc')):?>
+ div.cc_slider .featured .ui-tabs-panel a .wp-post-image{
+    width: 100%;
+    height: 100%;
+ }  
+<?php endif;?>
 div.cc_slider ul.ui-tabs-nav {
     list-style: none outside none;
     margin: 0;
@@ -3164,9 +3212,6 @@ div.cc_slider a, div.cc_slider a:hover, div.cc_slider a:focus {
 div.cc_slider li.ui-tabs-nav-item a:hover{
     background:#<?php echo $details_hover_bg_color;?>;
 }
-div.cc_slider ul.ui-tabs-nav li.ui-tabs-active{
-    background:url(<?php echo get_template_directory_uri() ?>/images/<?php cc_color_scheme();?>/selected-item.png) top left no-repeat transparent;
-}
 div.cc_slider ul.ui-tabs-nav li.ui-tabs-active a{
     background:#<?php echo $container_alt_bg_color;?>;
 }
@@ -3199,7 +3244,7 @@ div.cc_slider .featured .info h2 > a{
     color: #ffffff;
     color: #ffffff !important;
     overflow:hidden;
-    font-family: arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 div.cc_slider .featured .info h2 {
     padding:2px 2px 2px 5px;
@@ -3212,7 +3257,7 @@ div.cc_slider .featured .info p{
     font-size:13px;
     line-height:15px;
     color:#ffffff;
-    font-family: arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 div.cc_slider .featured .info a{
     color:#<?php echo $body_bg_color;?>;color:#<?php echo $body_bg_color;?> !important;
@@ -3261,7 +3306,6 @@ div.post img {
 }
 
 
-
 /* =list posts img mouse over effect
 -------------------------------------------------------------- */
 .boxgrid {
@@ -3298,7 +3342,7 @@ div.post img {
 .boxgrid p, .boxgrid p a {
     padding: 0 0 0 5px;
     color: #ffffff;
-    font: 11px Arial, sans-serif;
+    font: 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 div.boxgrid h3 > a {color:#ffffff;font:12px Arial, sans-serif;letter-spacing:0;font-weight: bold;padding-left:0px}
 .boxgrid h3 {margin: 5px 5px 5px 0px}
@@ -4426,7 +4470,7 @@ h3, h4, h5, h6, h3 a, h4 a, h5 a, h6 a {
 
 <?php endif;?>
 
-<?php if($cap->default_homepage_hide_avatar == "hide" || $cap->default_homepage_hide_avatar == __("hide",'cc') ){?>
+<?php if($cap->default_homepage_hide_avatar == "hide" || $cap->default_homepage_hide_avatar == __("hide",'cc') || $cap->avatars_only_in_comments == __('yes', 'cc')){?>
 /** ***standard wordpress home page: hide avatar**/
 
 body.home div.post div.post-content, div.comment-content,
@@ -4441,7 +4485,7 @@ body.home.bubble div.post div.author-box {
 }
 <?php } ?>
 
-<?php if($cap->posts_lists_hide_avatar == "hide" || $cap->posts_lists_hide_avatar == __("hide",'cc') ){?>
+<?php if($cap->posts_lists_hide_avatar == "hide" || $cap->posts_lists_hide_avatar == __("hide",'cc') || $cap->avatars_only_in_comments == __('yes', 'cc')){?>
 /** ***
 standard wordpress archive pages: hide avatar**/
 
@@ -4471,7 +4515,7 @@ body.bubble div.post h2.posttitle,
 <?php if($cap->default_homepage_hide_avatar == "hide" ||
          $cap->default_homepage_hide_avatar == __("hide",'cc') ||
          $cap->posts_lists_hide_avatar == "hide" ||
-         $cap->posts_lists_hide_avatar == __("hide",'cc') ) {?>
+         $cap->posts_lists_hide_avatar == __("hide",'cc') || $cap->avatars_only_in_comments == __('yes', 'cc')) {?>
     div.post span.marker {display: none}
 <?php } else {?>
     div.post span.marker {
@@ -4621,7 +4665,7 @@ background-image:url(<?php echo stripslashes($cap->header_img)?>);
     }
     #headimg h1,
     #desc {
-        font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
     #headimg h1 {
         margin: 0;
@@ -4948,6 +4992,8 @@ menu background colour drop down menu item hover  **/
 <?php if ( $cap->leftsidebar_width != "") {?>
     /** ***
     left sidebar width  **/
+   
+    <?php if($cap->cc_responsive_enable) { $cap->leftsidebar_width = 225; } ?>
 
     div#leftsidebar {
         width: <?php echo $cap->leftsidebar_width ?>px;
@@ -5000,10 +5046,7 @@ div#leftsidebar {
     /** ***
     right sidebar width  **/ 
     
-    <?php if($cap->cc_responsive_enable) {
-		$cap->rightsidebar_width = 225;
-		$cap->leftsidebar_width = 225;
-	} ?>
+    <?php if($cap->cc_responsive_enable) { $cap->rightsidebar_width = 225; } ?>
 
     div#sidebar { 
         width: <?php echo $cap->rightsidebar_width ?>px;
@@ -5014,7 +5057,7 @@ div#leftsidebar {
         right: <?php echo $cap->rightsidebar_width ?>px;
     }
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
-    $old = $cap->rightsidebar_width;$wdth = $old - 41; ?>
+    $old = $cap->rightsidebar_width; $wdth = $old - 41; ?>
 
     div#sidebar h3.widgettitle, #leftsidebar .widgettitle{
         width: <?php echo $wdth ?>px;
@@ -5212,6 +5255,9 @@ div.item-list-tabs {
 #activity-filter-select{
     width: auto;
 }
+.wp-pagenavi{
+    float: right;
+}
 .row-fluid #cc_sliderslidertop .span8{
     width: 76%;
 }
@@ -5223,9 +5269,6 @@ div.item-list-tabs {
     width: 75%;
 }
 
-#container .row-fluid .span8, .row-fluid .span8 {
-	width: <?php echo get_content_width($site_width) . $units;?>;
-} 
 
 /*
 .row-fluid.left-right-template .span8,.row-fluid.archive-width .span8{
@@ -5292,7 +5335,7 @@ div#content.span8.full-with { width: 100%; }
     display: table-row-group;
 }
 div#item-actions {
-    left: 55%;
+    left: 75%;
     top: 10px;
 }
 /** ***   
@@ -5364,30 +5407,41 @@ add_action('wp_head', 'cc_print_styles', 100);
  * Get content width
  */
 function get_content_width($site_width){
-    global $cap, $post;
+    global $cap, $post, $bp;
    
 	if($cap->cc_responsive_enable) {
 		$cap->rightsidebar_width = 225;
 		$cap->leftsidebar_width = 225;
 	}
-		
-    if((!is_page() || is_page('search') || is_search()) && !is_archive()){ 
+
+    if(defined('BP_VERSION') && bp_is_user() && $cap->bp_profile_sidebars == __('none', 'cc') ){
+        return $site_width;
+    } else if(defined('BP_VERSION') && bp_is_user() && $cap->bp_profile_sidebars != __('default', 'cc')){
+        
+        if($cap->bp_profile_sidebars == __('left', 'cc') || $cap->bp_profile_sidebars == __('left and right', 'cc')){
+            $site_width -= $cap->leftsidebar_width;
+        }
+        if($cap->bp_profile_sidebars == __('right', 'cc') || $cap->bp_profile_sidebars == __('left and right', 'cc')){
+            $site_width -= $cap->rightsidebar_width;
+        }
+        return $site_width;
+        
+    } else if((!is_page() || is_page('search') || is_search()) && !is_archive() || is_bbpress()){
         if($cap->sidebar_position == __('left','cc')){
             $site_width -= $cap->leftsidebar_width;
         } else if($cap->sidebar_position == __('right','cc')){
             $site_width -= $cap->rightsidebar_width;
-        } else if($cap->sidebar_position == __('full-width','cc')){
-
         } else if($cap->sidebar_position == __('left and right','cc')){
             $site_width = $site_width - $cap->rightsidebar_width - $cap->leftsidebar_width;
         }
+        return $site_width;
     } elseif (is_archive()) {
         
-         if(is_archive() && ($cap->archive_template == 'left' || $cap->archive_template == 'left and right' || $cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc'))){
-               $site_width -= $cap->leftsidebar_width;
-           } else if($cap->archive_template == "right" || $cap->archive_template == "left and right" || $cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc')){
-               $site_width -= $cap->rightsidebar_width;
-           }
+        if(is_archive() && ($cap->archive_template == 'left' || $cap->archive_template == 'left and right' || $cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc'))){
+            $site_width -= $cap->leftsidebar_width;
+         } else if($cap->archive_template == "right" || $cap->archive_template == "left and right" || $cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc')){
+              $site_width -= $cap->rightsidebar_width;
+         }
            
     } else {
         
@@ -5396,7 +5450,7 @@ function get_content_width($site_width){
             $detect = new TK_WP_Detect();
             $component = explode('-', $detect->tk_get_page_type());
             if(!empty($component[2])){
-                if($component[2] == 'groups' && bp_is_group()) {
+                if($component[2] == 'groups' && !empty($component[3]) && (property_exists($bp, 'unfiltered_uri') && !empty($bp->unfiltered_uri[0]) && $bp->unfiltered_uri[0] != 'members')) {
                 	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
                         || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
                         $site_width -= $cap->leftsidebar_width;
@@ -5405,8 +5459,8 @@ function get_content_width($site_width){
                         || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
                         $site_width -= $cap->rightsidebar_width;
                     };
-
-                } elseif($component[2] == 'profile' || bp_is_user()) {
+                    return $site_width;
+                } elseif((property_exists($bp, 'unfiltered_uri') && !empty($bp->unfiltered_uri[0]) && $bp->unfiltered_uri[0] == 'members') || bp_is_activity_component() || bp_is_profile_component() || bp_is_messages_component() || bp_is_friends_component() || bp_is_settings_component()) {
 
                     if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
                     	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
@@ -5420,28 +5474,37 @@ function get_content_width($site_width){
                         || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
 							$site_width -= $cap->rightsidebar_width;
                     }
+                    return $site_width;
                 }  elseif($component[2] == 'members') {
+                		
                 	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
                 		$site_width -= $cap->leftsidebar_width;
                 	}
 					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
 						$site_width -= $cap->rightsidebar_width;
 					}
-                } else {
+                    return $site_width;
+                } else if($component[2] != 'forums'){
+                    
                 	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
                 		$site_width -= $cap->leftsidebar_width;
                 	}
 					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
 						$site_width -= $cap->rightsidebar_width;
 					}
+                    return $site_width;
                 }
-                return $site_width;
             }
+            
             $width_change = FALSE;
             $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
             if($tmp == 'full-width.php'){
                 return $site_width;
             }
+			
+			// page template - if empty use "default" here... 
+			if( $tmp == '' ) $tmp = 'default';
+			
             if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('left','cc') || $cap->sidebar_position == __('left and right','cc'))) ||
             	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
                 $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){

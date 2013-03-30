@@ -91,7 +91,44 @@ function cc_change_profile_tab_order() {
 		$i ++;
 	}
 }
+if(defined('is_pro')){
+    //MAin menu tab
+    global $cap;
+    define ('BP_DEFAULT_COMPONENT', $cap->main_profile_menu_tab);
+    define ('BP_GROUPS_DEFAULT_EXTENSION', $cap->main_group_menu_tab);
 
+    add_action('bp_init', 'cc_change_main_tab', 9);
+
+    function cc_change_main_tab(){
+        global $bp, $cap;
+        $main_menu = $cap->main_profile_menu_tab;
+        if(empty($main_menu)){
+            return;
+        }
+        foreach($bp->bp_nav as $key => &$item) {
+            if($key === $main_menu){
+                $item['position'] = 9;
+            }
+        }
+    }
+    add_action('bp_init', 'cc_change_main_group_tab');
+    function cc_change_main_group_tab(){
+        global $bp, $cap;
+        $main_menu = $cap->main_group_menu_tab;
+        if(empty($main_menu)){
+            return;
+        }
+        $group_slug = isset( $bp->groups->current_group->slug ) ? $bp->groups->current_group->slug : false;
+        if(!empty($bp->bp_options_nav[$group_slug])){
+            foreach($bp->bp_options_nav[$group_slug] as $key => &$item) {
+                    if ($key === $main_menu){
+                        $item['position'] = 1;
+                    }
+                }
+        }
+
+    }
+}
 /**
  * change the groups tab order
  *
@@ -411,7 +448,7 @@ function cc_slidertop(){
 	$tmp .= slider($atts, $content = null);
 	$tmp .= '</div>';
 	if($cap->slideshow_shadow != "no shadow" && $cap->slideshow_shadow != __("no shadow",'cc')){
-		$tmp .= '<div class="slidershadow hidden-phone span10"><img src="'.get_template_directory_uri().'/images/slideshow/'.cc_slider_shadow().'"></img></div>';
+		$tmp .= '<div class="slidershadow hidden-phone span10"><img src="'.get_template_directory_uri().'/images/slideshow/'.cc_slider_shadow().'" alt="'.__('Slideshow shadow', 'cc').'"></div>';
 	}
 	$tmp .='<div class="clear"></div>';
 	return $tmp;

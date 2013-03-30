@@ -32,7 +32,7 @@
     div.v_line_right{
         right: 22%;
     }
-    .row-fluid .span8{
+    #container .row-fluid .span8, .row-fluid .span8{
         width: 799px;
     }
     #container .row-fluid.left-right-sidebar .span8{

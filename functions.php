@@ -42,6 +42,7 @@ if (!function_exists('cc_setup')):
             set_post_thumbnail_size(222, 160, true);
             add_image_size('slider-top-large', 1006, 250, true);
             add_image_size('slider-large', 990, 250, true);
+            add_image_size('slider-responsile', 925, 250, true);
             add_image_size('slider-middle', 756, 250, true);
             add_image_size('slider-thumbnail', 80, 50, true);
             add_image_size('post-thumbnails', 222, 160, true);
@@ -781,7 +782,7 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
                 $tmp .='<div id="fragment-' . $id . '-' . $i . '" class="ui-tabs-panel ' . $slider_class . '">' . chr(13);
 
                 if ($width != '' || $height != '') {
-                    $ftrdimg = get_the_post_thumbnail($post->ID, array($width + 10, $height), "class={$reflect}");
+                    $ftrdimg = get_the_post_thumbnail($post->ID, array($width + 10, $height), array('class' => $reflect, 'alt' => get_the_title()));
                     if (empty($ftrdimg)) {
                         if ($cap->slideshow_img) {
                             $ftrdimg = '<img src="' . $cap->slideshow_img . '" />';
@@ -790,12 +791,15 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
                         }
                     }
                 } else {
-                    $ftrdimg = get_the_post_thumbnail($post->ID, array(756, 250), "");
+                    
+                    $thumb = $cap->cc_responsive_enable ? 'slider-responsile' : 'slider-middle';
+                        
+                    $ftrdimg = get_the_post_thumbnail($post->ID, $thumb, array('alt' => get_the_title()));
                     if (empty($ftrdimg)) {
                         if ($cap->slideshow_img) {
-                            $ftrdimg = '<img src="' . $cap->slideshow_img . '" width="756" height="250"/>';
+                            $ftrdimg = '<img src="' . $cap->slideshow_img . '" class="no-image" width="756" height="250"/>';
                         } else {
-                            $ftrdimg = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg.jpg" />';
+                            $ftrdimg = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg.jpg" class="no-image" />';
                         }
                     }
                 }
@@ -805,7 +809,7 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
                 if ($caption == 'on') {
                     $tmp .=' <div class="info span8" >' . chr(13);
                     $tmp .='    <h2><a href="' . $url . '" >' . get_the_title() . '</a></h2>' . chr(13);
-                    $tmp .='    <p>' . mb_substr(strip_tags(get_the_excerpt()), 0, 300) . '</p>' . chr(13);
+                    $tmp .='    <p>' . get_the_excerpt() . '</p>' . chr(13);
                     $tmp .=' </div>' . chr(13);
                 }
                 $tmp .='</div>' . chr(13);
@@ -815,14 +819,14 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
             $tmp .='<ul class="ui-tabs-nav span4 offset1">' . chr(13);
             $i = 1;
             while (have_posts()) : the_post();
-                if (get_the_post_thumbnail($post->ID, 'slider-thumbnail') == '') {
+                if (get_the_post_thumbnail($post->ID, 'slider-thumbnail', array('alt' => get_the_title())) == '') {
                     if (!empty($cap->slideshow_small_img) || $cap->slideshow_small_img != '') {
                         $ftrdimgs = '<img src="' . $cap->slideshow_small_img . '" width="80" height="50"/>';
                     } else {
                         $ftrdimgs = '<img src="' . get_template_directory_uri() . '/images/slideshow/noftrdimg-80x50.jpg" />';
                     }
                 } else {
-                    $ftrdimgs = get_the_post_thumbnail($post->ID, 'slider-thumbnail');
+                    $ftrdimgs = get_the_post_thumbnail($post->ID, 'slider-thumbnail', array('alt' => get_the_title()));
                 }
                 $title = mb_substr(get_the_title(), 0, 65);
                 if ($allow_direct_link == __('yes', 'cc')) {
@@ -939,6 +943,29 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
 
     add_action('admin_enqueue_scripts', 'admin_dtheme_enqueue_scripts');
     
+	
+	/**
+     * WooCommerce 2.0+ Support
+	 * since version 1.15  
+     */
+    
+	
+	remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+	remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+	
+	add_action('woocommerce_before_main_content', 'cc_wc_wrapper_start', 10);
+	add_action('woocommerce_after_main_content', 'cc_wc_wrapper_end', 10);
+	
+	function cc_wc_wrapper_start() {
+			 echo '<div id="content" class="span8"><div class="padder">';
+	}
+	
+	function cc_wc_wrapper_end() {
+		echo '</div></div>';
+	}
+
+	add_theme_support( 'woocommerce' );
+	
     /**
      * Edit readmore links urls
      * @param string $link
@@ -956,15 +983,13 @@ if ($cap->buddydev_search == true && defined('BP_VERSION') && function_exists('b
         if(empty($cap->titles_post_types) || in_array($post->post_type, $cap->titles_post_types)){
 
                 $is_title_hidden = get_post_meta($post_id, '_cc_hide_title', TRUE);
-                $is_title_hidden_global = $cap->show_titles_all_pages;
-                if(($is_title_hidden_global == __('yes', 'cc')) 
-                        || ($is_title_hidden == 'no')){
+                if($is_title_hidden == 'yes'){
+                    return FALSE;
+                }
                 $center_title = get_post_meta($post_id, '_cc_center_title', TRUE); 
-                $center_title_global = $cap->titles_center;
                 ?>
-                <h2 class="pagetitle <?php if($center_title_global == __('yes', 'cc') || (!empty($center_title) && $center_title == 'yes')) echo 'title-center'?>"><?php echo $title; ?></h2>
+                <h2 class="pagetitle <?php if(!empty($center_title) && $center_title == 'yes') echo 'title-center'?>"><?php echo $title; ?></h2>
             <?php 
-            }
         }
 
     }

@@ -98,12 +98,14 @@ get_header(); ?>
                         <?php do_action( 'bp_after_blog_post' ) ?>
 
                     <?php endwhile; ?>
-
-                    <div class="navigation">
-                        <div class="alignleft"><?php next_posts_link( __( '&larr; Previous Entries', 'cc' ) ) ?></div>
-                        <div class="alignright"><?php previous_posts_link( __( 'Next Entries &rarr;', 'cc' ) ) ?></div>
-                    </div>
-
+                    <?php if(function_exists('wp_pagenavi')):
+                        wp_pagenavi();
+                    else: ?>
+                        <div class="navigation">
+                            <div class="alignleft"><?php next_posts_link( __( '&larr; Previous Entries', 'cc' ) ) ?></div>
+                            <div class="alignright"><?php previous_posts_link( __( 'Next Entries &rarr;', 'cc' ) ) ?></div>
+                        </div>
+                    <?php endif;?>
                 <?php else : ?>
 
                     <h2 class="center"><?php _e( 'Not Found', 'cc' ) ?></h2>

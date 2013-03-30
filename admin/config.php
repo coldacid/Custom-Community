@@ -24,7 +24,9 @@ function cc_get_user_roles(){
 
 }
 function cap_get_options() {
-	$pages     = get_pages();
+    global $bp;
+    
+    $pages     = get_pages();
 	$option    = Array();
 	$option[0] = __("All pages",'cc');
 	$i         = 1;
@@ -43,15 +45,8 @@ function cap_get_options() {
 		$option[$i]['id'] = $category->term_id;
 		$i++;
 	}
-    
-    $post_types = array();
-    $post_types_raw = get_post_types(array('public' => true));
-    foreach ($post_types_raw as $post_type){
-        $post_type_item = array('id' => $post_type, 'name' => str_replace('_', ' ', ucfirst($post_type)));
-        array_push($post_types, $post_type_item);
-    }
-    
-	$option_categories = $option;
+
+    $option_categories = $option;
     $magazine_styles = array(
                             __('img-mouse-over', 'cc'),
                             __('img-left-content-right', 'cc'),
@@ -190,8 +185,8 @@ function cap_get_options() {
 				__("Title font style",'cc'),
 				__("Change the title font style (h1 and h2)",'cc'),
 				"title_font_style",
-				array('Arial, sans-serif', 'Helvetica, Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Arial Black, Arial, sans-serif', 'Impact, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
-				"Arial, sans-serif",
+				array('Helvetica Neue, Helvetica, Arial, sans-serif', 'Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Arial Black, Arial, sans-serif', 'Impact, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
+				'Helvetica Neue, Helvetica, Arial, sans-serif',
 				"start",
 				__("Titles",'cc')),
 				new TextOption(
@@ -212,37 +207,13 @@ function cap_get_options() {
 				__("Title colour",'cc'),
 				__("Change title colour",'cc'),
 				"title_color",
-				"", ''),
-                        new DropdownOption(
-                                 __("Show titles at all pages",'cc'),
-				__("Global setting for show titles at all pages",'cc'),
-				"show_titles_all_pages",
-				array(__('yes','cc'), __('no','cc')),
-				__("yes",'cc'),
-                                ''
-                        ),
-                        new DropdownOption(
-                            __("Center title",'cc'),
-                            __("Global setting for on/off center text position for title",'cc'),
-                            "titles_center",
-                            array(__('no','cc'), __('yes','cc')),
-                            __("no",'cc'), 
-                            ''
-                        ),
-                        new CheckboxGroupOptions(
-                            __("Center title",'cc'),
-                            __("Global setting for on/off center text position for title",'cc'),
-                            "titles_post_types",
-                            $post_types,
-                            '',
-                            "end"
-                        ),
+				"", 'end'),
 			new DropdownOption(
 				__("Subtitle font style",'cc'),
 				__("Change the subtitle font style (h3-h6)",'cc'),
 				"subtitle_font_style",
-				array('Arial, sans-serif', 'Helvetica, Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Arial Black, Arial, sans-serif', 'Impact, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
-				"Arial, sans-serif",
+				array('Helvetica Neue, Helvetica, Arial, sans-serif', 'Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Arial Black, Arial, sans-serif', 'Impact, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
+				'Helvetica Neue, Helvetica, Arial, sans-serif',
 				"start",
 				__("Subtitles",'cc')),
 				new DropdownOption(
@@ -275,8 +246,8 @@ function cap_get_options() {
 				__("Font style",'cc'),
 				__("Change the font style",'cc'),
 				"font_style",
-				array('Arial, sans-serif', 'Helvetica, Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
-				"Arial, sans-serif",
+				array('Helvetica Neue, Helvetica, Arial, sans-serif', 'Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
+				'Helvetica Neue, Helvetica, Arial, sans-serif',
 				"start",
 				__("Fonts",'cc')),
 			new TextOption(
@@ -523,6 +494,15 @@ function cap_get_options() {
 				"",
 				true,
 				true),
+            new DropdownOption(
+                __('Show avatars only in comments', 'cc'),
+                __('Show avatars only in comments', 'cc'),
+                'avatars_only_in_comments',
+                array(__('no', 'cc'), __('yes', 'cc')),
+                __('no', 'cc'),
+                true,
+                true
+                ),
 			)),
 		new Group (__("Header",'cc'), "header",
 			array(
@@ -758,8 +738,8 @@ function cap_get_options() {
 				__("Sidebar widget title font style",'cc'),
 				__("Change the widget title's font style",'cc'),
 				"widgettitle_font_style",
-				array('Arial, sans-serif', 'Impact, sans-serif', 'Helvetica, Arial, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
-				"Arial, sans-serif",
+				array('Helvetica Neue, Helvetica, Arial, sans-serif', 'Arial, sans-serif', 'Impact, sans-serif', 'Century Gothic, Avant Garde, Arial, sans-serif', 'Times New Roman, Times', 'Garamond, Times New Roman, Times'),
+				'Helvetica Neue, Helvetica, Arial, sans-serif',
 				"start",
 				__("Sidebar widget title fonts",'cc')),
 				new TextOption(
@@ -953,7 +933,8 @@ function cap_get_options() {
 				Note: a slug is the name as it is written in the url, <br>
 				means all letters in small, no symbols, ...",'cc'),
 				"bp_profiles_nav_order",
-				"")
+				""
+                )
 			)
 			),
 		new Group (__("Groups",'cc'), "groups",
@@ -1027,7 +1008,7 @@ function cap_get_options() {
 			new TextOption(
 				__("Post type",'cc'),
 				__("Define the post type to display instead of posts. For pages write 'page', <br>
-				for a custom post type the name of the cutsom post type, e.g. 'radio'", 'cc'),
+				for a custom post type the name of the custom post type, e.g. 'radio'", 'cc'),
 				"slideshow_post_type",
 				""),
 			new TextOption(

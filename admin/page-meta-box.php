@@ -1,6 +1,8 @@
 <?php 
-	function cc_page_metabox(){ 	
-		$args = array('echo' => '0','hide_empty' => '0');
+	function cc_page_metabox(){ 
+        global $cap;
+        
+        $args = array('echo' => '0','hide_empty' => '0');
 		$categories = get_categories($args);
 		$option = Array();
 		$i = 0;
@@ -13,8 +15,11 @@
 		$option_categories = $option;
         $yes_no_options = array(__('no', 'cc'), __('yes', 'cc'));
         
-    	$is_allowed_direct_link = $is_title_centered = $is_title_hidden = __('no', 'cc');
+    	$is_allowed_direct_link =  __('no', 'cc');
         
+        $is_title_hidden   = $cap->show_titles_all_pages == __('yes', 'cc') ? __('yes', 'cc') : __('no', 'cc');
+        $is_title_centered = $cap->titles_center == __('yes', 'cc') ? __('yes', 'cc') : __('no', 'cc');
+                
     	$cc_page_options = cc_get_page_meta();
 
 		if($cc_page_options['cc_page_slider_on'] == 1){
@@ -43,7 +48,7 @@
         if(!empty($cc_page_options['cc_page_allow_direct_link']) && $cc_page_options['cc_page_allow_direct_link'] == __('yes', 'cc')){
             $is_allowed_direct_link = __('yes', 'cc');
         }
-        if(empty($cc_page_options['cc_hide_title']) || $cc_page_options['cc_hide_title'] == __('yes', 'cc')){
+        if(!empty($cc_page_options['cc_hide_title']) && $cc_page_options['cc_hide_title'] == __('yes', 'cc')){
             $is_title_hidden = __('yes', 'cc');
         }
         if(!empty($cc_page_options['cc_center_title']) && $cc_page_options['cc_center_title'] == __('yes', 'cc')){

@@ -63,7 +63,9 @@ get_header()
                             <?php do_action('bp_after_blog_post') ?>
 
                         <?php endwhile; ?>
-
+                    <?php if(function_exists('wp_pagenavi')):
+                        wp_pagenavi();
+                    else: ?>
                     <div class="pagination">
                         <?php
                         $big = 999999999; // need an unlikely integer
@@ -76,6 +78,7 @@ get_header()
                         ));
                         ?>
                     </div>
+                    <?php endif;?>
                 <?php else : ?>
 
                     <h2 class="center"><?php _e('Not Found', 'cc') ?></h2>

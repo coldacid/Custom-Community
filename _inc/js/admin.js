@@ -77,6 +77,29 @@
             }
         });
     
+        $('#cap_posts_lists_style_home').change(function(){
+           hide_images_position(this, '#cap_magazine_style_home');
+        });
+        $('#cap_posts_lists_style_taxonomy').change(function(){
+           hide_images_position(this, '#cap_magazine_style_taxonomy');
+        });
+        $('#cap_posts_lists_style_dates').change(function(){
+            hide_images_position(this, '#cap_magazine_style_dates');
+        });
+        $('#cap_posts_lists_style_author').change(function(){
+            hide_images_position(this, '#cap_magazine_style_author');
+        });
+        $('#cap_posts_lists_style_home, #cap_posts_lists_style_taxonomy, #cap_posts_lists_style_dates, #cap_posts_lists_style_author').trigger('change');
+        
+        function hide_images_position(object, selector){
+           var value = $(object).val();
+           if(value === 'blog'){
+                $(selector).hide().prev().hide().prev('.option-title').hide();
+           } else {
+                $(selector).show().prev().show().prev('.option-title').show();
+           }
+        };
     });
+    
     
 })(jQuery)
