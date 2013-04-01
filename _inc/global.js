@@ -648,7 +648,7 @@ jq(document).ready( function() {
 
     /* When the filter select box is changed re-query */
     jq('li.filter select').change( function() {
-        if ( jq('div.item-list-tabs li.selected').length )
+        if ( jq('div.item-list-tabs li.selected').not('#nav-forum-groups-li').length )
             var el = jq('div.item-list-tabs li.selected');
         else
             var el = jq(this);
@@ -664,7 +664,7 @@ jq(document).ready( function() {
 
         if ( 'friends' == object )
             object = 'members';
-
+        
         bp_filter_request( object, filter, scope, 'div.' + object, search_terms, 1, jq.cookie('bp-' + object + '-extras') );
 
         return false;

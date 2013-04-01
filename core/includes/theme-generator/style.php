@@ -26,7 +26,7 @@ function get_css(){
 body {
     background: none #<?php echo $body_bg_color;?>;
     color:#<?php echo $font_color;?>;
-    font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family:Arial,Tahoma,Verdana,sans-serif;
     font-size:12px;
     line-height:170%;
     margin:0 auto;
@@ -124,13 +124,13 @@ p:last-child {margin-bottom: 0}
 sub {
     line-height: 100%;
     font-size: 60%;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     vertical-align:bottom;
 }
 sup {
     line-height: 100%;
     font-size: 60%;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     vertical-align:top;
 }
 hr {
@@ -347,10 +347,13 @@ body.activity-permalink div#container {
 
 /* > Sidebar
 -------------------------------------------------------------- */
-
 #sidebar-me, #sidebar-login-form {
     margin: 0 0 20px 10px;
 }
+
+/*.right-sidebar-padder {padding: 30px 15px 30px 20px}*/
+
+/*.left-sidebar-padder {padding:30px 15px 30px 20px}*/
 
 div#sidebar {
     -moz-background-clip:border;
@@ -405,7 +408,7 @@ div#leftsidebar h3.widgettitle, div#sidebar h3.widgettitle, div.widgetarea h3.wi
     margin:0 8px 12px 0px;
     padding:5px 10px;
     width:182px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: arial, helvetica, sans-serif;
 }
 
 div#leftsidebar h3.widgettitle a, div#sidebar h3.widgettitle a, div.widgetarea h3.widgettitle a {
@@ -414,7 +417,7 @@ div#leftsidebar h3.widgettitle a, div#sidebar h3.widgettitle a, div.widgetarea h
     background-color: transparent;
     text-decoration: none;
     font-size:12px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: arial, helvetica, sans-serif;
 }
 div#leftsidebar h3.widgettitle a:hover, div#leftsidebar h3.widgettitle a:focus,
 div#sidebar h3.widgettitle a:hover, div#sidebar h3.widgettitle a:focus,
@@ -607,7 +610,8 @@ div#content div#item-header {
     margin-top:0;
     overflow:hidden;
 }
-.full-width div#item-header div#item-header-content{
+.full-width div#item-header div#item-header-content,
+.left-right-sidebar div#item-header div#item-header-content {
     width: 70%;
 }
 <?php if(bp_current_action() != 'forum'):
@@ -618,18 +622,20 @@ div#content div#item-header {
     }
 ?>
 div#item-header div#item-header-content {
-    width: auto; 
-    max-width: 70%;
+    width: 80%;
     float: left;
     margin-left: 20px;
 }
 <?php endif; ?>
+<?php if(($cap->bp_profile_sidebars != __('none', 'cc') && $cap->bp_profile_sidebars != __('left and right', 'cc')) 
+        || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position != __('full-width', 'cc') && $cap->sidebar_position != __('left and right', 'cc'))):?>
 #container #content.added-by-plugins{
     width: calc(100% - <?php echo ($rightsidebar_width)?>px);
     width: -webkit-calc(100% - <?php echo ($rightsidebar_width)?>px);
     width: -moz-calc(100% - <?php echo ($rightsidebar_width)?>px);
     width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
 }
+<?php endif;?>
 div#item-header h2 {
     font-size: 28px;
     margin: -5px 0 15px 0;
@@ -655,12 +661,7 @@ div#item-header span.activity, div#item-header h2 span.highlight {
     color:#<?php echo $font_color;?>;
 }
 
-div#item-header h2 span.highlight {
-	font-size: 16px;
-	color:#<?php echo $font_color;?>
-	padding-left: 10px;
-}
-
+div#item-header h2 span.highlight {font-size: 16px;color:#<?php echo $font_color;?>}
 div#item-header h2 span.highlight span {
     position: relative;
     top: -2px;
@@ -1298,8 +1299,8 @@ a.comment-edit-link, a.comment-reply-link, a.button, input[type="submit"], input
     border-top: none;
     border-left: none;
     color: #<?php echo $container_bg_color;?>;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
+    font-family: arial, sans-serif;
+    font-size: 12px;
     cursor: pointer;
     font-weight: normal;
     padding: 3px 5px;
@@ -1317,7 +1318,7 @@ ul.button-nav li a:hover, div.generic-button a:hover, ul.button-nav li a:focus, 
     border-width:medium 1px 1px medium;
     color:#<?php echo $container_bg_color;?>;
     cursor:pointer;
-    font-size:13px;
+    font-size:12px;
     font-weight:normal;
     padding:3px 5px;
     text-decoration:none;
@@ -1983,6 +1984,7 @@ body.activity-permalink .activity-content blockquote {
     padding:4px 8px;
     font-size:11px;
     text-decoration: none;
+    font-family: arial, sans-serif;
 }
 .activity-list div.activity-meta a:hover,
 .activity-list div.activity-meta a:focus {
@@ -3212,6 +3214,9 @@ div.cc_slider a, div.cc_slider a:hover, div.cc_slider a:focus {
 div.cc_slider li.ui-tabs-nav-item a:hover{
     background:#<?php echo $details_hover_bg_color;?>;
 }
+div.cc_slider ul.ui-tabs-nav li.ui-tabs-active{
+    background:url(<?php echo get_template_directory_uri() ?>/images/<?php cc_color_scheme();?>/selected-item.png) top left no-repeat transparent;
+}
 div.cc_slider ul.ui-tabs-nav li.ui-tabs-active a{
     background:#<?php echo $container_alt_bg_color;?>;
 }
@@ -3244,7 +3249,7 @@ div.cc_slider .featured .info h2 > a{
     color: #ffffff;
     color: #ffffff !important;
     overflow:hidden;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: arial, sans-serif;
 }
 div.cc_slider .featured .info h2 {
     padding:2px 2px 2px 5px;
@@ -3257,7 +3262,7 @@ div.cc_slider .featured .info p{
     font-size:13px;
     line-height:15px;
     color:#ffffff;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: arial, sans-serif;
 }
 div.cc_slider .featured .info a{
     color:#<?php echo $body_bg_color;?>;color:#<?php echo $body_bg_color;?> !important;
@@ -3342,7 +3347,7 @@ div.post img {
 .boxgrid p, .boxgrid p a {
     padding: 0 0 0 5px;
     color: #ffffff;
-    font: 11px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font: 11px Arial, sans-serif;
 }
 div.boxgrid h3 > a {color:#ffffff;font:12px Arial, sans-serif;letter-spacing:0;font-weight: bold;padding-left:0px}
 .boxgrid h3 {margin: 5px 5px 5px 0px}
@@ -4665,7 +4670,7 @@ background-image:url(<?php echo stripslashes($cap->header_img)?>);
     }
     #headimg h1,
     #desc {
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-family: "Helvetica Neue", Arial, Helvetica, "Nimbus Sans L", sans-serif;
     }
     #headimg h1 {
         margin: 0;
@@ -4992,8 +4997,6 @@ menu background colour drop down menu item hover  **/
 <?php if ( $cap->leftsidebar_width != "") {?>
     /** ***
     left sidebar width  **/
-   
-    <?php if($cap->cc_responsive_enable) { $cap->leftsidebar_width = 225; } ?>
 
     div#leftsidebar {
         width: <?php echo $cap->leftsidebar_width ?>px;
@@ -5046,7 +5049,10 @@ div#leftsidebar {
     /** ***
     right sidebar width  **/ 
     
-    <?php if($cap->cc_responsive_enable) { $cap->rightsidebar_width = 225; } ?>
+    <?php if($cap->cc_responsive_enable) {
+		$cap->rightsidebar_width = 225;
+		$cap->leftsidebar_width = 225;
+	} ?>
 
     div#sidebar { 
         width: <?php echo $cap->rightsidebar_width ?>px;
@@ -5057,7 +5063,7 @@ div#leftsidebar {
         right: <?php echo $cap->rightsidebar_width ?>px;
     }
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
-    $old = $cap->rightsidebar_width; $wdth = $old - 41; ?>
+    $old = $cap->rightsidebar_width;$wdth = $old - 41; ?>
 
     div#sidebar h3.widgettitle, #leftsidebar .widgettitle{
         width: <?php echo $wdth ?>px;
@@ -5300,7 +5306,7 @@ div.item-list-tabs {
 	}
 <?php } ?>
 [class^="rspace"], [class^="rspace"] img{
-    width: 100% !important;
+    width: 100% ;
 }
 body #content #groups-displaymode-select.span4, body #content #groups-order-select.span5{
     width: 27%;

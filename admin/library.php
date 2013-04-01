@@ -436,6 +436,7 @@ class FileOption extends Option
 				<label for="image1">
 				<input id="#upload_image<?php echo $this->id ?>" type="text" size="36" name="custom_community_theme_options[<?php echo $this->id; ?>]" value="<?php echo htmlspecialchars(stripslashes($stdText)) ?>" />
 				<input class="upload_image_button" type="button" value="<?php _e('Browse..','cc')?>" />
+				<input class="delete_image_button" type="button" value="<?php _e('Delete','cc')?>" />
 				<img class="cc_image_preview" id="image_<?php echo $this->id ?>" src="<?php echo htmlspecialchars($stdText);  ?>" />
 				
 				</label>
@@ -510,9 +511,14 @@ function cap_admin_js_libs() {
 	wp_enqueue_script( 'jquery-ui-widget' );
 	wp_enqueue_script( 'jquery-color' );
 	
-	wp_enqueue_script('media-upload');
-	wp_enqueue_script('thickbox');
-	wp_register_script('my-upload', get_template_directory_uri() . '/admin/js/uploader.js', array('jquery','media-upload','thickbox'));
+	if (function_exists('wp_enqueue_media')) {
+            wp_enqueue_media();
+    } else {
+
+        wp_enqueue_script('media-upload');
+        wp_enqueue_script('thickbox');
+    }
+	wp_register_script('my-upload', get_template_directory_uri() . '/admin/js/uploader.js', array('jquery'));
 	wp_enqueue_script('my-upload');
 	
 	wp_register_script( 'jquery-ui-accordion', get_template_directory_uri() . '/admin/js/jquery.ui.accordion.js', array( 'jquery' ), '1.8.9', true );

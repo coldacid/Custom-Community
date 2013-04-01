@@ -87,6 +87,10 @@ fieldset.import-export{
 .CodeMirror-lines{
     border: 1px solid #cecece;
 }
+#config-tabs .CodeMirror .CodeMirror-scroll{
+    overflow-y: scroll;
+    height: 200px;
+}
 .ui-accordion .ui-accordion-header a{
     padding-left: 2.2em;
 }
