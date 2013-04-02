@@ -176,7 +176,60 @@ span.cc_blockquote, span.cc_blockquote p, span.cc_blockquote a {
 ol {list-style: decimal outside none;}
 ul {list-style: circle outside none;}
 
+<?php if(bp_current_action() != 'forum'):
+    if($cap->cc_responsive_enable) {
+		$rightsidebar_width = 225;
+    } else {
+        $rightsidebar_width = $cap->rightsidebar_width;
+    }
+?>
+div#item-header div#item-header-content {
+    float: left;
+    margin-left: 20px;
+    width: 60%;
+}
+.left-right-sidebar div#item-header div#item-header-content { width: 53%; }
 
+<?php endif; ?>
+<?php
+    global $post;
+    $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
+    $tpl = empty($tpl) ? 'default' : $tpl;
+    if(($cap->bp_profile_sidebars != __('none', 'cc') && $cap->bp_profile_sidebars != __('left and right', 'cc')) ): ?>
+    <?php if(($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position != __('full-width', 'cc') && $cap->sidebar_position != __('left and right', 'cc'))): ?>
+        #container #content.added-by-plugins{
+            width: calc(100% - <?php echo ($rightsidebar_width)?>px);
+            width: -webkit-calc(100% - <?php echo ($rightsidebar_width)?>px);
+            width: -moz-calc(100% - <?php echo ($rightsidebar_width)?>px);
+            width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
+        }
+    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl != 'default' && $tpl != '_pro/tpl-left-and-right-sidebar.php' && $tpl != 'full-width.php')): ?>
+        #container #content.added-by-plugins{
+            width: calc(100% - <?php echo ($rightsidebar_width)?>px);
+            width: -webkit-calc(100% - <?php echo ($rightsidebar_width)?>px);
+            width: -moz-calc(100% - <?php echo ($rightsidebar_width)?>px);
+            width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
+        }
+    <?php endif;?>
+    <?php if($cap->bp_profile_sidebars == __('left', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):?>
+         #container .v_line_right, #container #sidebar {
+            display: none;
+         }
+    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-sidebar.php' || $tpl == 'full-width.php')): ?>
+        #container .v_line_right, #container #sidebar {
+            display: none;
+         }
+    <?php endif;?>
+    <?php if($cap->bp_profile_sidebars == __('right', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):?>
+         #container .v_line_left, #container #leftsidebar {
+            display: none;
+         }
+    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-right-sidebar.php' || $tpl == 'full-width.php')): ?>
+        #container .v_line_left, #container #leftsidebar {
+            display: none;
+         }
+    <?php endif;?>
+<?php endif;?>
 
 /* > Admin Bar
 -------------------------------------------------------------- */
@@ -610,32 +663,10 @@ div#content div#item-header {
     margin-top:0;
     overflow:hidden;
 }
-.full-width div#item-header div#item-header-content,
-.left-right-sidebar div#item-header div#item-header-content {
+.full-width div#item-header div#item-header-content {
     width: 70%;
 }
-<?php if(bp_current_action() != 'forum'):
-    if($cap->cc_responsive_enable) {
-		$rightsidebar_width = 225;
-    } else {
-        $rightsidebar_width = $cap->rightsidebar_width;
-    }
-?>
-div#item-header div#item-header-content {
-    width: 80%;
-    float: left;
-    margin-left: 20px;
-}
-<?php endif; ?>
-<?php if(($cap->bp_profile_sidebars != __('none', 'cc') && $cap->bp_profile_sidebars != __('left and right', 'cc')) 
-        || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position != __('full-width', 'cc') && $cap->sidebar_position != __('left and right', 'cc'))):?>
-#container #content.added-by-plugins{
-    width: calc(100% - <?php echo ($rightsidebar_width)?>px);
-    width: -webkit-calc(100% - <?php echo ($rightsidebar_width)?>px);
-    width: -moz-calc(100% - <?php echo ($rightsidebar_width)?>px);
-    width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
-}
-<?php endif;?>
+
 div#item-header h2 {
     font-size: 28px;
     margin: -5px 0 15px 0;
@@ -769,7 +800,7 @@ ul.item-list li {
     list-style: none outside none;
 }
 ul.single-line li {border: none}
-body.activity-permalink ul.item-list li {padding-top: 0;border-bottom:none}
+body.activity-permalink ul.item-list li {padding-top: 0;}
 
 ul.item-list li img.avatar {
     float: left;
@@ -1040,7 +1071,7 @@ div#subnav.item-list-tabs  {
     border-bottom: medium none;
     margin: 0 0 20px 0;
     min-height: 26px;
-    padding: 10px 20px 0 10px;
+    padding: 5px 20px 0 10px;
     overflow: hidden;
 
 }
@@ -1059,7 +1090,7 @@ div.item-list-tabs ul li.feed a {
 .item-list-tabs .next, 
 .item-list-tabs .prev{
     display:none;
-    padding:2px 6px 5px 6px;
+    padding:2px 6px 4px 6px;
     float:left;
     border:0;
     font:normal 18px Helvetica;
@@ -5433,11 +5464,32 @@ function get_content_width($site_width){
         return $site_width;
         
     } else if((!is_page() || is_page('search') || is_search()) && !is_archive() || is_bbpress()){
-        if($cap->sidebar_position == __('left','cc')){
-            $site_width -= $cap->leftsidebar_width;
-        } else if($cap->sidebar_position == __('right','cc')){
+        
+        $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
+        $tpl = empty($tpl) ? 'default' : $tpl;
+        $affected = FALSE;
+        
+        if($cap->bp_profile_sidebars == __('default', 'cc') && $tpl == 'full-width.php'){
+            return $site_width;
+        }
+        if ($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-and-right-sidebar.php' || $tpl == '_pro/tpl-left-sidebar.php')) {
+             $site_width -= $cap->leftsidebar_width;
+             $affected = TRUE;
+        } 
+        if ($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-and-right-sidebar.php' || $tpl == '_pro/tpl-right-sidebar.php')) {
             $site_width -= $cap->rightsidebar_width;
-        } else if($cap->sidebar_position == __('left and right','cc')){
+            $affected = TRUE;
+        } 
+        if($affected){
+            return $site_width;
+        }
+        if($cap->bp_profile_sidebars == __('none', 'cc')){
+            return $site_width;
+        } elseif($cap->bp_profile_sidebars == __('left', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left','cc'))){
+            $site_width -= $cap->leftsidebar_width;
+        } if($cap->bp_profile_sidebars == __('right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('right','cc'))){
+            $site_width -= $cap->rightsidebar_width;
+        } else if($cap->bp_profile_sidebars == __('left and right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left and right','cc'))){
             $site_width = $site_width - $cap->rightsidebar_width - $cap->leftsidebar_width;
         }
         return $site_width;

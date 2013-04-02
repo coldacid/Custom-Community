@@ -430,7 +430,7 @@ class CC_Theme_Generator{
 		<?php if($cap->disable_credits_footer != false || !defined('is_pro')){ ?>
 			<br />
 			<div class="credits"><?php printf( __( '%s is proudly powered by <a class="credits" href="http://wordpress.org" alt="Link to WordPress site">WordPress</a> and <a class="credits" href="http://buddypress.org" alt="Link to BuddyPress site">BuddyPress</a>. ', 'cc' ), bloginfo('name') ); ?>
-			<?php _e('Just another <a class="credits" href="http://themekraft.com/all-themes/" target="_blank" title="Wordpress Theme" alt="WordPress Theme">WordPress Theme</a> developed by Themekraft.','cc') ?></div>
+			<?php _e('Just another <a class="credits" href="http://themekraft.com/" target="_blank" title="Wordpress Themes" alt="WordPress Theme">WordPress Theme by Themekraft</a>.','cc') ?></div>
 		<?php } ?>
 		<?php if($cap->my_credits_footer != '' ){ ?>
 			<br />
