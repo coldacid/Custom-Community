@@ -176,13 +176,6 @@ span.cc_blockquote, span.cc_blockquote p, span.cc_blockquote a {
 ol {list-style: decimal outside none;}
 ul {list-style: circle outside none;}
 
-<?php if(bp_current_action() != 'forum'):
-    if($cap->cc_responsive_enable) {
-		$rightsidebar_width = 225;
-    } else {
-        $rightsidebar_width = $cap->rightsidebar_width;
-    }
-?>
 div#item-header div#item-header-content {
     float: left;
     margin-left: 20px;
@@ -190,12 +183,42 @@ div#item-header div#item-header-content {
 }
 .left-right-sidebar div#item-header div#item-header-content { width: 53%; }
 
-<?php endif; ?>
-<?php
+<?php if(function_exists('bp_current_action') && bp_current_action() != 'forum'):
     global $post;
     $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
     $tpl = empty($tpl) ? 'default' : $tpl;
-    if(($cap->bp_profile_sidebars != __('none', 'cc') && $cap->bp_profile_sidebars != __('left and right', 'cc')) ): ?>
+    
+    if($cap->cc_responsive_enable) {
+        $rightsidebar_width = 225;
+    } else {
+
+        $rightsidebar_width = $cap->rightsidebar_width;
+    }
+        
+    if($cap->bp_profile_sidebars == __('left', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):
+        $rightsidebar_width = $cap->leftsidebar_width;
+        ?>
+         #container .v_line_right, #container #sidebar {
+            display: none !important;
+         }
+    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-sidebar.php' || $tpl == 'full-width.php')): ?>
+        #container .v_line_right, #container #sidebar {
+            display: none !important;
+         }
+    <?php endif;?>
+    <?php if($cap->bp_profile_sidebars == __('right', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):?>
+         #container .v_line_left, #container #leftsidebar {
+            display: none !important;
+         }
+    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-right-sidebar.php' || $tpl == 'full-width.php')): ?>
+        #container .v_line_left, #container #leftsidebar {
+            display: none !important;
+         }
+    <?php endif;
+    
+    //this section don't need now, because we css hide sidebars which icluded by plugins pages 
+    
+    /*if(($cap->bp_profile_sidebars != __('none', 'cc') && $cap->bp_profile_sidebars != __('left and right', 'cc')) ): ?>
     <?php if(($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position != __('full-width', 'cc') && $cap->sidebar_position != __('left and right', 'cc'))): ?>
         #container #content.added-by-plugins{
             width: calc(100% - <?php echo ($rightsidebar_width)?>px);
@@ -211,25 +234,8 @@ div#item-header div#item-header-content {
             width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
         }
     <?php endif;?>
-    <?php if($cap->bp_profile_sidebars == __('left', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):?>
-         #container .v_line_right, #container #sidebar {
-            display: none;
-         }
-    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-sidebar.php' || $tpl == 'full-width.php')): ?>
-        #container .v_line_right, #container #sidebar {
-            display: none;
-         }
-    <?php endif;?>
-    <?php if($cap->bp_profile_sidebars == __('right', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):?>
-         #container .v_line_left, #container #leftsidebar {
-            display: none;
-         }
-    <?php elseif($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-right-sidebar.php' || $tpl == 'full-width.php')): ?>
-        #container .v_line_left, #container #leftsidebar {
-            display: none;
-         }
-    <?php endif;?>
-<?php endif;?>
+<?php endif;*/?>
+<?php endif; ?>
 
 /* > Admin Bar
 -------------------------------------------------------------- */
@@ -5463,7 +5469,7 @@ function get_content_width($site_width){
         }
         return $site_width;
         
-    } else if((!is_page() || is_page('search') || is_search()) && !is_archive() || is_bbpress()){
+    } else if((!is_page() || is_page('search') || is_search()) && !is_archive() || (function_exists('is_bbpress') && is_bbpress())){
         
         $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
         $tpl = empty($tpl) ? 'default' : $tpl;
