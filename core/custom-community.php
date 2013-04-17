@@ -83,6 +83,22 @@ class Custom_Community{
 		if ( !defined( 'CC_TEMPLATE_PATH' ) )
 			define( 'CC_TEMPLATE_PATH', 'CC_TEMPLATE_PATH' );
 			
+		if ( !defined( 'CC_MAIN_CSS_FILE_PATH' ) ){
+			$main_css_file = get_option('cc_main_css_file');
+			if ($main_css_file != FALSE){
+				define( 'CC_MAIN_CSS_FILE_PATH', $main_css_file['path'] );
+				define( 'CC_MAIN_CSS_FILE_URL', $main_css_file['url'] );
+			}
+			if (!defined( 'CC_CUSTOM_CSS_FILE_PATH' ) ){
+				$custom_css_file = get_option('cc_custom_css_file');
+				if ($custom_css_file != FALSE){
+					define( 'CC_CUSTOM_CSS_FILE_PATH', $custom_css_file['path'] );
+					define( 'CC_CUSTOM_CSS_FILE_URL', $custom_css_file['url'] );
+				}else{
+					define( 'CC_CUSTOM_CSS_FILE_PATH', '' );
+				}
+			}
+		}
 	}	
 	
 	/**

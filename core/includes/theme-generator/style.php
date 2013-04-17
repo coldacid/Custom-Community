@@ -5411,20 +5411,47 @@ div{
 	echo compress($dynamic_styles);
 }
 
+function cc_create_static_css_files(){
+	global $cap;
+	ob_start();
+	get_css();
+	if($cap->overwrite_css){
+		echo stripslashes($cap->overwrite_css);
+	}
+	$main_css = ob_get_contents();
+	ob_end_clean();
+	
+	$upload_dir = wp_upload_dir();
+	$main_css_file = array(
+		'path' => $upload_dir['path'] . '/cc_main.css',
+		'url' => $upload_dir['url'] . '/cc_main.css'
+	);	
+	file_put_contents($main_css_file['path'], compress($main_css));
+	update_option('cc_main_css_file', $main_css_file);
+}
+
+function cc_remove_static_css_files($names_arr){
+	foreach($names_arr as $name){
+		if (file_exists($name)){
+			unlink($name);
+		}
+	}
+}
+
 /**
 * This function ...
 */
 function cc_style_switcher(){
 	global $cap;
-
-	if( $cap->static_css == 'no' || !defined('is_pro') && defined('CC_MAIN_CSS_FILE_PATH') && defined('CC_CUSTOM_CSS_FILE_PATH')){
+	
+	if( $cap->static_css == 'no' /*|| !defined('is_pro')*/ && defined('CC_MAIN_CSS_FILE_PATH') && defined('CC_CUSTOM_CSS_FILE_PATH')){
 		$names_arr = array(
 			CC_MAIN_CSS_FILE_PATH,
 			CC_CUSTOM_CSS_FILE_PATH
 		);
 		cc_remove_static_css_files($names_arr);
 	}
-	elseif( $cap->static_css == 'yes' && defined('is_pro') && function_exists('cc_create_static_css_files')){
+	elseif( /*$cap->static_css == 'yes' && defined('is_pro') &&*/ function_exists('cc_create_static_css_files')){
 		cc_create_static_css_files();
 	}
 }
@@ -5434,13 +5461,13 @@ add_action('cc_after_theme_settings_saved', 'cc_style_switcher');
 * This function ...
 */
 function cc_print_styles(){
-	if( defined('is_pro') && defined('CC_MAIN_CSS_FILE_PATH') && file_exists(CC_MAIN_CSS_FILE_PATH)){
+	if( defined('CC_MAIN_CSS_FILE_PATH') && file_exists(CC_MAIN_CSS_FILE_PATH)){
 		echo '<link type="text/css" rel="stylesheet" href="'.CC_MAIN_CSS_FILE_URL.'" />';
 	    if(file_exists(CC_CUSTOM_CSS_FILE_PATH)){
 			echo '<link type="text/css" rel="stylesheet" href="'.CC_CUSTOM_CSS_FILE_URL.'" />';
 	    }
 	}
-	elseif( (defined('CC_MAIN_CSS_FILE_PATH') && !file_exists(CC_MAIN_CSS_FILE_PATH)) || !defined('is_pro') ){
+	else/*( (defined('CC_MAIN_CSS_FILE_PATH') && !file_exists(CC_MAIN_CSS_FILE_PATH)) || !defined('is_pro') )*/{
 		cc_dysplay_dynamic_css();
 	}
 }
