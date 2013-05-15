@@ -307,6 +307,16 @@ function third_col_right($atts,$content = null) {
 }
 add_shortcode('cc_third_col_right', 'third_col_right');
 
+/*
+ * This function checks is this page is "Posts page", and is theme setting "Posts listing style on home page" is "magazine"
+ */
+function is_page_for_posts(){
+    global $cap, $wp_query;
+    $page = $wp_query->get_queried_object();
+    return (get_option( 'page_for_posts' ) == $page->ID || get_option( 'page_for_posts' ) == 0 || is_home());
+}
+
+
 // list posts
 function cc_list_posts($atts,$content = null) {
     global $cap, $cc_page_options, $post, $cc_js;
@@ -374,29 +384,67 @@ function cc_list_posts($atts,$content = null) {
         $thePath = array();
         $pattern = "/(?<=src=['|\"])[^'|\"]*?(?=['|\"])/i";
         while (have_posts()) : the_post();
-            if($img_position == 'boxgrid'){
-                $thumb   = get_the_post_thumbnail( $post->ID, 'post-thumbnail', __('List post image', 'cc') );
-                preg_match($pattern, $thumb, $thePath);
-                if(!isset($thePath[0])){
-                    $thePath[0] = get_template_directory_uri().'/images/slideshow/noftrdimg-222x160.jpg';
+            if($cap->posts_lists_style_taxonomy == 'magazine' || (is_page_for_posts() && $cap->posts_lists_style_home == 'magazine')){
+                if($img_position == 'boxgrid'){
+                    $thumb   = get_the_post_thumbnail( $post->ID, 'post-thumbnail', __('List post image', 'cc') );
+                    preg_match($pattern, $thumb, $thePath);
+                    if(!isset($thePath[0])){
+                        $thePath[0] = get_template_directory_uri().'/images/slideshow/noftrdimg-222x160.jpg';
+                    }
+                    $tmp .= '<div class="boxgrid captionfull" style="background: transparent url('.$thePath[0].') repeat scroll 0 0; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; " title="'. get_the_title().'">';
+                    $tmp .= '<a href="'. get_permalink().'" title="'. get_the_title().'"><img src="'.$thePath[0].'" /></a>';
+                    $tmp .= '<div class="cover boxcaption">';
+                    $tmp .= '<h3><a href="'. get_permalink().'" title="'. get_the_title().'">'. get_the_title().'</a></h3>';
+                    $tmp .= '<p class="hidden-phone"><a href="'. get_permalink().'" title="'. get_the_title().'">'. get_the_excerpt().'...</a></p>';
+                    $tmp .= '</div>';
+                    $tmp .= '</div>'; 
+                } else {
+                    $tmp .= '<div class="listposts '.$img_position.'">';
+                    if($img_position != 'posts-img-under-content') $tmp .= '<a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_post_thumbnail($post->ID, 'post-thumbnail', array('alt' => get_the_title())).'</a>';
+                    $tmp .= '<h3><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h3>';
+                    if($height != 'auto'){ $height = str_replace('px','',$height).'px'; }
+                    $tmp .= '<p style="height:'.$height.';">'. get_the_excerpt().'</p>';
+                    if($img_position == 'posts-img-under-content') $tmp .= '<a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_post_thumbnail($post->ID, 'post-thumbnail', array('alt' => get_the_title())).'</a>';
+                    $tmp .= '</div>';
+                    if($img_position == 'posts-img-left-content-right' || $img_position == 'posts-img-right-content-left') $tmp .= '<div class="clear"></div>';    
                 }
-                $tmp .= '<div class="boxgrid captionfull" style="background: transparent url('.$thePath[0].') repeat scroll 0 0; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; " title="'. get_the_title().'">';
-                $tmp .= '<a href="'. get_permalink().'" title="'. get_the_title().'"><img src="'.$thePath[0].'" /></a>';
-                $tmp .= '<div class="cover boxcaption">';
-                $tmp .= '<h3><a href="'. get_permalink().'" title="'. get_the_title().'">'. get_the_title().'</a></h3>';
-                $tmp .= '<p class="hidden-phone"><a href="'. get_permalink().'" title="'. get_the_title().'">'. get_the_excerpt().'...</a></p>';
-                $tmp .= '</div>';
-                $tmp .= '</div>'; 
             } else {
-                $tmp .= '<div class="listposts '.$img_position.'">';
-                if($img_position != 'posts-img-under-content') $tmp .= '<a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_post_thumbnail($post->ID, 'post-thumbnail', array('alt' => get_the_title())).'</a>';
-                $tmp .= '<h3><a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_title().'</a></h3>';
-                if($height != 'auto'){ $height = str_replace('px','',$height).'px'; }
-                $tmp .= '<p style="height:'.$height.';">'. get_the_excerpt().'</p>';
-                if($img_position == 'posts-img-under-content') $tmp .= '<a href="'.get_permalink().'" title="'.get_the_title().'">'.get_the_post_thumbnail($post->ID, 'post-thumbnail', array('alt' => get_the_title())).'</a>';
-                $tmp .= '</div>';
-                if($img_position == 'posts-img-left-content-right' || $img_position == 'posts-img-right-content-left') $tmp .= '<div class="clear"></div>';    
+                ?>
+                <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+                    <?php if (($cap->posts_lists_hide_avatar == 'show' && !is_page_for_posts()) || (is_page_for_posts() && $cap->default_homepage_hide_avatar == 'show')) { ?>
+                        <div class="author-box visible-desktop">
+                            <?php echo get_avatar(get_the_author_meta('user_email'), '50'); ?>
+                            <?php if (defined('BP_VERSION')) { ?>
+                                <p><?php printf(__('by %s', 'cc'), bp_core_get_userlink($post->post_author)) ?></p>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+
+                    <div class="post-content span11">
+
+                        <span class="marker visible-desktop"></span>
+
+                        <h2 class="posttitle"><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php _e('Permanent Link to', 'cc') ?> <?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+                        <?php if (($cap->posts_lists_hide_date == 'show' && !is_page_for_posts()) || (is_page_for_posts() && $cap->default_homepage_hide_date == 'show')) { ?>
+                            <p class="date"><?php the_time('F j, Y') ?> <em><?php _e('in', 'cc') ?> <?php the_category(', ') ?><?php if (defined('BP_VERSION')) {printf(__(' by %s', 'cc'), bp_core_get_userlink($post->post_author));} ?></em></p>
+                        <?php } ?>
+                        <div class="entry">
+                            <?php do_action('blog_post_entry') ?>
+                        </div>
+
+                        <?php $tags = get_the_tags();
+                        if ($tags) { ?>
+                            <p class="postmetadata"><span class="tags"><?php the_tags(__('Tags: ', 'cc'), ', ', '<br />'); ?></span> <span class="comments"><?php comments_popup_link(__('No Comments &#187;', 'cc'), __('1 Comment &#187;', 'cc'), __('% Comments &#187;', 'cc')); ?></span></p>
+                        <?php } else { ?>
+                            <p class="postmetadata"><span class="comments"><?php comments_popup_link(__('No Comments &#187;', 'cc'), __('1 Comment &#187;', 'cc'), __('% Comments &#187;', 'cc')); ?></span></p>
+                        <?php } ?>
+                    </div>
+
+                </div>
+                <?php
             }
+        
+            
         endwhile;
     }
     

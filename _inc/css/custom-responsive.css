@@ -1,6 +1,12 @@
 /*
     Custom CSS for responsive theme
 */
+
+.row-fluid.left-right-sidebar div.post div.post-content,
+.row-fluid.left-right-template div.post div.post-content, 
+.row-fluid.left-right-template #blog-search div.post-content {
+    width: 90%;
+}
 .row-fluid .cc_slider.span12 {
 	width: 100%;
 	margin: 0;
@@ -10,6 +16,13 @@
 #footer .row-fluid .span4{
     margin-left: 10px;
     width: 32.2%;
+}
+.single.responsive div.post div.post-content,.responsive div.post div.post-content {
+    width: 90%;
+}
+#container #message-threads.messages-notices{
+    width: 97%;
+    clear: both;
 }
 /* Tablet Landscape */
 @media screen and (max-width: 1024px) {
@@ -124,9 +137,6 @@
     #access {
         position: static;
         margin-bottom: 0px;
-    }
-    div.menu ul{
-        float: none;
     }
     .widget {
         margin-left: 20px;
@@ -284,4 +294,3 @@
     }
 }
 img { max-width: 100%; }
-

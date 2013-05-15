@@ -23,37 +23,7 @@ function get_css(){
 /* > Global Elements
 -------------------------------------------------------------- */
 
-body {
-    background: none #<?php echo $body_bg_color;?>;
-    color:#<?php echo $font_color;?>;
-    font-family:Arial,Tahoma,Verdana,sans-serif;
-    font-size:12px;
-    line-height:170%;
-    margin:0 auto;
-    max-width:100%;
-    min-width:100%;
-    padding:0 !important;
-    width:100%;
-    <?php
-    switch ($cap->bg_body_img_pos){
-        case __('left','cc'):
-            echo 'background-position: left top;';
-            break;
-        case __('right','cc'):
-            echo 'background-position: right top;';
-            break;
-        case __('center','cc'):
-            echo 'background-position: center top;';
-            break;
-        default:
-            echo 'background-position: center top;';
-            break;
-    }
-    ?>
-    <?php if($cap->bg_body_img_fixed){?>
-    background-attachment: fixed;
-    <?php } ?>
-}
+
 body.activity-permalink {
     min-width: 100%;
     max-width: 100%;
@@ -62,21 +32,9 @@ body.activity-permalink {
     margin: 0 auto;
 }
 <?php 
-$site_width = '';
-$units = 'px';
-if($cap->cc_responsive_enable){
-    $site_width = '1200';
-} else if($cap->website_width){
-    $site_width = $cap->website_width;
-    $units = $cap->website_width_unit;
-} else {
-    $site_width = '1000';
-}
-//get_content_width($site_width);die;
+require_once get_template_directory() . "/_inc/css/editor-styles.php";
+require_once get_template_directory() . "/_inc/css/width-calculators.php";
 ?>
-#container .row-fluid .span8, .row-fluid .span8 {
-	width: <?php echo get_content_width($site_width) . $units;?>;
-} 
 #innerrim {
     width: <?php echo $site_width . $units;?>;
     float: none;
@@ -183,7 +141,7 @@ div#item-header div#item-header-content {
 }
 .left-right-sidebar div#item-header div#item-header-content { width: 53%; }
 
-<?php if(function_exists('bp_current_action') && bp_current_action() != 'forum'):
+<?php if(function_exists('bp_current_action') && bp_current_action() && bp_current_action() != 'forum'):
     global $post;
     $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
     $tpl = empty($tpl) ? 'default' : $tpl;
@@ -284,6 +242,7 @@ div.row-fluid [class*="span"] {
 	min-height: 10px;
 }
 #header #search-bar {
+        clear: both;
 	margin-top: 25px;
 	float: right;
 	width: 390px;
@@ -510,7 +469,9 @@ div#sidebar .widget_search input[type=text], div.widgetarea .widget_search input
 div#sidebar ul#recentcomments li, div#sidebar .widget_recent_entries ul li, div.widgetarea  ul#recentcomments li, div.widgetarea .widget_recent_entries ul li{
     margin-bottom: 5px;
 }
-
+.children {
+    list-style: none;
+}
 div#sidebar ul.item-list img.avatar, div.widgetarea  ul.item-list img.avatar{
     width: 25px;
     height: 25px;
@@ -612,6 +573,9 @@ div#leftsidebar div.item-options a.selected, div.widgetarea {
 }
 div.widget div.textwidget{
     padding: 0 10px 0 0;
+}
+.widget .textwidget div{
+    max-width: 100%;
 }
 #header .widgetarea:first-child, 
 #footer .widgetarea:first-child{
@@ -851,7 +815,9 @@ ul.item-list li div.action {
 .item-meta{
     float:left;
     width:87%;
-    margin-left:10px;
+}
+#members-list .item-title{
+    margin-left: 0;
 }
 
 #groups-list .item-meta{
@@ -871,9 +837,6 @@ ul.item-list li h5 span.small {
     font-size: 11px;
 }
 
-#groups-list div.item {
-	margin-left: 60px;
-}
 .widget_bp_groups_widget #groups-list div.item {
 	margin-left: 0;
 }
@@ -2391,7 +2354,7 @@ div.post h2.pagetitle, div.post h2.posttitle {
     padding: 5px 0;
     margin: 5px 0 25px 0;
 }
-div.post p {margin: 0 0 20px 0}
+
 div.post ul, div.post ol, div.post dl {margin: 0 0 15px 20px}
 div.post ul, div.page ul {list-style: circle outside none;margin: 0 0 15px 20px}
 div.post ol, div.page ol {list-style: decimal outside none;margin: 0 0 15px 20px}
@@ -2813,7 +2776,6 @@ ul#groups-list li{
 }
 div.widget ul#members-list li {
     min-height:64px;
-    width:189px;
     margin-bottom:0 !important;
 }
 div.widget ul li.vcard a {
@@ -2996,6 +2958,19 @@ div.menu-top ul.sub-menu li:hover > a {
 div.menu-top ul li:hover > ul {
     display: block;
 }
+#nav-community .children{
+    display:none;
+}
+#nav-community:hover .children{
+    display: block;
+    width: 180px;
+    position: absolute;
+    z-index: 1000 !important;
+    background:  #<?php echo $body_bg_color;?>;
+}
+#nav-home.current-menu-item{
+    background:  #<?php echo $body_bg_color;?>;
+}
 div.menu-top ul li.current_page_item > a,
 div.menu-top ul li.current-menu-ancestor > a,
 div.menu-top ul li.current-menu-item > a,
@@ -3037,7 +3012,6 @@ div.menu-top ul li.current-menu-item > a:hover {
 div.menu {
     font-size: 13px;
     margin-left: 12px;
-    width: 100%;
 }
 
 #access .menu-header ul,
@@ -3089,7 +3063,7 @@ div.menu .span2{
     width:180px;
     z-index:1000000;
 }
-#access ul li ul li {
+#access ul li ul li, li ul.children li {
     min-width: 180px;
     z-index:1000000;
     margin-top:0px !important;
@@ -3270,7 +3244,7 @@ div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
 }
 div.cc_slider .featured .ui-tabs-panel .info{
     position:absolute;
-    top:170px;
+    top:180px;
     left:0;
     height:80px;
     background: url(<?php echo get_template_directory_uri() ?>/images/slideshow/transparent-bg.png);
@@ -3803,9 +3777,7 @@ body.search div#message p {
 }
 
 body.search ul.item-list li div.item-title {
-    font-size: 20px;
     margin-bottom:5px;
-    font-weight: bold;
 }
 
 h2.content-title {
@@ -4077,440 +4049,13 @@ a.comment-edit-link, a.comment-reply-link, a.button, input[type="submit"], input
 }
 <?php };?>
 
-<?php if($cap->font_style){?>
-/** ***
-font family  **/
 
-a, div.post p.date a, div.post p.postmetadata a, div.comment-meta a, div.comment-options a, span.highlight, #item-nav a, div.widget ul li a:hover,
-body {
-    font-family: <?php echo $cap->font_style?>;
-}
-<?php };?>
 
-<?php if($cap->font_size){?>
-/** ***
-standard font size  **/
 
-body, p, em, a,
-div.post,
-div.post p.date,
-div.post p.postmetadata,
-div.comment-meta,
-div.comment-options,
-div.post p.date a,
-div.post p.postmetadata a,
-div.comment-meta a,
-div.comment-options a,
-span.highlight,
-#item-nav a,
-div#leftsidebar h3.widgettitle,
-div#sidebar h3.widgettitle,
-div.widgetarea h3.widgettitle,
-div.widget ul li a:hover,
-#subnav a:hover,
-div.widget ul#blog-post-list li a,
-div.widget ul#blog-post-list li,
-div.widget ul#blog-post-list li p,
-div.widget ul#blog-post-list li div,
-div.widget ul li.recentcomments a,
-div#sidebar div#sidebar-me h4,
-div.widgetarea div#sidebar-me h4,
-div#item-header div#item-meta,
-ul.item-list li div.item-title span,
-ul.item-list li div.item-desc,
-ul.item-list li div.meta,
-div.item-list-tabs ul li span,
-span.activity,
-div#message p,
-div.widget span.activity,
-div.pagination,
-div#message.updated p,
-#subnav a,
-div.widget-title ul.item-list li a,
-div#item-header span.activity,
-div#item-header span.highlight,
-form.standard-form input:focus,
-form.standard-form textarea:focus,
-form.standard-form select:focus,
-table tr td.label,
-table tr td.thread-info p.thread-excerpt,
-table.forum td p.topic-text,
-table.forum td.td-freshness,
-form#whats-new-form,
-form#whats-new-form h5,
-form#whats-new-form #whats-new-textarea,
-.activity-list li .activity-inreplyto,
-.activity-list .activity-content .activity-header,
-.activity-list .activity-content .comment-header,
-.activity-list .activity-content span.time-since,
-.activity-list .activity-content span.activity-header-meta a,
-.activity-list .activity-content .activity-inner,
-.activity-list .activity-content blockquote,
-.activity-list .activity-content .comment-header,
-.activity-header a:hover,
-div.activity-comments div.acomment-meta,
-div.activity-comments form .ac-textarea,
-div.activity-comments form textarea,
-div.activity-comments form div.ac-reply-content,
-li span.unread-count,
-tr.unread span.unread-count,
-div.item-list-tabs ul li a span.unread-count,
-ul#topic-post-list li div.poster-meta,
-div.admin-links,
-div.poster-name a,
-div.object-name a,
-div.post p.date a:hover,
-div.post p.postmetadata a:hover,
-div.comment-meta a:hover,
-div.comment-options a:hover,
-#footer,
-#footer a,
-div.widget ul li a,
-.widget li.cat-item a,
-#item-nav a:hover {
-    font-size: <?php echo $cap->font_size?>px;
-}
-<?php };?>
 
 
-<?php if($cap->font_color != ""):?>
-    /** ***
-    font colour  **/
 
-    body, p, em, div.post, div.post p.date, div.post p.postmetadata, div.comment-meta, div.comment-options,
-    div#item-header div#item-meta, ul.item-list li div.item-title span, ul.item-list li div.item-desc,
-    ul.item-list li div.meta, div.item-list-tabs ul li span, span.activity, div#message p, div.widget span.activity,
-    div.pagination, div#message.updated p, #subnav a,
-    h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus,
-    div#item-header span.activity, div#item-header h2 span.highlight, div.widget-title ul.item-list li.selected a,
-    form.standard-form input:focus, form.standard-form select:focus, table tr td.label,
-    table tr td.thread-info p.thread-excerpt, table.forum td p.topic-text, table.forum td.td-freshness, form#whats-new-form,
-    form#whats-new-form h5, form#whats-new-form #whats-new-textarea, .activity-list li .activity-inreplyto,
-    .activity-list .activity-content .activity-header, .activity-list .activity-content .comment-header,
-    .activity-list .activity-content span.time-since,
-    .activity-list .activity-content .activity-inner, .activity-list .activity-content blockquote,
-    .activity-list .activity-content .comment-header, div.activity-comments div.acomment-meta,
-    div.activity-comments form div.ac-reply-content, li span.unread-count, tr.unread span.unread-count, div.item-list-tabs ul li a span.unread-count, ul#topic-post-list li div.poster-meta,
-    div.admin-links, #comments h3, #trackbacks h3, #respond h3, #footer, div#item-header span.activity, div#item-header h2 span.highlight, #item-nav a:hover {
-        color:#<?php echo $cap->font_color?>;
-    }
-    div#item-header h2 span.highlight, div.item-list-tabs ul li.selected a, div.item-list-tabs ul li.current a {
-        color:#<?php echo $cap->font_color?> !important;
-    }
 
-/** ***
-buttons and widgets that want some adapting to the font colour  **/
-
-a.comment-edit-link, a.comment-reply-link, a.button, input[type="submit"], input[type="button"], ul.button-nav li a, div.generic-button a,
-.activity-list div.activity-meta a  {
-    background:#<?php echo $cap->font_color?>;
-}
-
-div#leftsidebar h3.widgettitle, div#sidebar h3.widgettitle, div.widgetarea h3.widgettitle {
-    color:#<?php echo $cap->font_color?>;
-}
-<?php endif;?>
-
-<?php if($cap->title_font_style != "" || $cap->title_size != "" || $cap->title_color != "" || $cap->title_weight != ""):?>
-/** ***
-title font style, size, weight and colour  **/
-
-h1, h2, h1 a, h2 a, h1 a:hover, h1 a:focus, h2 a:hover, h2 a:focus {
-<?php if($cap->title_font_style){?>
-    font-family: <?php echo $cap->title_font_style?>;
-<?php };?>
-<?php if($cap->title_size){?>
-    font-size: <?php echo $cap->title_size?>px;
-<?php };?>
-<?php if($cap->title_weight == __('bold','cc')){?>
-    font-weight:bold;
-<?php } elseif( $cap->title_weight == __('normal','cc')){?>
-    font-weight:normal;
-<?php } ;?>
-}
-
-h1, h2, h1 a, h2 a {
-<?php if($cap->title_color){?>
-    color:#<?php echo $cap->title_color?>;
-<?php };?>
-}
-
-<?php endif;?>
-
-<?php if($cap->subtitle_font_style != "" || $cap->subtitle_color != "" || $cap->subtitle_weight != ""):?>
-/** ***
-subtitle font style, weight and colour  **/
-
-h3, h4, h5, h6, h3 a, h4 a, h5 a, h6 a {
-<?php if($cap->subtitle_font_style){?>
-    font-family: <?php echo $cap->subtitle_font_style?>;
-<?php };?>
-<?php if($cap->subtitle_color){?>
-    color:#<?php echo $cap->subtitle_color?>;
-<?php };?>
-<?php if($cap->subtitle_weight == __('bold','cc') || $cap->subtitle_weight == 'bold'){?>
-    font-weight:bold;
-<?php } else {?>
-    font-weight:normal;
-<?php };?>
-}
-<?php endif;?>
-
-<?php if($cap->link_color){?>
-    /** ***
-    link colour  **/
-
-    a,
-    span.highlight, #item-nav a,
-    div.widget ul#blog-post-list li a,
-    div.widget ul li.recentcomments a,
-    .widget li.current-cat a,
-    div.widget ul li.current_page_item a,
-    #footer .widget li.current-cat a,#header .widget li.current-cat a ,
-    #footer div.widget ul li.current_page_item a,
-    #header div.widget ul li.current_page_item a,
-    #subnav a:hover  {
-        color:#<?php echo $cap->link_color?>;
-    }
-
-    /** ***
-    buttons and widgets that want some adapting to the link colour  **/
-
-    a.comment-edit-link:hover,
-    a.comment-edit-link:focus,
-    a.comment-reply-link:hover,
-    a.comment-reply-link:focus,
-    a.button:focus,
-    a.button:hover,
-    input[type="submit"]:hover,
-    input[type="button"]:hover,
-    ul.button-nav li a:hover,
-    div.generic-button a:hover,
-    ul.button-nav li a:focus,
-    div.generic-button a:focus,
-    .activity-list div.activity-meta a.acomment-reply,
-    div.activity-meta a.fav:hover,
-    a.unfav:hover,
-    div#item-header h2 span.highlight span {
-        background-color:#<?php echo $cap->link_color?>;
-        background-color:#<?php echo $cap->link_color?> !important;
-    }
-<?php } ?>
-
-<?php if($cap->link_color_hover != ""):?>
-    /** ***
-    link colour hover  **/
-
-    a:hover,
-    a:focus,
-    div#sidebar div.item-options a.selected:hover,
-    div#leftsidebar div.item-options a.selected:hover,
-    form.standard-form input:focus,
-    form.standard-form select:focus,
-    .activity-header a:hover,
-    div.post p.date a:hover,
-    div.post p.postmetadata a:hover,
-    div.comment-meta a:hover,
-    div.comment-options a:hover,
-    div.widget ul li a:hover,
-    div.widget ul li.recentcomments a:hover,
-    div.widget-title ul.item-list li a:hover {
-        color:#<?php echo $cap->link_color_hover ?>;
-    }
-
-    <?php if ( $cap->link_color_subnav_adapt == __("link colour and hover colour",'cc') ) {?>
-        #subnav a:hover, #subnav a:focus, div.item-list-tabs ul li a:hover, div.item-list-tabs ul li a:focus {
-            color:#<?php echo $cap->link_color_hover ?>;
-        }
-    <?php } ?>
-
-<?php endif;?>
-
-<?php if($cap->link_underline != __("never",'cc') && $cap->link_underline != "never" && $cap->link_underline != "" ): ?>
-
-    <?php if($cap->link_underline == __("just for mouse over",'cc') || $cap->link_underline == "just for mouse over"){
-        $stylethis = 'a:hover, a:focus';
-    } else {
-        if($cap->link_underline == __("always",'cc') || $cap->link_underline == "always") {
-          $stylethis = 'a, a:hover, a:focus';
-        } else {
-          $stylethis = 'a:hover, a:focus {text-decoration: none} a';
-        }
-    } ?>
-
-    /** ***
-    link underline  **/
-
-    <?php echo $stylethis ?> {
-        text-decoration: underline;
-    }
-
-<?php endif;?>
-
-<?php if($cap->link_bg_color != ""):?>
-    /** ***
-    link BACKGROUND colour  **/
-
-    a {
-        background-color: <?php if ( $cap->link_bg_color != __('transparent','cc') && $cap->link_bg_color != 'transparent' ) {echo '#', $cap->link_bg_color; } else { echo 'transparent'; }?>;
-    }
-<?php endif;?>
-
-<?php if($cap->link_bg_color_hover != ""):?>
-    /** ***
-    link BACKGROUND colour hover  **/
-
-    a:hover, a:focus {
-        background-color: <?php if ( $cap->link_bg_color_hover != __('transparent','cc') && $cap->link_bg_color_hover != 'transparent' ) {echo '#', $cap->link_bg_color_hover; } else { echo 'transparent'; }?>;
-    }
-<?php endif;?>
-
-<?php if($cap->link_styling_title_adapt != "just the hover effect" && $cap->link_styling_title_adapt != __("just the hover effect",'cc')):?>
-/** ***
-    link styling titles adapt**/
-
-    <?php if ($cap->link_hover_color != '') {
-    // use the link hover colour anyway - if one is selected ?>
-                h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
-                    color: #<?php echo $cap->link_hover_color;?>;
-                }
-    <?php } ?>
-
-
-    <?php switch ($cap->link_styling_title_adapt) {
-        case __('link colour and hover colour','cc'):
-        case 'link colour and hover colour': ?>
-
-            h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-                color: #<?php echo $cap->link_color;?>;
-            }
-
-        <?php break;
-        case 'no, only the link colour!':
-        case __('no, only the link colour!','cc'): ?>
-
-            <?php if ($cap->link_bg_color_hover || $cap->link_bg_color_hover) {?>
-                h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
-                    color: #<?php if (!$cap->font_color) {echo $font_color;} else {echo $cap->font_color; } ?>;
-                }
-            <?php } ?>
-
-        <?php break;
-        case 'link colour and hover colour':
-        case __('link colour and hover colour','cc'):?>
-
-            <?php if($cap->link_underline != "never" && $cap->link_underline != __("never",'cc')): ?>
-
-                <?php if($cap->link_underline == "just for mouse over" || $cap->link_underline == __("just for mouse over",'cc')){
-                    $stylethis = 'h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                    h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus';
-                } else {
-                    if($cap->link_underline == "always" || $cap->link_underline == __("always",'cc')) {
-                        $stylethis =    'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                                        h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus';
-                    } else {
-                        $stylethis =    'h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                                        h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
-                                        text-decoration: none;
-                                        }
-                                        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a';
-                    }
-                } ?>
-
-                /** ***
-                title links underline  **/
-
-                <?php echo $stylethis ?> {
-                    text-decoration: underline;
-                }
-
-            <?php endif;?>
-
-        <?php break;
-        case 'adapt all link styles':
-        case __('adapt all link styles','cc'):?>
-
-            <?php if($cap->link_underline != "never" && $cap->link_underline != __("never",'cc')): ?>
-
-                <?php if($cap->link_underline == "just for mouse over" || $cap->link_underline == __("just for mouse over",'cc')){
-                    $stylethis = 'h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus';
-                } else {
-                    if($cap->link_underline == "always" && $cap->link_underline == __("always",'cc')) {
-                        $stylethis =    'h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                                        h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus';
-                    } else {
-                        $stylethis =    'h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                                        h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
-                                        text-decoration: none;
-                                        }
-                                        h1 a, h2 a, h3 a, h4 a, h5 a, h6 a';
-                    }
-                } ?>
-
-                /** ***
-                title links underline  **/
-
-                <?php echo $stylethis ?> {
-                    text-decoration: underline;
-                }
-
-            <?php endif;?>
-
-            <?php if($cap->link_bg_color != ""):?>
-                /** ***
-                title links BACKGROUND colour  **/
-
-                h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-                    background-color: <?php if ( $cap->link_bg_color != 'transparent' && $cap->link_bg_color != __('transparent','cc') ) {echo '#', $cap->link_bg_color; } else { echo 'transparent';}?>;
-                }
-            <?php endif;?>
-
-            <?php if($cap->link_bg_color_hover != ""):?>
-                /** ***
-                title links BACKGROUND colour hover  **/
-
-                h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
-                    background-color: <?php if ( $cap->link_bg_color_hover != 'transparent' && $cap->link_bg_color_hover != __('transparent','cc') ) {echo '#', $cap->link_bg_color_hover; } else { echo 'transparent';}?>;
-                }
-            <?php endif;?>
-
-
-        <?php break;
-        case 'the background colours too':
-        case __('the background colours too','cc'): ?>
-
-            <?php if($cap->link_bg_color != ""):?>
-                /** ***
-                title links BACKGROUND colour  **/
-
-                h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-                    background-color: <?php if ( $cap->link_bg_color != 'transparent' && $cap->link_bg_color != __('transparent','cc')) {echo '#', $cap->link_bg_color; } else { echo 'transparent';}?>;
-                }
-            <?php endif;?>
-
-            <?php if($cap->link_bg_color_hover != ""):?>
-                /** ***
-                title links BACKGROUND colour hover  **/
-
-                h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover,
-                h1 a:focus, h2 a:focus, h3 a:focus, h4 a:focus, h5 a:focus, h6 a:focus {
-                    background-color: <?php if ( $cap->link_bg_color_hover != 'transparent' && $cap->link_bg_color_hover != __('transparent','cc') ) {echo '#', $cap->link_bg_color_hover; } else { echo 'transparent';} ?>;
-                }
-            <?php endif;?>
-
-        <?php break;
-        ?>
-
-      <?php } ?>
-
-
-
-
-<?php endif;?>
 
 <?php if($cap->default_homepage_hide_avatar == "hide" || $cap->default_homepage_hide_avatar == __("hide",'cc') || $cap->avatars_only_in_comments == __('yes', 'cc')){?>
 /** ***standard wordpress home page: hide avatar**/
@@ -4525,6 +4070,7 @@ body.home div.post div.author-box,
 body.home.bubble div.post div.author-box {
     display: none !important;
 }
+
 <?php } ?>
 
 <?php if($cap->posts_lists_hide_avatar == "hide" || $cap->posts_lists_hide_avatar == __("hide",'cc') || $cap->avatars_only_in_comments == __('yes', 'cc')){?>
@@ -4542,7 +4088,11 @@ body.archive.bubble div.post div.author-box {
     display: none !important;
 }
 <?php } ?>
-
+<?php if($cap->avatars_only_in_comments == __('yes', 'cc')):?>
+    .single .author-box{
+        display: none !important;
+    }
+<?php endif;?>
 <?php if($cap->default_homepage_style == "bubbles" || $cap->default_homepage_style == __("bubbles",'cc') || $cap->posts_lists_style == "bubbles" || $cap->posts_lists_style == __("bubbles",'cc') ){?>
 /** ***
 standard wordpress home page: bubble style**/
@@ -4583,6 +4133,7 @@ body.bubble div.post div.post-content, #blog-search div.post-content{
     padding: 15px 10px 5px 15px;
     margin-bottom:10px;
     float: left;
+    position: relative;
 }
 body.bubble div.post p.date, 
 #blog-search div.page p.date, 
@@ -5041,7 +4592,7 @@ menu background colour drop down menu item hover  **/
     }
 
     div.v_line_left {
-        margin-left: <?php echo $cap->leftsidebar_width ?>px;
+        left: <?php echo $cap->leftsidebar_width ?>px;
     }
 
     <?php // change the width of the widget titles, which is always 41px less because of its padding..
@@ -5335,13 +4886,6 @@ div.item-list-tabs {
 }
 
 */
-<?php if ( $cap->cc_responsive_enable ) { ?>
-	.row-fluid.left-right-sidebar div.post div.post-content,
-	.row-fluid.left-right-template div.post div.post-content, 
-	.row-fluid.left-right-template #blog-search div.post-content {
-	    width: 90%;
-	}
-<?php } ?>
 [class^="rspace"], [class^="rspace"] img{
     width: 100% ;
 }
@@ -5381,6 +4925,10 @@ div#item-actions {
     left: 75%;
     top: 10px;
 }
+#content.span8 #single_product_page_container{
+    width : 100%;
+}
+
 /** ***   
 overwrite css area adding  **/
 <?php
@@ -5446,146 +4994,4 @@ function cc_print_styles(){
 }
 add_action('wp_head', 'cc_print_styles', 100);
 
-/**
- * Get content width
- */
-function get_content_width($site_width){
-    global $cap, $post, $bp;
-   
-	if($cap->cc_responsive_enable) {
-		$cap->rightsidebar_width = 225;
-		$cap->leftsidebar_width = 225;
-	}
-
-    if(defined('BP_VERSION') && bp_is_user() && $cap->bp_profile_sidebars == __('none', 'cc') ){
-        return $site_width;
-    } else if(defined('BP_VERSION') && bp_is_user() && $cap->bp_profile_sidebars != __('default', 'cc')){
-        
-        if($cap->bp_profile_sidebars == __('left', 'cc') || $cap->bp_profile_sidebars == __('left and right', 'cc')){
-            $site_width -= $cap->leftsidebar_width;
-        }
-        if($cap->bp_profile_sidebars == __('right', 'cc') || $cap->bp_profile_sidebars == __('left and right', 'cc')){
-            $site_width -= $cap->rightsidebar_width;
-        }
-        return $site_width;
-        
-    } else if((!is_page() || is_page('search') || is_search()) && !is_archive() || (function_exists('is_bbpress') && is_bbpress())){
-        
-        $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
-        $tpl = empty($tpl) ? 'default' : $tpl;
-        $affected = FALSE;
-        
-        if($cap->bp_profile_sidebars == __('default', 'cc') && $tpl == 'full-width.php'){
-            return $site_width;
-        }
-        if ($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-and-right-sidebar.php' || $tpl == '_pro/tpl-left-sidebar.php')) {
-             $site_width -= $cap->leftsidebar_width;
-             $affected = TRUE;
-        } 
-        if ($cap->bp_profile_sidebars == __('default', 'cc') && ($tpl == '_pro/tpl-left-and-right-sidebar.php' || $tpl == '_pro/tpl-right-sidebar.php')) {
-            $site_width -= $cap->rightsidebar_width;
-            $affected = TRUE;
-        } 
-        if($affected){
-            return $site_width;
-        }
-        if($cap->bp_profile_sidebars == __('none', 'cc')){
-            return $site_width;
-        } elseif($cap->bp_profile_sidebars == __('left', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left','cc'))){
-            $site_width -= $cap->leftsidebar_width;
-        } if($cap->bp_profile_sidebars == __('right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('right','cc'))){
-            $site_width -= $cap->rightsidebar_width;
-        } else if($cap->bp_profile_sidebars == __('left and right', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left and right','cc'))){
-            $site_width = $site_width - $cap->rightsidebar_width - $cap->leftsidebar_width;
-        }
-        return $site_width;
-    } elseif (is_archive()) {
-        
-        if(is_archive() && ($cap->archive_template == 'left' || $cap->archive_template == 'left and right' || $cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc'))){
-            $site_width -= $cap->leftsidebar_width;
-         } else if($cap->archive_template == "right" || $cap->archive_template == "left and right" || $cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc')){
-              $site_width -= $cap->rightsidebar_width;
-         }
-           
-    } else {
-        
-        if(isset($post)){
-            
-            $detect = new TK_WP_Detect();
-            $component = explode('-', $detect->tk_get_page_type());
-            if(!empty($component[2])){
-                if($component[2] == 'groups' && !empty($component[3]) && (property_exists($bp, 'unfiltered_uri') && !empty($bp->unfiltered_uri[0]) && $bp->unfiltered_uri[0] != 'members')) {
-                	if( ($cap->bp_groups_sidebars == 'default' && $cap->sidebar_position ==__('left and right','cc')) || $cap->bp_groups_sidebars == 'left' || $cap->bp_groups_sidebars == __('left','cc')  
-                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc') ){ 
-                        $site_width -= $cap->leftsidebar_width;
-                    } 
-                    if($cap->bp_groups_sidebars == 'default' || $cap->bp_groups_sidebars == 'right' || $cap->bp_groups_sidebars == __('right','cc')  
-                        || $cap->bp_groups_sidebars == 'left and right'  || $cap->bp_groups_sidebars == __('left and right','cc')){
-                        $site_width -= $cap->rightsidebar_width;
-                    };
-                    return $site_width;
-                } elseif((property_exists($bp, 'unfiltered_uri') && !empty($bp->unfiltered_uri[0]) && $bp->unfiltered_uri[0] == 'members') || bp_is_activity_component() || bp_is_profile_component() || bp_is_messages_component() || bp_is_friends_component() || bp_is_settings_component()) {
-
-                    if( ($cap->bp_profile_sidebars == 'default' || $cap->sidebar_position == __('default','cc')) 
-                    	&& ($cap->bp_profile_sidebars == 'left and right' || $cap->sidebar_position == __('left and right','cc') || $cap->sidebar_position == __('left','cc') || $cap->sidebar_position == 'left') 
-                    	|| $cap->bp_profile_sidebars == 'left' || $cap->bp_profile_sidebars == __('left','cc') 
-                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){
-                        	$site_width -= $cap->leftsidebar_width;
-                    } 
-                    if( ($cap->bp_profile_sidebars == "default" || $cap->bp_profile_sidebars == __("default",'cc') ) 
-                        && ($cap->sidebar_position == "right" || $cap->sidebar_position == __("right",'cc') || $cap->sidebar_position == "left and right" || $cap->sidebar_position == __("left and right",'cc')) 
-                        || $cap->bp_profile_sidebars == 'right' || $cap->bp_profile_sidebars == __('right','cc') 
-                        || $cap->bp_profile_sidebars == 'left and right' || $cap->bp_profile_sidebars == __('left and right','cc')  ){ 
-							$site_width -= $cap->rightsidebar_width;
-                    }
-                    return $site_width;
-                }  elseif($component[2] == 'members') {
-                		
-                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
-                		$site_width -= $cap->leftsidebar_width;
-                	}
-					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
-						$site_width -= $cap->rightsidebar_width;
-					}
-                    return $site_width;
-                } else if($component[2] != 'forums'){
-                    
-                	if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('left','cc') ) {
-                		$site_width -= $cap->leftsidebar_width;
-                	}
-					if( $cap->sidebar_position ==__('left and right','cc') || $cap->sidebar_position ==__('right','cc') ) {
-						$site_width -= $cap->rightsidebar_width;
-					}
-                    return $site_width;
-                }
-            }
-            
-            $width_change = FALSE;
-            $tmp = get_post_meta( $post->ID, '_wp_page_template', true );
-            if($tmp == 'full-width.php'){
-                return $site_width;
-            }
-			
-			// page template - if empty use "default" here... 
-			if( $tmp == '' ) $tmp = 'default';
-			
-            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('left','cc') || $cap->sidebar_position == __('left and right','cc'))) ||
-            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-                $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
-                $site_width -= $cap->leftsidebar_width;
-                $width_change = TRUE;
-            }
-            if( (($tmp == 'default' || $tmp=='activity/index.php') && ($cap->sidebar_position == __('right','cc') ||  $cap->sidebar_position == __('left and right','cc'))) ||
-            	$tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
-                || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
-                $site_width -= $cap->rightsidebar_width;
-                $width_change = TRUE;
-            }
-            if($width_change){
-                return $site_width;
-            }
-        }
-    }
-    return $site_width;
-}
 ?>
