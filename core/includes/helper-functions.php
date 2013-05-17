@@ -381,7 +381,8 @@ function cc_slidertop(){
         if($cap->slideshow_direct_links == 'yes'){
             $is_allowed_direct_link = __('yes', 'cc');
         }
-	}
+        $open_new_tab = $cap->open_new_tab;
+    }
     if($cap->cc_responsive_enable){
         $slide_width = 1200;
     } else {
@@ -395,7 +396,8 @@ function cc_slidertop(){
         'orderby'           => $slideshow_orderby,
         'page_id'           => $slideshow_show_page,
         'post_type'         => $slideshow_post_type,
-        'allow_direct_link' => $is_allowed_direct_link    
+        'allow_direct_link' => $is_allowed_direct_link,    
+        'open_new_tab' => $open_new_tab    
     );
 	if($slider_style == __('full width','cc') || $slider_style == 'full-width-image' ){
 		$atts = array(
@@ -414,7 +416,7 @@ function cc_slidertop(){
 	}
     $atts = array_merge($atts, $same_attrs);
 	$tmp = '<div id="cc_slider-top" class="hidden-phone row-fluid">';
-	$tmp .= slider($atts, $content = null);
+	$tmp .= cc_slider($atts, $content = null);
 	$tmp .= '</div>';
 	if($cap->slideshow_shadow != "no shadow" && $cap->slideshow_shadow != __("no shadow",'cc')){
 		$tmp .= '<div class="slidershadow hidden-phone span10"><img src="'.get_template_directory_uri().'/images/slideshow/'.cc_slider_shadow().'" alt="'.__('Slideshow shadow', 'cc').'"></div>';

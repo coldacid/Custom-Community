@@ -34,7 +34,7 @@ class CC_Theme_Generator{
 		add_action( 'bp_after_header', array( $this, 'innerrim_after_header' ), 2 );
 		add_action( 'bp_before_access', array( $this, 'menue_enable_search' ), 2 );
 		add_action( 'bp_before_access', array( $this, 'header_logo' ), 2 );
-		add_action( 'bp_menu', array( $this, 'bp_menu' ), 2 );
+//		add_action( 'bp_menu', array( $this, 'bp_menu' ), 2 );
 		add_filter( 'wp_page_menu_args', array( $this, 'remove_home_nav_from_fallback'), 100 ); 
 		add_action( 'bp_after_header', array( $this, 'slideshow_home' ), 2 );
 		add_action( 'favicon', array( $this, 'favicon' ), 2 );
@@ -239,32 +239,32 @@ class CC_Theme_Generator{
 				</li>
 			<?php }?>
 				<?php if($cap->menue_enable_community == true){ ?>
-				<li id="nav-community"<?php if ( bp_is_page( BP_ACTIVITY_SLUG ) || (bp_is_page( BP_MEMBERS_SLUG ) || bp_is_user()) || (bp_is_page( BP_GROUPS_SLUG ) || bp_is_group()) || bp_is_page( BP_FORUMS_SLUG ) || bp_is_page( BP_BLOGS_SLUG ) )  : ?> class="span2 page_item current-menu-item"<?php endif; ?>>
+                                <li id="nav-community"<?php if (bp_is_activity_component() || (bp_is_members_component() || bp_is_user()) || (bp_is_groups_component()|| bp_is_group()) || bp_is_forums_component() || bp_is_blogs_component() )  : ?> class="span2 page_item current-menu-item"<?php endif; ?>>
 					<a href="<?php echo site_url() ?>/<?php echo BP_ACTIVITY_SLUG ?>/" title="<?php _e( 'Community', 'cc' ) ?>"><?php _e( 'Community', 'cc' ) ?></a>
 					<ul class="children">
 						<?php if ( 'activity' != bp_dtheme_page_on_front() && bp_is_active( 'activity' ) ) : ?>
-							<li<?php if ( bp_is_page( BP_ACTIVITY_SLUG ) ) : ?> class="selected"<?php endif; ?>>
+							<li<?php if ( bp_is_activity_component() ) : ?> class="selected"<?php endif; ?>>
 								<a href="<?php echo site_url() ?>/<?php echo BP_ACTIVITY_SLUG ?>/" title="<?php _e( 'Activity', 'cc' ) ?>"><?php _e( 'Activity', 'cc' ) ?></a>
 							</li>
 						<?php endif; ?>
 		
-						<li<?php if ( bp_is_page( BP_MEMBERS_SLUG ) || bp_is_user() ) : ?> class="selected"<?php endif; ?>>
+						<li<?php if ( bp_is_members_component() || bp_is_user() ) : ?> class="selected"<?php endif; ?>>
 							<a href="<?php echo site_url() ?>/<?php echo BP_MEMBERS_SLUG ?>/" title="<?php _e( 'Members', 'cc' ) ?>"><?php _e( 'Members', 'cc' ) ?></a>
 						</li>
 		
 						<?php if ( bp_is_active( 'groups' ) ) : ?>
-							<li<?php if ( bp_is_page( BP_GROUPS_SLUG ) || bp_is_group() ) : ?> class="selected"<?php endif; ?>>
+							<li<?php if ( bp_is_groups_component()|| bp_is_group() ) : ?> class="selected"<?php endif; ?>>
 								<a href="<?php echo site_url() ?>/<?php echo BP_GROUPS_SLUG ?>/" title="<?php _e( 'Groups', 'cc' ) ?>"><?php _e( 'Groups', 'cc' ) ?></a>
 							</li>
 							<?php if ( bp_is_active( 'forums' ) && ( function_exists( 'bp_forums_is_installed_correctly' ) && !(int) bp_get_option( 'bp-disable-forum-directory' ) ) && bp_forums_is_installed_correctly() ) : ?>
-								<li<?php if ( bp_is_page( BP_FORUMS_SLUG ) ) : ?> class="selected"<?php endif; ?>>
+								<li<?php if ( bp_is_forums_component() ) : ?> class="selected"<?php endif; ?>>
 									<a href="<?php echo site_url() ?>/<?php echo BP_FORUMS_SLUG ?>/" title="<?php _e( 'Forums', 'cc' ) ?>"><?php _e( 'Forums', 'cc' ) ?></a>
 								</li>
 							<?php endif; ?>
 						<?php endif; ?>
 		
 						<?php if ( bp_is_active( 'blogs' ) && is_multisite() ) : ?>
-							<li<?php if ( bp_is_page( BP_BLOGS_SLUG ) ) : ?> class="selected"<?php endif; ?>>
+							<li<?php if ( bp_is_blogs_component() ) : ?> class="selected"<?php endif; ?>>
 								<a href="<?php echo site_url() ?>/<?php echo BP_BLOGS_SLUG ?>/" title="<?php _e( 'Blogs', 'cc' ) ?>"><?php _e( 'Blogs', 'cc' ) ?></a>
 							</li>
 						<?php endif; ?>
@@ -464,15 +464,13 @@ class CC_Theme_Generator{
             locate_template( array( 'sidebar-left.php' ), true );
             return;
         }
-        
-        if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php' || $cap->sidebar_position == __('right', 'cc'))
+        if( $tmp == 'full-width.php'|| $tmp == 'tpl-search-full-width.php' || $tmp == 'right-sidebar.php' || $tmp == '_pro/tpl-right-sidebar.php')
             return;
         
         
         if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'left-sidebar.php' || 
             $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php' ||
-            $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' 
-            || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc')){
+            $tmp == '_pro/tpl-left-sidebar.php' || $tmp == '_pro/tpl-search-left-sidebar.php' ){
             locate_template( array( 'sidebar-left.php' ), true );
             return;		
         }
@@ -513,15 +511,21 @@ class CC_Theme_Generator{
 				locate_template( array( 'sidebar-left.php' ), true );
 			}
             return ;
-        } 
+        }
+        
+        $cap->archive_template = ($cap->archive_template == 'full-width' && defined('is_pro'))? $cap->archive_template : $cap->sidebar_position;
+        
         if(is_archive() && ($cap->archive_template == 'left' || $cap->archive_template == 'left and right' || $cap->archive_template == __('left', 'cc') || $cap->archive_template == __("left and right",'cc'))){
             locate_template( array( 'sidebar-left.php' ), true );
             return ;
-        } else if(!is_page() && ($cap->archive_template == "right"  || $cap->archive_template == __("right",'cc'))){
+        } else if(!is_page() && ($cap->archive_template == "right"  || $cap->archive_template == __("right",'cc') || $cap->archive_template == 'full-width' || $cap->archive_template == __('full-width', 'cc'))){
              return;
         }
-           
-        
+                    
+        if($cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('left', 'cc')){
+            locate_template( array( 'sidebar-left.php' ), true );
+            return ;
+        }
 	}
 
 	/**
@@ -547,18 +551,18 @@ class CC_Theme_Generator{
         }
         if(function_exists('is_bbpress') && (is_bbpress() && defined('BP_VERSION') && !bp_is_user() && !bp_is_group()) && (($cap->sidebar_position == __('left', 'cc') || $cap->sidebar_position == __('full-width', 'cc')))){
            return; 
-        }else if(function_exists('is_bbpress') && (is_bbpress() && defined('BP_VERSION') && !bp_is_user() && !bp_is_group()) && ($cap->sidebar_position == __('right', 'cc') || $cap->sidebar_position == __('left and right', 'cc'))){
+        } else if(function_exists('is_bbpress') && (is_bbpress() && defined('BP_VERSION') && !bp_is_user() && !bp_is_group()) && ($cap->sidebar_position == __('right', 'cc') || $cap->sidebar_position == __('left and right', 'cc'))){
             locate_template( array( 'sidebar.php' ), true );
             return;
         }
         
 
-        if( $tmp == 'full-width.php' || $tmp =='tpl-search-full-width.php' || $tmp == 'left-sidebar.php' || $tmp == '_pro/tpl-left-sidebar.php' || $cap->sidebar_position == __('left', 'cc') )
+        if( $tmp == 'full-width.php' || $tmp =='tpl-search-full-width.php' || $tmp == 'left-sidebar.php' || $tmp == '_pro/tpl-left-sidebar.php' )
                 return;
             
         if( $tmp == 'left-and-right-sidebar.php' || $tmp == 'right-sidebar.php' 
             || $tmp == '_pro/tpl-left-and-right-sidebar.php' || $tmp == '_pro/tpl-search-right-and-left-sidebar.php'
-            || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php' || $cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
+            || $tmp == '_pro/tpl-right-sidebar.php' || $tmp == '_pro/tpl-search-right-sidebar.php'){
             locate_template( array( 'sidebar.php' ), true );
             return;		
         }
@@ -599,15 +603,20 @@ class CC_Theme_Generator{
                     }    
   		}
         
+        $cap->archive_template = ($cap->archive_template == 'full-width' && defined('is_pro'))? $cap->archive_template : $cap->sidebar_position;
+                
         if(is_archive() && ($cap->archive_template == "right" || $cap->archive_template == "left and right" || $cap->archive_template == __("right",'cc') || $cap->archive_template == __("left and right",'cc'))){
             locate_template( array( 'sidebar.php' ), true );
             return;
-        } else if(!is_page() && ($cap->archive_template == "left"  || $cap->archive_template == __("left",'cc'))){
+        } else if(!is_page() && ($cap->archive_template == "left"  || $cap->archive_template == __("left",'cc') || $cap->archive_template == 'full-width' || $cap->archive_template == __('full-width', 'cc'))){
             return;
         }
         
         
-        
+        if($cap->sidebar_position == __('left and right', 'cc') || $cap->sidebar_position == __('right', 'cc')){
+            locate_template( array( 'sidebar.php' ), true );
+            return;
+        }
 		
 	}
 	

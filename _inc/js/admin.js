@@ -99,6 +99,7 @@
                 $(selector).show().prev().show().prev('.option-title').show();
            }
         };
+        
     });
     
     

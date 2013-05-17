@@ -12,7 +12,7 @@ get_header(); ?>
                $cap->posts_lists_style_author   == 'magazine') {
                     $args = array();
                     $magazine_style = '';
-                    if($cap->posts_lists_style_taxonomy == 'magazine' && (is_category() || is_tag())){
+                    if($cap->posts_lists_style_taxonomy == 'magazine' && is_category()){
                         $args['category_name'] = get_query_var('category_name');
                         $magazine_style        = $cap->magazine_style_taxonomy;
                     } else if($cap->posts_lists_style_dates == 'magazine' && is_date()){
@@ -23,6 +23,7 @@ get_header(); ?>
                         $args['author'] = get_query_var('author');
                         $magazine_style   = $cap->magazine_style_author;
                     }
+                    
                     if($magazine_style){
                         $args['img_position'] = cc_get_magazine_style($magazine_style);
                     }

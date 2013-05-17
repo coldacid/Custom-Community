@@ -330,7 +330,7 @@ function cap_get_options() {
 				array(__('show','cc'), __('hide','cc')),
 				__("show",'cc'),
 				"start",
-				__("Default homepage",'cc')),
+				__("Posts lists on home page",'cc')),
 	        new DropdownOption(
 				__("Posts listing style on home page",'cc'),
 				__("Display style for home page list page.",'cc'),
@@ -377,10 +377,10 @@ function cap_get_options() {
 				__("blog",'cc'),
 				"start"),
             new DropdownOption(
-                __('Archives page template', 'cc'),
-                __('Select Archives page template', 'cc'),
+                __('Archives page sidebar position', 'cc'),
+                __('Select Archives page sidebar position', 'cc'),
                 'archive_template',
-                array(__('right', 'cc'), __('left','cc'), __('left and right','cc')),
+                apply_filters('cc_get_archive_sidebar_position', array(__('right', 'cc'), __('left','cc'), __('left and rightt','cc'))),
                 '',
                 ''),
 			new DropdownOption(
