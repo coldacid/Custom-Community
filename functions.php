@@ -672,9 +672,9 @@ function cc_slider($atts, $content = null) {
             }
             #featured' . $id . ' {
                 background: none;
-                padding:0
-            }';
-        $tmp .= 'div#cc_slider'.$id.'.cc_slider .featured .ui-tabs-panel{
+                padding:0;
+            }
+            div#cc_slider'.$id.'.cc_slider .featured .ui-tabs-panel{
                 width: 100%;
             }';
     } else {
@@ -1117,4 +1117,70 @@ function add_home_link($items, $args) {
     $items = $homeMenuItem . $community_item .$items;
 
     return $items;
+}
+
+
+/*
+ * This function checking condition independently from language
+ */
+function check_value($key,$value,$operator){
+    switch ($operator){
+        case ('=='):
+            return ($key == __($value, 'cc') || $key == $value);
+        case ('!='):
+            return ($key != __($value, 'cc') || $key != $value);
+        case ('>='):
+            return ($key >= __($value, 'cc') || $key >= $value);
+        case ('<='):
+            return ($key <= __($value, 'cc') || $key <= $value);
+        case ('<'):
+            return ($key < __($value, 'cc') || $key < $value);
+        case ('>'):
+            return ($key > __($value, 'cc') || $key > $value);
+        case ('==='):
+            return ($key === __($value, 'cc') || $key === $value);
+    }
+}
+
+function cc_author_link(){
+    global $post;
+
+    if (defined('BP_VERSION')) {
+        echo sprintf( __('by %s', 'cc'), bp_core_get_userlink($post->post_author) );
+    }else{
+        echo sprintf( __('by %s', 'cc'), '<a href="'. get_author_posts_url( get_the_author_meta( 'ID' ) ).'">'. get_the_author_meta( 'display_name' ) .'</a>' );
+    }
+}
+
+/*
+ *  Checking posts order on different archive pages
+ */
+function archive_post_order($query_string){
+    global $cap, $authordata;
+
+    if((is_category() && check_value($cap->posts_lists_category_order,'ASC','===')) ||
+        (is_tag() && check_value($cap->posts_lists_tag_order,'ASC','===')) ||
+        (is_author() && check_value($cap->posts_lists_author_order,'ASC','===')) ||
+        (is_date() && check_value($cap->posts_lists_date_order,'ASC','==='))){
+            query_posts($query_string.'&order=ASC');
+    }
+}
+
+function cc_exclude_home_3_posts( $query ) {
+    global $cap;
+
+    if (($cap->default_homepage_last_posts == 'show' || $cap->default_homepage_last_posts == __('show','cc')) &&
+        $query->is_home() && $query->is_main_query()
+    ) {
+        $query->set( 'offset', '3' );
+    }
+}
+add_action( 'pre_get_posts', 'cc_exclude_home_3_posts' );
+
+/*
+ * Alternative author archive check
+ */
+function custom_is_author(){
+    var_dump(is_archive());
+    return (is_archive() && !is_category() && !is_tag() && !is_date())? true:false;
 }

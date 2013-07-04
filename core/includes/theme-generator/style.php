@@ -31,7 +31,7 @@ body.activity-permalink {
 #outerrim{
     margin: 0 auto;
 }
-<?php 
+<?php
 require_once get_template_directory() . "/_inc/css/editor-styles.php";
 require_once get_template_directory() . "/_inc/css/width-calculators.php";
 ?>
@@ -145,14 +145,14 @@ div#item-header div#item-header-content {
     global $post;
     $tpl = !empty($post) ? get_post_meta($post->ID, '_wp_page_template', TRUE) : FALSE;
     $tpl = empty($tpl) ? 'default' : $tpl;
-    
+
     if($cap->cc_responsive_enable) {
         $rightsidebar_width = 225;
     } else {
 
         $rightsidebar_width = $cap->rightsidebar_width;
     }
-        
+
     if($cap->bp_profile_sidebars == __('left', 'cc') || $cap->bp_profile_sidebars == __('none', 'cc') || (($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('left', 'cc') || ($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position == __('full-width', 'cc'))))):
         $rightsidebar_width = $cap->leftsidebar_width;
         ?>
@@ -173,9 +173,9 @@ div#item-header div#item-header-content {
             display: none !important;
          }
     <?php endif;
-    
-    //this section don't need now, because we css hide sidebars which icluded by plugins pages 
-    
+
+    //this section don't need now, because we css hide sidebars which icluded by plugins pages
+
     /*if(($cap->bp_profile_sidebars != __('none', 'cc') && $cap->bp_profile_sidebars != __('left and right', 'cc')) ): ?>
     <?php if(($cap->bp_profile_sidebars == __('default', 'cc') && $cap->sidebar_position != __('full-width', 'cc') && $cap->sidebar_position != __('left and right', 'cc'))): ?>
         #container #content.added-by-plugins{
@@ -577,7 +577,7 @@ div.widget div.textwidget{
 .widget .textwidget div{
     max-width: 100%;
 }
-#header .widgetarea:first-child, 
+#header .widgetarea:first-child,
 #footer .widgetarea:first-child{
     margin-left: 0;
 }
@@ -599,7 +599,7 @@ div#content {
 }
 
 div#content .padder {
-    border-radius: 0px; 
+    border-radius: 0px;
     border-left: none;
     border-right: none;
     min-height: 300px;
@@ -1056,7 +1056,7 @@ div.item-list-tabs ul li.feed a {
 
 
 /*--A lot of sub menu items in BuddyPress menu--*/
-.item-list-tabs .next, 
+.item-list-tabs .next,
 .item-list-tabs .prev{
     display:none;
     padding:2px 6px 4px 6px;
@@ -1079,7 +1079,7 @@ div.item-list-tabs ul li.feed a {
 .item-list-tabs .prev{
     margin:0 4px 0 0;
 }
-.item-list-tabs .next:hover, 
+.item-list-tabs .next:hover,
 .item-list-tabs .prev:hover{
     color: #<?php echo $font_color;?>;
     background: #<?php echo $container_alt_bg_color;?>;
@@ -1178,7 +1178,7 @@ div.profile{
 }
 #container table.forum{
     margin: 0;
-} 
+}
 /* > Group specific styles
 -------------------------------------------------------------- */
 #item-actions li{
@@ -1240,7 +1240,7 @@ div#pag-bottom {
     background:none repeat scroll 0 0 transparent;
     margin-top:0;
 }
-#pag-top { 
+#pag-top {
 	margin-bottom: 20px;
 }
 
@@ -1942,7 +1942,7 @@ body.activity-permalink .activity-content blockquote {
 
 /* - additional to activity- */
 
-.activity-list .activity-content .activity-inner, 
+.activity-list .activity-content .activity-inner,
 .activity-list .activity-content blockquote {
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
@@ -2419,7 +2419,7 @@ div.post div.post-content {
 	width: 79%;
 }
 .search-result div.post div.post-content{
-    width: 100%; 
+    width: 100%;
 }
 #activate-page.page, #register-page.page{
     margin-left: 20px;
@@ -2427,8 +2427,8 @@ div.post div.post-content {
 #activate-page.page #activation-form, #register-page #signup_form{
     margin-left: 0;
 }
-div.post p.date, 
-div.page p.date, 
+div.post p.date,
+div.page p.date,
 div.post p.postmetadata, div.comment-meta {
     color: #<?php echo $font_color;?>;
     font-size: 12px;
@@ -3170,13 +3170,13 @@ div.cc_slider .featured .ui-tabs-panel a img{
     	border-radius: 6px 0 0 6px;
     <?php } else { ?>
     	border-radius: 6px;
-    <?php } ?>	
+    <?php } ?>
 }
 <?php if($cap->stretch_big_image == '' || $cap->stretch_big_image == __('default', 'cc') || $cap->stretch_big_image == __('on', 'cc')):?>
  div.cc_slider .featured .ui-tabs-panel a .wp-post-image{
     width: 100%;
     height: 100%;
- }  
+ }
 <?php endif;?>
 div.cc_slider ul.ui-tabs-nav {
     list-style: none outside none;
@@ -3242,15 +3242,29 @@ div.cc_slider .featured .ui-tabs-panel{
 div#cc_slider-top div.cc_slider .featured .ui-tabs-panel{
     margin-left: 0;
 }
+div.cc_slider .featured .ui-tabs-panel{
+    margin-left: 0;
+}
 div.cc_slider .featured .ui-tabs-panel .info{
     position:absolute;
-    top:180px;
+    top:157px;
     left:0;
-    height:80px;
+    height:92px;
     background: url(<?php echo get_template_directory_uri() ?>/images/slideshow/transparent-bg.png);
     margin-left: 0;
     width:100%;
     border-radius: 0 0 6px 6px;
+}
+/*with side nav*/
+div.cc_slider .featured .ui-tabs-panel.span8 .info{
+    top:157px;
+}
+/*without side nav*/
+div.cc_slider .featured .ui-tabs-panel.span12 .info{
+    top:170px;
+}
+.not-responsive div.cc_slider .featured .ui-tabs-panel.span8 .info{
+    top:159px;
 }
 .cover.boxcaption{
     text-align: justify;
@@ -3619,6 +3633,7 @@ div.single-img-under-content a{
 .full_width_col {
     width:99.6%;
     margin:0 0.4% 20px 0;
+    clear: both;
 }
 
 .half_col_left {
@@ -3737,6 +3752,9 @@ div.announcement a {
     margin-top: 0;
     text-align: center;
     width: 33%;
+}
+#content .gallery.gallery-columns-4 .gallery-item {
+width: 25%;
 }
 #content .gallery img {
     border: none;
@@ -4097,8 +4115,8 @@ body.archive.bubble div.post div.author-box {
 /** ***
 standard wordpress home page: bubble style**/
 
-body.bubble div.post h2.posttitle, 
-#blog-search div.page h2.posttitle, 
+body.bubble div.post h2.posttitle,
+#blog-search div.page h2.posttitle,
 #blog-search div.post h2.posttitle {
     line-height: 120%;
     margin: 0 0 12px;
@@ -4135,8 +4153,8 @@ body.bubble div.post div.post-content, #blog-search div.post-content{
     float: left;
     position: relative;
 }
-body.bubble div.post p.date, 
-#blog-search div.page p.date, 
+body.bubble div.post p.date,
+#blog-search div.page p.date,
 #blog-search div.post p.date{
     border-top: 1px solid #<?php echo $container_bg_color;?>;
     border-bottom: 1px solid #<?php echo $container_bg_color;?>;
@@ -4635,14 +4653,14 @@ div#leftsidebar {
 
 <?php if ( $cap->rightsidebar_width != "" ) {?>
     /** ***
-    right sidebar width  **/ 
-    
+    right sidebar width  **/
+
     <?php if($cap->cc_responsive_enable) {
 		$cap->rightsidebar_width = 225;
 		$cap->leftsidebar_width = 225;
 	} ?>
 
-    div#sidebar { 
+    div#sidebar {
         width: <?php echo $cap->rightsidebar_width ?>px;
         margin-left: -<?php echo$cap->rightsidebar_width ?>px;
     }
@@ -4871,7 +4889,7 @@ div.item-list-tabs {
 .row-fluid.full-search-width .span8{
     width: 98%;
 }
-.row-fluid.left-right-sidebar .span8, 
+.row-fluid.left-right-sidebar .span8,
 .row-fluid .span8.left-right-template{
     width: 50%;
 }
@@ -4929,7 +4947,7 @@ div#item-actions {
     width : 100%;
 }
 
-/** ***   
+/** ***
 overwrite css area adding  **/
 <?php
     do_action('cc_pro_add_styles');
@@ -4944,7 +4962,7 @@ function cc_dysplay_dynamic_css(){
 	?>
 	<style type="text/css" title="here they are">
 div{
-	
+
 }
 	<?php
 	get_css();
