@@ -2515,6 +2515,12 @@ div.author-box, div.comment-avatar-box {
     float:left;
 }
 
+div.author-box {
+    font-size: 10px;
+    font-style: normal;
+    line-height: 120%;
+    text-align: center;
+}
 div.author-box p,
 div.author-box a,
 div.comment-avatar-box p,
