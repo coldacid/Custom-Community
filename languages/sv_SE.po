@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Custom Community v1.13\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2013-02-26 19:01:30+0000\n"
+"PO-Revision-Date: 2013-03-12 18:46:00+0000\n"
 "Last-Translator: Isak Öhrlund <isak.ohrlund@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -3069,7 +3069,7 @@ msgstr "Visa stil för inläggslistning startsida."
 #: functions.php:930
 #@ cc
 msgid "blog"
-msgstr "blogg"
+msgstr "blog"
 
 #: admin/config.php:335
 #: admin/config.php:373
@@ -3077,7 +3077,7 @@ msgstr "blogg"
 #: admin/config.php:410
 #@ cc
 msgid "magazine"
-msgstr "tidning"
+msgstr "magazine"
 
 #: admin/config.php:339
 #@ cc
@@ -4719,11 +4719,6 @@ msgstr "Importera"
 #@ cc
 msgid "Export"
 msgstr "Exportera"
-
-#: admin/library.php:633
-#@ cc
-msgid "Reset All Settings"
-msgstr "Nollställ Alla Inställningar"
 
 #: admin/page-meta-box.php:66
 #: admin/post-meta-box.php:41

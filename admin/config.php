@@ -25,7 +25,7 @@ function cc_get_user_roles(){
 }
 function cap_get_options() {
     global $bp;
-    
+
     $pages     = get_pages();
 	$option    = Array();
 	$option[0] = __("All pages",'cc');
@@ -228,7 +228,7 @@ function cap_get_options() {
 				__("Change subtitle colour",'cc'),
 				"subtitle_color",
 				"","end"),
-            
+
 			new DropdownOption(
 				__("Show excerpts",'cc'),
 				__("Just for category and archive views: use excerpts or show full content of your posts",'cc'),
@@ -444,6 +444,38 @@ function cap_get_options() {
 				"posts_lists_hide_date",
 				array(__('show','cc'), __('hide','cc')),
 				__("show",'cc'),
+				false),
+            new DropdownOption(
+				'<span class="blog-items">' .__('Posts order on "category" archive page.','cc'). '</span>',
+				'<span class="blog-items">' .__("DESC - Default. Latest posts at the top.<br />
+                                                 ASC - Early posts at the top.",'cc'). '</span>',
+				"posts_lists_category_order",
+				array(__('DESC','cc'), __('ASC','cc')),
+				__("DESC",'cc'),
+				false),
+            new DropdownOption(
+				'<span class="blog-items">' .__('Posts order on "tag" archive page.','cc'). '</span>',
+				'<span class="blog-items">' .__("DESC - Default. Latest posts at the top.<br />
+                                                 ASC - Early posts at the top.",'cc'). '</span>',
+				"posts_lists_tag_order",
+				array(__('DESC','cc'), __('ASC','cc')),
+				__("DESC",'cc'),
+				false),
+    //         new DropdownOption(
+				// '<span class="blog-items">' .__('Posts order on "author" archive page.','cc'). '</span>',
+				// '<span class="blog-items">' .__("DESC - Default. Latest posts at the top.<br />
+    //                                              ASC - Early posts at the top.",'cc'). '</span>',
+				// "posts_lists_author_order",
+				// array(__('DESC','cc'), __('ASC','cc')),
+				// __("DESC",'cc'),
+				// false),
+            new DropdownOption(
+				'<span class="blog-items">' .__('Posts order on "date" archive page.','cc'). '</span>',
+				'<span class="blog-items">' .__("DESC - Default. Latest posts at the top.<br />
+                                                 ASC - Early posts at the top.",'cc'). '</span>',
+				"posts_lists_date_order",
+				array(__('DESC','cc'), __('ASC','cc')),
+				__("DESC",'cc'),
 				'end'),
 			// Login
 			new FileOption(
