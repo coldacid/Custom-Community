@@ -77,7 +77,10 @@ p, em {
     font-size: 13px;
     margin-bottom: 15px;
 }
-em {font-style: italic}
+em { 
+	font-style: italic; 
+	font-size: inherit; 
+}
 p:last-child {margin-bottom: 0}
 sub {
     line-height: 100%;
