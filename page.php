@@ -13,7 +13,7 @@
 
 				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 					<div class="entry">
-
+						<?php if ( function_exists( 'sharing_display' ) ) remove_filter( 'the_content', 'sharing_display', 19 ); ?>
 						<?php the_content( __( '<p class="serif">Read the rest of this page &rarr;</p>', 'cc' ) ); ?>
 						<div class="clear"></div>
 						<?php wp_link_pages( array( 'before' => __( '<p class="cc_pagecount"><strong>Pages:</strong> ', 'cc' ), 'after' => '</p>', 'next_or_number' => 'number')); ?>
@@ -25,8 +25,8 @@
 			<?php endwhile; endif; ?>
 
 		</div><!-- .page -->
-
-		<?php cc_list_posts_on_page(); ?>
+		<?php cc_list_posts_on_page(); ?> 
+		<?php if ( function_exists( 'sharing_display' ) ) echo sharing_display(); ?>
 
 		<div class="clear"></div>
 
