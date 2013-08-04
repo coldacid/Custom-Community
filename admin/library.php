@@ -563,6 +563,10 @@ function top_level_settings() {
 	if ( isset( $_REQUEST['reset'] ) )
 		echo "<div id='message' class='updated fade'><p><strong>$themename settings reset.</strong></p></div>";
 	?>
+	
+	<?php // next line is just a quick fix which should be checked again! ?>
+	<style>.ui-accordion .ui-accordion-content-active { height: auto !important; }</style>
+	
 	<div class="wrap">
 	
 		<h2><b><?php echo $themename; ?> <?php _e('Options','cc')?></b></h2>
