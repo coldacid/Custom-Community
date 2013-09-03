@@ -23,7 +23,11 @@ function get_css(){
 /* > Global Elements
 -------------------------------------------------------------- */
 
-
+body { 
+	line-height: 140%;
+	font-size: 13px;
+	color: #<?php echo $font_color;?>; 
+}
 body.activity-permalink {
     min-width: 100%;
     max-width: 100%;
@@ -112,6 +116,11 @@ blockquote h4, blockquote h5, blockquote h6 {
     font-size: 16px;
     font-style:italic;
 }
+img {
+	max-width: 100%;
+	max-height: auto;
+	height: auto;
+}
 img.avatar {
     border:1px solid #<?php echo $container_alt_bg_color;?>;
     float:left;
@@ -195,7 +204,7 @@ div#item-header div#item-header-content {
             width: -ms-calc(100% - <?php echo ($rightsidebar_width)?>px);
         }
     <?php endif;?>
-<?php endif;*/?>
+<?php endif; */?>
 <?php endif; ?>
 
 /* > Admin Bar
@@ -523,10 +532,12 @@ div#sidebar ul , div.widgetarea ul {
 }
 
 .widget li.cat-item {
-    margin-bottom: 0px;
+    padding: 3px 10px;
+	width: 100%;
+	margin-bottom: 5px;
 }
 .widget li.current-cat a, div.widget ul li.current_page_item a {
-    color:#<?php echo $link_color;?>;
+    color: #<?php echo $font_color;?>;
 }
 
 .cc-widget, #header .span3{
@@ -548,10 +559,7 @@ div#sidebar ul , div.widgetarea ul {
     margin-top: 0px !important;
 }
 .widget li.current-cat, div.widget ul li.current_page_item{
-    background:transparent;
-    margin-left:-8px;
-    padding:2px 8px 0 8px;
-    width:100%;
+    width: 100%;
 }
 
 div#leftsidebar {
@@ -2461,9 +2469,6 @@ div.post p.postmetadata {
 div.postmetadata span{
     display: inline-block;
 }
-.hentry{
-    padding: 10px;
-}
 .activity-comments .hidden{
     display:none;
     visibility: inherit;
@@ -3378,11 +3383,13 @@ div.post img {
     border: 0;
 }
 
-.boxgrid p, .boxgrid p a {
-    padding: 0 0 0 5px;
+.boxgrid p,
+.boxgrid p a {
     color: #ffffff;
     font: 11px Arial, sans-serif;
 }
+.boxgrid p { padding: 0 8px; }
+
 div.boxgrid h3 > a {color:#ffffff;font:12px Arial, sans-serif;letter-spacing:0;font-weight: bold;padding-left:0px}
 .boxgrid h3 {margin: 5px 5px 5px 0px}
 
@@ -3837,7 +3844,7 @@ colour of the vertical lines  **/
 /** ***
 body background colour, image and repeat  **/
 
-body {
+body { 
     <?php if($cap->bg_body_color != ''){?>
         background-color: <?php if($cap->bg_body_color != 'transparent') {?>#<?php } ?><?php echo $cap->bg_body_color; ?>;
     <?php } ?>
@@ -3921,11 +3928,17 @@ div#container, body.activity-permalink div#container {
     <?php if($cap->container_corner_radius ==__('not rounded','cc') ) {?>
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
-        border-radius: 0px;
+        -o-border-radius: 0px;
+		-ms-border-radius: 0px;
+		border-radius: 0px;
         }
-        div#leftsidebar, div#sidebar, div.cc_slider {
+        div#leftsidebar, div#sidebar, 
+        div.cc_slider, div#cc_slider-top, div.cc_slider .featured .ui-tabs-panel .info, 
+        #header, #footer, div.cc_slider .featured .ui-tabs-panel a img {
         -moz-border-radius: 0px;
         -webkit-border-radius: 0px;
+        -o-border-radius: 0px;
+		-ms-border-radius: 0px;
         border-radius: 0px;
     <?php } ?>
 

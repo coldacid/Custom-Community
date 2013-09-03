@@ -322,7 +322,10 @@ function is_page_for_posts(){
 
 // list posts
 function cc_list_posts($atts, $content = null) {
-    global $cap, $cc_page_options, $post, $cc_js;
+    global $cap, $post, $cc_js;
+    
+    $cc_page_options = cc_get_page_meta();
+    
     $tmp = '';
 
     extract(shortcode_atts(array(
@@ -341,7 +344,7 @@ function cc_list_posts($atts, $content = null) {
         'monthnum'           => '',
         'author'             => ''
     ), $atts));
-
+	
     switch ($img_position){
         case 'left':
             $img_position = 'posts-img-left-content-right';
@@ -397,7 +400,8 @@ function cc_list_posts($atts, $content = null) {
         $pattern = "/(?<=src=['|\"])[^'|\"]*?(?=['|\"])/i";
         archive_post_order($query_string);
         while (have_posts()) : the_post();
-            if($cap->posts_lists_style_taxonomy == 'magazine' || (is_page_for_posts() && $cap->posts_lists_style_home == 'magazine')){
+            // magazine style and on pages
+            if($cc_page_options['cc_page_template_on'] == 1 || $cap->posts_lists_style_taxonomy == 'magazine' || (is_page_for_posts() && $cap->posts_lists_style_home == 'magazine') || $is_home_last_posts){
                 if($img_position == 'boxgrid'){
                     $thumb   = get_the_post_thumbnail( $post->ID, 'post-thumbnail', __('List post image', 'cc') );
                     preg_match($pattern, $thumb, $thePath);
@@ -421,6 +425,7 @@ function cc_list_posts($atts, $content = null) {
                     $tmp .= '</div>';
                     if($img_position == 'posts-img-left-content-right' || $img_position == 'posts-img-right-content-left') $tmp .= '<div class="clear"></div>';
                 }
+            // blog
             } else {
                 ?>
                 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
