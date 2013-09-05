@@ -527,7 +527,7 @@ function cc_get_pro_version() {
  * Fix ...[]
  */
 function cc_replace_read_more($text) {
-    return ' <a class="read-more-link" href="' . get_permalink() . '"><br />' . __('...read more', 'cc') . '</a>';
+    return ' <a class="read-more-link" href="' . get_permalink() . '"><br />' . __('read more', 'cc') . '</a>';
 }
 
 add_filter('excerpt_more', 'cc_replace_read_more');
@@ -1059,10 +1059,22 @@ function cc_add_admin_editor_styles(){
 }
 add_action('init', 'cc_add_admin_editor_styles', 100);
 
-add_filter( 'wp_nav_menu_items', 'add_home_link', 10, 2 );
+if ( has_nav_menu( 'primary' ) ): 
+	add_filter( 'wp_nav_menu_items', 'add_home_link', 10, 2 ); 
+else: 
+	add_action( 'bp_menu', 'add_home_link_fallback' );
+endif;
+
+function add_home_link_fallback() {
+	echo '<ul class="menu">';
+	echo add_home_link('', '');
+	echo '</ul>';
+}
+	
 function add_home_link($items, $args) {
     global $cap;
     $community_item = $homeMenuItem = '';
+	
     if($cap->menue_disable_home == true){
         ob_start();
         ?>
@@ -1114,7 +1126,7 @@ function add_home_link($items, $args) {
          }
     }
 
-    $items = $homeMenuItem . $community_item .$items;
+    $items = $homeMenuItem . $community_item . $items;
 
     return $items;
 }

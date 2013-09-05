@@ -509,8 +509,9 @@ function cap_admin_js_libs() {
 	wp_enqueue_script( 'jquery-ui' );	
 	wp_enqueue_script( 'jquery-ui-tabs' );
 	wp_enqueue_script( 'jquery-ui-widget' );
+	wp_enqueue_script( 'jquery-ui-accordion' );
 	wp_enqueue_script( 'jquery-color' );
-	
+
 	if (function_exists('wp_enqueue_media')) {
             wp_enqueue_media();
     } else {
@@ -520,9 +521,6 @@ function cap_admin_js_libs() {
     }
 	wp_register_script('my-upload', get_template_directory_uri() . '/admin/js/uploader.js', array('jquery'));
 	wp_enqueue_script('my-upload');
-	
-	wp_register_script( 'jquery-ui-accordion', get_template_directory_uri() . '/admin/js/jquery.ui.accordion.js', array( 'jquery' ), '1.8.9', true );
-	wp_enqueue_script( 'jquery-ui-accordion' );	
 	
 	wp_enqueue_script( 'colorpicker-js', get_template_directory_uri()."/admin/js/colorpicker.js", array(), true );
 	wp_enqueue_script( 'autogrow-textarea');
@@ -535,7 +533,12 @@ function cap_admin_js_footer() {
 /* <![CDATA[ */
 	jQuery(document).ready(function($) {
 		jQuery("#config-tabs").tabs();
-		jQuery(".accordion").accordion({ header: "h3", active: false, autoHeight: false, collapsible:true });
+		jQuery(".accordion").accordion({ 
+			header:"h3",
+			active:false,
+ 			heightStyle: "content",
+		    collapsible: true,
+		});
 });
 /* ]]> */
 </script>
@@ -563,6 +566,7 @@ function top_level_settings() {
 	if ( isset( $_REQUEST['reset'] ) )
 		echo "<div id='message' class='updated fade'><p><strong>$themename settings reset.</strong></p></div>";
 	?>
+	
 	<div class="wrap">
 	
 		<h2><b><?php echo $themename; ?> <?php _e('Options','cc')?></b></h2>

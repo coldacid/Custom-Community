@@ -26,7 +26,6 @@
 
 		</div><!-- .page -->
 		<?php cc_list_posts_on_page(); ?> 
-		<?php if ( function_exists( 'sharing_display' ) ) echo sharing_display(); ?>
 
 		<div class="clear"></div>
 
