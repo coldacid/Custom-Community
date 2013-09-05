@@ -6,8 +6,8 @@
 	else: ?>
 		 <div id="cap_getpro">
 			<div class="getpro_content">
-			    <a href="http://themekraft.com/shop/custom-community-pro/" title="Custom Community Pro" target="_blank">
-			    <img src="<?php echo get_template_directory_uri(); ?>/_inc/images/get-pro.jpg" width="861" height="1200" style="margin:10px 0;" />
+			    <a href="http://themekraft.com/shop/" title="WordPress Premium Themes and Plugins by ThemeKraft" target="_new">
+			    <img src="<?php echo get_template_directory_uri(); ?>/images/go-pro.jpg" width="861" height="830" style="margin:10px 0;" />
 			    </a> 
 			</div>
 		</div>

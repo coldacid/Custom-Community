@@ -570,13 +570,15 @@ function top_level_settings() {
 	<div class="wrap">
 	
 		<h2><b><?php echo $themename; ?> <?php _e('Options','cc')?></b></h2>
-        <p class="additional_info"><?php _e('Custom Community is proudly brought to you by ','cc')?><a class="themekraft-link" href="http://themekraft.com/" target="_blank">Themekraft</a>.
-		<br> 
+		<div class="updated">
+		<p>Custom Community 2.0 is already in the oven! <a href="http://themekraft.com/blog/custom-community-2-0-first-alpha/" target="_new" title="Custom Community 2.0 just being baked for you">Read the blogpost here.</a></p>
+		</div>
+        <p class="additional_info"><?php _e('Proudly brought to you by ','cc')?><a class="themekraft-link" href="http://themekraft.com/" target="_new">ThemeKraft</a>.
 		<?php if(!defined('is_pro')){ ?>
-			<?php _e('Looking for more? ','cc');?><a class="full-version-link" href="http://themekraft.com/shop/custom-community-pro/" target="_blank"><?php _e('Get the full version','cc')?></a>.
-		<br>
+			<?php _e('Looking for more? ','cc');?><a class="full-version-link" href="http://themekraft.com/shop/" target="_new"><?php _e('Go Pro','cc')?></a>.
         <?php } ?>
-		<a style="margin-top:10px;" href="http://support.themekraft.com/categories/20053996-custom-community" class="button button-secondary" target="_blank"><?php _e('Documentation','cc')?></a> <a class="button button-secondary" href="http://themekraft.com/support/" style="margin-top:10px;" target="_blank"><?php _e('Support','cc')?></a>
+		<br> 
+		<a style="margin-top:10px;" href="http://support.themekraft.com/categories/20053996-custom-community" class="button button-secondary" target="_new"><?php _e('Documentation','cc')?></a> <a class="button button-secondary" href="http://themekraft.com/support/" style="margin-top:10px;" target="_blank"><?php _e('Support','cc')?></a>
 		</p>
 		
 		<form method="post" action="">
@@ -596,7 +598,7 @@ function top_level_settings() {
 				endforeach;
 				
 				if(!defined('is_pro') && current_user_can('switch_themes')){
-					$cap_getpro = 'Get the Pro';
+					$cap_getpro = 'Go Pro';
 					echo " <li><a href='#cap_getpro'>$cap_getpro</a></li>";
 				}
 
