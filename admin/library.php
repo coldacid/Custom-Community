@@ -571,7 +571,7 @@ function top_level_settings() {
 	
 		<h2><b><?php echo $themename; ?> <?php _e('Options','cc')?></b></h2>
 		<div class="updated">
-		<p>Custom Community 2.0 is already in the oven! <a href="http://themekraft.com/blog/custom-community-2-0-first-alpha/" target="_new" title="Custom Community 2.0 just being baked for you">Read the blogpost here.</a></p>
+		<p>Custom Community 2.0 is already in the oven! &nbsp;<a href="http://themekraft.com/blog/custom-community-2-0-first-alpha/" target="_new" title="Custom Community 2.0 just being baked for you">&raquo; Read the blogpost here.</a> And important info about this latest update <a href="http://themekraft.com/blog/custom-community-update-1-17-3-available/" target="_new" title="Custom Community Update 1.17.3">here</a>.</p>
 		</div>
         <p class="additional_info"><?php _e('Proudly brought to you by ','cc')?><a class="themekraft-link" href="http://themekraft.com/" target="_new">ThemeKraft</a>.
 		<?php if(!defined('is_pro')){ ?>
