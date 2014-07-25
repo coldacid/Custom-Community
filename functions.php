@@ -538,20 +538,20 @@ add_filter('excerpt_more', 'cc_replace_read_more');
 function cc_add_rate_us_notice() {
     $hide_message = get_option('cc_hide_activation_message', false);
     if (!$hide_message) {
-        echo '<div class="update-nag cc-rate-it">
-            ' . cc_get_add_rate_us_message() . '<a href="#" class="dismiss-activation-message">' . __('Dismiss', 'cc') . '</a>
-        </div>';
+        // echo '<div class="update-nag cc-rate-it">
+        //    ' . cc_get_add_rate_us_message() . '<a href="#" class="dismiss-activation-message">' . __('Dismiss', 'cc') . '</a>
+        // </div>';
     }
 }
 
 function cc_get_add_rate_us_message() {
-    return 'Please rate for <a class="go-to-wordpress-repo" href="http://wordpress.org/extend/themes/custom-community" target="_blank">Custom Community</a> theme on WordPress.org';
+    //return 'Please rate for <a class="go-to-wordpress-repo" href="http://wordpress.org/extend/themes/custom-community" target="_blank">Custom Community</a> theme on WordPress.org';
 }
 
 /**
  * Ajax processor for show/hide Please rate for
  */
-add_action('wp_ajax_dismiss_activation_message', 'cc_dismiss_activation_message');
+//add_action('wp_ajax_dismiss_activation_message', 'cc_dismiss_activation_message');
 
 function cc_dismiss_activation_message() {
     echo update_option('cc_hide_activation_message', $_POST['value']);
@@ -561,7 +561,7 @@ function cc_dismiss_activation_message() {
 /**
  * Ajax processor for show/hide Please info for
  */
-add_action('wp_ajax_cc_dismiss_info_messages', 'cc_dismiss_info_messages');
+// add_action('wp_ajax_cc_dismiss_info_messages', 'cc_dismiss_info_messages');
 function cc_dismiss_info_messages() {
     echo update_option($_POST['action'], $_POST['value']);
     die();

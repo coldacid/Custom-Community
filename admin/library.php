@@ -569,14 +569,16 @@ function top_level_settings() {
 	
 	<div class="wrap">
 	
-		<h2><b><?php echo $themename; ?> <?php _e('Options','cc')?></b></h2>
-        <p class="additional_info"><?php _e('Custom Community is proudly brought to you by ','cc')?><a class="themekraft-link" href="http://themekraft.com/" target="_blank">Themekraft</a>.
+		<h2><b><?php echo $themename; ?> <?php _e('Settings','cc')?></b></h2>
+		<div class="error">
+			<p>This theme is outdated by now. Please read the <a href="http://themekraft.com/blog/custom-community-2-0-current-status/" target="_blank" title="Blogpost about the current status of Custom Community Theme version 2.0">blogpost about the current status of version 2.0</a> - Get involved and help us making it the perfect WordPress theme for you!</p>
+		</div>
+		<div class="updated">
+			<p><i>For all you early birds and Custom Community Lovers! Pre-order the CC 2.0 <b>Premium Pack</b> today and save 50%! &nbsp;&nbsp;<a class="button button-secondary" href="http://themekraft.com/store/custom-community-2-premium-pack/" target="_blank" title="Pre-order Custom Community 2.0 Premium Pack now and save 50%!">Checkout the deal here.</a></i></p>
+		</div>
+        <p class="additional_info"><?php _e('Proudly brought to you by ','cc')?><a class="themekraft-link" href="http://themekraft.com/" target="_new">ThemeKraft</a>.
 		<br> 
-		<?php if(!defined('is_pro')){ ?>
-			<?php _e('Looking for more? ','cc');?><a class="full-version-link" href="http://themekraft.com/shop/custom-community-pro/" target="_blank"><?php _e('Get the full version','cc')?></a>.
-		<br>
-        <?php } ?>
-		<a style="margin-top:10px;" href="http://support.themekraft.com/categories/20053996-custom-community" class="button button-secondary" target="_blank"><?php _e('Documentation','cc')?></a> <a class="button button-secondary" href="http://themekraft.com/support/" style="margin-top:10px;" target="_blank"><?php _e('Support','cc')?></a>
+		<a style="margin-top:10px;" href="http://support.themekraft.com/categories/20053996-custom-community" class="button button-secondary" target="_new"><?php _e('Documentation','cc')?></a> <a class="button button-secondary" href="http://themekraft.com/support/" style="margin-top:10px;" target="_blank"><?php _e('Support','cc')?></a>
 		</p>
 		
 		<form method="post" action="">
@@ -596,7 +598,7 @@ function top_level_settings() {
 				endforeach;
 				
 				if(!defined('is_pro') && current_user_can('switch_themes')){
-					$cap_getpro = 'Get the Pro';
+					$cap_getpro = 'Go Pro';
 					echo " <li><a href='#cap_getpro'>$cap_getpro</a></li>";
 				}
 

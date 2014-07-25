@@ -30,10 +30,13 @@ img.cc_image_preview {
     color:#000;
 }
 .wrap p.additional_info .themekraft-link{
-    color:#abc214;
+
 }
 .wrap .full-version-link{
-    color:#ff9900;
+    color: red;
+}
+.wrap .full-version-link:hover{
+    color: #21759b;
 }
 form .export-button{
     margin-left:20px;
