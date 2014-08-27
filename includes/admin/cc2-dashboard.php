@@ -262,6 +262,8 @@ class cc2_Admin {
 	}
 	
 	function load_assets() {
+		wp_enqueue_script( 'svg-painter' ); // might fix the randomly appearing 'cannot initialize wp.svgPainter' error
+		
 		wp_enqueue_script('cc-admin-js');
 		wp_enqueue_style('cc-admin-css');
 		

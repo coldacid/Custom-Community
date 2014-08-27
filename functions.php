@@ -492,8 +492,6 @@ function cc2_load_assets() {
 	);
 	*/
 	
-	//extract( $headjs_settings );
-	
 	/**
 	 *  Disable headjs for known plugins: 
 	 * - Head.WP (only executes load component; @link https://github.com/kylereicks/head.js.wp), 

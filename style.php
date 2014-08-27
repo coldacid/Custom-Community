@@ -295,6 +295,23 @@ class cc2_CustomStyle {
 
     /** Navigation **/
 
+	<?php
+	/**
+	 * NOTE: Quick bugfix for the mobile menu jumping bug; its cause is a completely ignored CSS priority of button:hover over .navbar-toggle:hover
+	 */
+	?>
+	nav button.navbar-toggle {
+		border-radius: 4px 4px 4px 4px;
+		float: right;
+		margin-bottom: 15px;
+		margin-right: 15px;
+		margin-top: 15px;
+		padding: 9px 10px;
+		position: relative;
+	}
+
+
+
     <?php // Nav Branding Font Family according to Site Title Font Family
 	// prepare data
 		if( get_theme_mod( 'site_title_font_family', '' ) !== '' ) {

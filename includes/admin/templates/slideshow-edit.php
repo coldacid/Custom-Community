@@ -5,6 +5,8 @@
  * @package cc2
  * @since 2.0
  */
+ 
+//new __debug( $cc_slider_options, 'slideshows' );
 ?>
 	<p>Add, reorder or remove the slides of a slideshow!</p>
 
@@ -17,10 +19,15 @@
 		
 		foreach ($cc_slider_options as $slide_slug => $slide_data) {
 			if( !empty( $slide_slug ) ) {
+				/**
+				 * FIXME: Some troubles are starting here
+				 */
+				
+				
 				$slide_title = ( isset( $slide_data['title'] ) && !empty( $slide_data['title'] ) ? $slide_data['title'] : $slide_slug );
 			
 	?>
-		<option value="<?php echo $slide_title; ?>"><?php echo $slide_title; ?></option>
+		<option value="<?php echo $slide_slug; ?>" data-slug="<?php echo $slide_slug; ?>"><?php echo $slide_title; ?></option>
 	<?php 	}
 		}
 	} ?>
