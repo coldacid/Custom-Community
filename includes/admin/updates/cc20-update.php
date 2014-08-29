@@ -301,7 +301,7 @@ if( $has_old_settings == false ) {
 
 // abort if specific $run_update variable is not set
 if( !isset( $exec_update ) || $exec_update != true ) {
-	echo 'exec_update is false.';
+	//echo 'exec_update is false.';
 	//break;
 	return;
 }

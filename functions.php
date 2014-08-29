@@ -605,7 +605,7 @@ endif;
 
 
 // Load Customizer Options
-require get_template_directory() . '/includes/admin/customizer-options.php';
+require get_template_directory() . '/includes/admin/customizer-options.class.php';
 
 // Implement the Custom Header Feature
 require get_template_directory() . '/includes/custom-header.php';

@@ -409,11 +409,11 @@ function cc2_display_sidebar( $side = 'right' ){
 
 /**
  * Small helper for submit buttons - uses the PROPER element button, NOT input! tsk ..
- * Mostly a improved copy of @see get_submit_button()
+ * Mostly an improved copy of @see get_submit_button()
  *
  * 
  * @author Fabian Wolf
- * @since 2.0-rc2
+ * @since 2.0-b3
  * @package cc2
  */
 if( !function_exists( 'proper_submit_button' ) ) :
@@ -443,6 +443,14 @@ if( !function_exists( 'proper_submit_button' ) ) :
 			$id = $other_attributes['id'];
 			unset( $other_attributes['id'] );
 		}
+		
+		// Defualt button type
+		$button_type = 'submit';
+		if( is_array( $other_attributes ) && isset( $other_attributes['type'] ) ) {
+			$button_type = $other_attributes['type'];
+			unset( $other_attributes['type'] );
+		}
+		
 
 		$attributes = '';
 		if ( is_array( $other_attributes ) ) {
@@ -453,7 +461,7 @@ if( !function_exists( 'proper_submit_button' ) ) :
 			$attributes = $other_attributes;
 		}
 
-		$button = '<button type="submit" name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '" class="' . esc_attr( $class ) . '" '
+		$button = '<button type="' . esc_attr( $button_type ) . '" name="' . esc_attr( $name ) . '" id="' . esc_attr( $id ) . '" class="' . esc_attr( $class ) . '" '
 				. trim($attributes) . '>' . esc_attr( $text ) 
 				. '</button>';
 

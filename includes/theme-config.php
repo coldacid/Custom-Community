@@ -52,6 +52,23 @@ define('CC2_THEME_CONFIG', serialize(
 			'"Times New Roman", Times, serif' => 'Times New Roman',
 		),
 		
+		'color_schemes' => array(
+			'default' => array(
+				'title' => 'Orange Colour Scheme',
+				'file' => 'default.less',
+				'main_color_scheme' => array(
+					'font_color' => '', /** actual theme_mod: */
+					''
+				),
+			),
+			'dark' => array(
+				'title' => 'Dark Colour Scheme',
+			),
+			'light' => array(
+				'title' => 'Light Colour Scheme',
+			),
+		),
+		
 		'support_settings' => array(
 			'zendesk' => array(
 				'css' => 'https://assets.zendesk.com/external/zenbox/v2.6/zenbox.css',
