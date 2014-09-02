@@ -1,7 +1,3 @@
-
-As Custom Community has always been a community project,
-we want to form the 2.0 version together with you.
-
 ---------------------------------------------------------------------------------------------------
 
 == Community Based Development == 
