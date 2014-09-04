@@ -380,7 +380,7 @@ if( !class_exists( 'cc2_ColorSchemes' ) ) {
 	 * @hook cc2_include_color_scheme_class		Optionally add drop-in replacement.
 	 */
 	
-	require_once( apply_filters('cc2_include_color_scheme_class', 'includes/color_schemes.class.php' ) );
+	require_once( apply_filters('cc2_include_color_scheme_class', get_template_directory() . '/includes/color-schemes.class.php' ) );
 
 	new cc2_ColorSchemes();
 }
