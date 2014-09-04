@@ -34,7 +34,6 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			
 			
 			// set up actions
-			add_action( 'init', array( $this, 'customizer_init' ) );
 			add_action( 'customize_preview_init', array( $this, 'customizer_preview_init' ) );
 			
 		}
@@ -114,11 +113,21 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 				
 				$return['config'] = $config;
 				
+				/**
+				 * TODO: Use cc2_ColorSchemes instead
+				 */
+				
 				if( isset( $config['color_schemes'] ) && is_array( $config['color_schemes'] ) ) {
 				
 					foreach( $config['color_schemes'] as $strSchemeSlug => $arrSchemeParams ) {
 				
 						$return['color_schemes'][ $strSchemeSlug ] = $arrSchemeParams['title'];
+						
+						if( !empty($arrSchemeParams['scheme'] ) ) { // some may be just rudimentary added
+							$return['color_scheme_previews'][ $strSchemeSlug ] = $arrSchemeParams['scheme'];
+						} else {
+							$return['color_scheme_previews'][ $strSchemeSlug ] = false;
+						}
 					}
 				}
 			}
@@ -249,12 +258,37 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			);	
 			
 			
-			return $return;
+			return apply_filters( 'cc2_customizer_prepare_variables',  $return );
 		}
-
-
 		
+	
+		function customizer_preview_init() {
+		
+			$tk_customizer_options = get_option('tk_customizer_options');
+			
+			if(isset( $tk_customizer_options['customizer_disabled'])) {
+				return;
+			}
+			wp_enqueue_script('consoledummy');
+			
+			wp_enqueue_script('jquery');
 
+			// load animate.css
+			wp_enqueue_style( 'cc-animate-css');
+			wp_enqueue_script( 'tk_customizer_preview_js',	get_template_directory_uri() . '/includes/admin/js/customizer.js', array( 'jquery', 'customize-preview' ), '', true );
+		}
+		
+	}
+	
+	class cc2_CustomizerTheme extends cc2_CustomizerLoader {
+		function __construct() {
+			
+			
+			
+			add_action( 'init', array( $this, 'customizer_init' ) );
+			
+		}
+		
 		function customizer_init() {
 			
 			
@@ -312,24 +346,6 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			
 			//add_action( 'customize_register', 'tk_customizer_support' );
 		}
-	
-		function customizer_preview_init() {
-		
-			$tk_customizer_options = get_option('tk_customizer_options');
-			
-			if(isset( $tk_customizer_options['customizer_disabled'])) {
-				return;
-			}
-			
-			wp_enqueue_script('jquery');
-
-			// load animate.css
-			wp_enqueue_style( 'cc-animate-css');
-			wp_enqueue_script( 'tk_customizer_preview_js',	get_template_directory_uri() . '/includes/admin/js/customizer.js', array( 'jquery', 'customize-preview' ), '', true );
-		}
-		
-		
-		
 		
 		/**
 		 * Goes first
@@ -375,10 +391,11 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			
 				// Color Scheme
 				 $wp_customize->add_setting( 'color_scheme', array(
-					 'default'      => $color_schemes['default'],
+					 'default'      => 'default',
 					 'capability'   => 'edit_theme_options',
 					 'transport'   	=> 	'refresh',
 				 ) );
+				 
 				 $wp_customize->add_control( 'color_scheme', array(
 					'label'   		=> 	__('Choose a skin!', 'cc2'),
 					'section' 		=> 	'colors',
@@ -1690,23 +1707,23 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 
 			$wp_customize->add_section( 'typography', array(
 				'title'         => 	'Typography',
-				'priority'      => 	140,
+				'priority'      => 	110,
 			) );
 
-			if( ! defined( 'CC2_LESSPHP' ) ) :
+			if( ! defined( 'CC2_LESSPHP' ) ) {
 
 				// A Quick Note on Bootstrap Variables
 				$wp_customize->add_setting( 'bootstrap_typography_note', array(
 					'capability'    => 	'edit_theme_options',
 				) );
 				$wp_customize->add_control( new Description( $wp_customize, 'bootstrap_typography_note', array(
-					'label' 		=> 	__('Most Typography just work with Bootstrap Variables, which cannot be compiled within the theme, as this is plugin territory. Get all typography options with the <a href="http://themekraft.com/store/custom-community-2-premium-pack/" target="_blank">premium extension.</a>', 'cc2'),
+					'label' 		=> 	sprintf( __('Most Typography just work with Bootstrap Variables, which cannot be compiled within the theme, as this is plugin territory. Get all typography options with the <a href="%s" target="_blank">premium extension.</a>', 'cc2'), 'http://themekraft.com/store/custom-community-2-premium-pack/' ),
 					'type' 			=> 	'description',
 					'section' 		=> 	'typography',
-					'priority'		=> 	2,
+					'priority'		=> 	115,
 				) ) );
 
-			endif;
+			}
 
 			// Headline Font Family
 			$wp_customize->add_setting( 'title_font_family', array(
@@ -2794,7 +2811,7 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 	
 	
 	if( !isset( $cc2_customizer ) ) {
-		$cc2_customizer = new cc2_CustomizerLoader(); // intentionally NOT using the Simpleton pattern .. ;)
+		$cc2_customizer = new cc2_CustomizerTheme(); // intentionally NOT using the Simpleton pattern .. ;)
 	}
 	
 }

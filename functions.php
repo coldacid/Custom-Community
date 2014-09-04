@@ -359,6 +359,33 @@ if( !class_exists( 'cc2_BootstrapButton') ) {
 	add_action('after_setup_theme', array('cc2_BootstrapButton', 'init' ) );
 }
 
+/**
+ * Load the aid against JS errors (@see https://github.com/andyet/ConsoleDummy.js)
+ * Try to load as early as possible
+ */
+function cc2_js_aid() { 
+	wp_register_script( 'consoledummy', get_template_directory_uri() . '/includes/js/SlimConsoleDummy.min.js' ); // out of convenience
+	wp_enqueue_script( 'consoledummy' );
+}
+add_action('get_header', 'cc2_js_aid' ); // frontend
+add_action('admin_enqueue_scripts', 'cc2_js_aid', 1 ); // admin
+
+//add_action('wp_enqueue_scripts', 'cc2_js_aid', 0 );
+//add_action('admin_enqueue_scripts', 'cc2_js_aid', 0 );
+
+
+if( !class_exists( 'cc2_ColorSchemes' ) ) {
+	
+	/**
+	 * @hook cc2_include_color_scheme_class		Optionally add drop-in replacement.
+	 */
+	
+	require_once( apply_filters('cc2_include_color_scheme_class', 'includes/color_schemes.class.php' ) );
+
+	new cc2_ColorSchemes();
+}
+
+
 
 /**
  * Register scripts and styles 
@@ -378,6 +405,8 @@ function cc2_register_scripts() {
 
     // load bootstrap css
     wp_enqueue_style( 'style', apply_filters('cc2_style_css', get_template_directory_uri() . '/style.css') );
+
+
 
 	// load bootstrap js
 	//wp_register_script( 'bootstrap-min', get_template_directory_uri() . '/includes/resources/bootstrap/dist/js/'
@@ -465,6 +494,9 @@ function cc2_register_scripts() {
 add_action( 'wp_enqueue_scripts', 'cc2_load_assets', 11 );
  
 function cc2_load_assets() {
+	
+	
+	
 	// load settings
 	$advanced_settings = get_option('cc2_advanced_settings', array() );
 	
@@ -505,6 +537,10 @@ function cc2_load_assets() {
     //wp_enqueue_style( 'cc-bootstrap', get_template_directory_uri() . '/includes/resources/bootstrap/dist/css/bootstrap.min.css' );
 
     // load bootstrap css
+
+	// aid against JS troubles => https://github.com/andyet/ConsoleDummy.js
+	//wp_enqueue_script( 'consoledummy' );
+
 
 	// load bootstrap js
     wp_enqueue_script( 'cc-bootstrap-tooltip');
@@ -605,7 +641,7 @@ endif;
 
 
 // Load Customizer Options
-require get_template_directory() . '/includes/admin/customizer-options.class.php';
+require get_template_directory() . '/includes/admin/customizer-options-extended.class.php';
 
 // Implement the Custom Header Feature
 require get_template_directory() . '/includes/custom-header.php';

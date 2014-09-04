@@ -54,18 +54,21 @@ define('CC2_THEME_CONFIG', serialize(
 		
 		'color_schemes' => array(
 			'default' => array(
-				'title' => 'Orange Colour Scheme',
-				'file' => 'default.less',
-				'main_color_scheme' => array(
-					'font_color' => '', /** actual theme_mod: */
-					''
+				'title' => 'Orange &amp; Black',
+				'file' => 'default.less', /** if no filename is given, we assume its {$slug}.less */
+				'scheme' => array(
+					'font_color' => '333333', /** @gray-dark: lighten(#000, 20%); // #333 */
+					'font_family' => 'font-family-sans-serif',
+					'link_color' => 'f2694b',
+					'hover_color' => 'f2854b',
 				),
 			),
 			'dark' => array(
-				'title' => 'Dark Colour Scheme',
+				'title' => 'Dark Colours',
+				
 			),
 			'light' => array(
-				'title' => 'Light Colour Scheme',
+				'title' => 'Light Colours',
 			),
 		),
 		
