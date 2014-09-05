@@ -3,6 +3,12 @@
 // some initial variables, some of them being very important for updates etc.
 define('CC2_THEME', '2.0' );
 
+// required for most stuff to work properly
+if( file_exists( get_stylesheet_directory() . '/includes/theme-config.php' ) && !defined('CC2_THEME_CONFIG') ) {
+	include_once( get_stylesheet_directory() . '/includes/theme-config.php' );
+}
+
+
 // uncomment if something fails to work - enables all built-in theme debugging options
 //define('CC2_THEME_DEBUG', true );
 
@@ -11,8 +17,8 @@ if( !class_exists('__debug') && file_exists( get_template_directory() . '/includ
 	include_once( get_template_directory() . '/includes/debug.class.php' );
 endif;
 
-// enable internal debug mode
-//define('CC2_THEME_DEBUG', true ); // uncomment to enable the internal debug mode
+
+
 
 /**
  * Possible bugfix for randomly appearing "blank" screen in the Theme Customizer
@@ -382,7 +388,7 @@ if( !class_exists( 'cc2_ColorSchemes' ) ) {
 	
 	require_once( apply_filters('cc2_include_color_scheme_class', get_template_directory() . '/includes/color-schemes.class.php' ) );
 
-	new cc2_ColorSchemes();
+	add_action('after_setup_theme', array( 'cc2_ColorSchemes', 'init' ), 11 );
 }
 
 
@@ -403,7 +409,7 @@ function cc2_register_scripts() {
     // load bootstrap css
     //wp_enqueue_style( 'cc-bootstrap', get_template_directory_uri() . '/includes/resources/bootstrap/dist/css/bootstrap.min.css' );
 
-    // load bootstrap css
+    // load bootstrap css => fires earlier
     wp_enqueue_style( 'style', apply_filters('cc2_style_css', get_template_directory_uri() . '/style.css') );
 
 
@@ -536,7 +542,8 @@ function cc2_load_assets() {
     // load bootstrap css
     //wp_enqueue_style( 'cc-bootstrap', get_template_directory_uri() . '/includes/resources/bootstrap/dist/css/bootstrap.min.css' );
 
-    // load bootstrap css
+	// load bootstrap css => fires too late
+    //wp_enqueue_style( 'style', apply_filters('cc2_style_css', get_template_directory_uri() . '/style.css') );
 
 	// aid against JS troubles => https://github.com/andyet/ConsoleDummy.js
 	//wp_enqueue_script( 'consoledummy' );

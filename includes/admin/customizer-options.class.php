@@ -388,6 +388,11 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			extract ( $this->prepare_variables() );
 			
 			if( !empty( $color_schemes ) ) {
+				// mind the test scheme
+				if( !defined('CC2_THEME_DEBUG' ) && isset( $color_schemes['_test'] ) ) {
+					unset( $color_schemes['_test'] );
+				}
+				
 			
 				// Color Scheme
 				 $wp_customize->add_setting( 'color_scheme', array(
@@ -397,7 +402,7 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 				 ) );
 				 
 				 $wp_customize->add_control( 'color_scheme', array(
-					'label'   		=> 	__('Choose a skin!', 'cc2'),
+					'label'   		=> 	__('Choose a scheme', 'cc2'),
 					'section' 		=> 	'colors',
 					'priority'		=> 	10,
 					'type'    		=> 	'radio',
