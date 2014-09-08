@@ -10,10 +10,12 @@
 if( !class_exists( 'cc2_ColorSchemes' ) ) {
 	class cc2_ColorSchemes {
 		
-		var $arrKnownLocations = array();
+		var $arrKnownLocations = array(),
+			$arrColorSchemes = array();
 		
 		function __construct() {
 			// init variables
+			$this->init_schemes();
 			
 			$upload_dir = $upload_dir = wp_upload_dir();
 			
@@ -63,56 +65,63 @@ if( !class_exists( 'cc2_ColorSchemes' ) ) {
 			return $return;
 		}
 		
+		
+		public function init_schemes() {
+			
+			if( defined('CC2_THEME_CONFIG' ) ) {
+				
+				$config = maybe_unserialize( CC2_THEME_CONFIG );
+				
+				if( !empty( $config['color_schemes'] ) ) {
+					$this->arrColorSchemes = $config['color_schemes'];
+				}
+
+			}
+		}
 	
 		function get_current_color_scheme( $default = false ) {
 			$return = $default;
 			
+			$arrColorSchemes = apply_filters( 'cc2_get_available_color_schemes', $this->arrColorSchemes );
+			
 			$current_scheme_slug = get_theme_mod('color_scheme', $default );
 			
 			
-			
-			if( !empty( $current_scheme_slug ) && defined('CC2_THEME_CONFIG' ) ) {
+			if( !empty( $current_scheme_slug ) && !empty( $arrColorSchemes ) && !empty( $arrColorSchemes[ $current_scheme_slug ] ) ) {
+					
+				$return = $arrColorSchemes[ $current_scheme_slug ];
 				
-				$config = maybe_unserialize( CC2_THEME_CONFIG );
 				
-				
-				if( !empty( $config['color_schemes'] ) && !empty( $config['color_schemes'][ $current_scheme_slug ] ) ) {
-					
-					$return = $config['color_schemes'][ $current_scheme_slug ];
-					
-					
-					if( empty( $return['slug'] ) ) {
-						$return['slug'] = $current_scheme_slug;
-					}
-					
-					
-					if( empty( $return['output_file'] ) != false ) {
-						$strOutputFile = $current_scheme_slug . '.css';
-						
-						if( !empty( $return['file'] ) ) {
-							$strOutputFile = basename( $return['file'], 'less' ) . '.css';
-						}
-						
-						$return['output_file'] = $strOutputFile;
-					}
-					
-					// check paths
-					
-					/**
-					 * NOTE: A (do-)while-loop might be the better choice. Avoids nasty breaks.
-					 */
-					
-					foreach( $this->arrKnownLocations as $strPath => $strURL ) { 
-						
-						if( file_exists( $strPath . $return['output_file'] ) ) {
-							$return['style_path'] = $strPath . $return['output_file'];
-							$return['style_url'] = $strURL . $return['output_file'];
-							break;
-						}
-					}
-					
+				if( empty( $return['slug'] ) ) {
+					$return['slug'] = $current_scheme_slug;
 				}
 				
+				
+				if( empty( $return['output_file'] ) != false ) {
+					$strOutputFile = $current_scheme_slug . '.css';
+					
+					if( !empty( $return['file'] ) ) {
+						$strOutputFile = basename( $return['file'], 'less' ) . '.css';
+					}
+					
+					$return['output_file'] = $strOutputFile;
+				}
+				
+				// check paths
+				
+				/**
+				 * NOTE: A (do-)while-loop might be the better choice. Avoids nasty breaks.
+				 */
+				
+				foreach( $this->arrKnownLocations as $strPath => $strURL ) { 
+					
+					if( file_exists( $strPath . $return['output_file'] ) ) {
+						$return['style_path'] = $strPath . $return['output_file'];
+						$return['style_url'] = $strURL . $return['output_file'];
+						break;
+					}
+				}
+	
 			}
 			
 			return $return;

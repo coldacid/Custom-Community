@@ -254,7 +254,7 @@ function add_nav_brand( $content = '' ) {
 
 
 	// just echo the brand here.	
-	echo '<a class="navbar-brand" href="' . esc_url( home_url( '/' ) ) . '" title="'. esc_attr( get_bloginfo( 'name', 'display' ) ) .'" rel="home">' . $content . '</a>';
+	echo '<a class="navbar-brand hidden-xs" href="' . esc_url( home_url( '/' ) ) . '" title="'. esc_attr( get_bloginfo( 'name', 'display' ) ) .'" rel="home">' . $content . '</a>';
 
 }
 
@@ -1206,12 +1206,85 @@ endif;
 
 
 if ( ! function_exists( '_tk_content_nav' ) ) :
+
+/**
+ * Display navigation to next/previous pages when applicable
+ * 
+ * NOTE: Resurrected original function from 1.99 / early alpha releases
+ */
+function _tk_index_nav() {
+	global $wp_query;
+	static $tk_index_count = 1;
+
+	$return = '';
+	$strAttrID = 'cc2-pagination' . $tk_index_count;
+	$tk_index_count++;
+
+    if(function_exists('wp_pagenavi')) {
+
+        ob_start();
+        wp_pagenavi( array( 'query' => $wp_query ) );
+        $cc_tmp_wp_pagenavi = ob_get_clean();
+        $cc_tmp_wp_pagenavi = str_replace('class=\'wp-pagenavi\'', 'id="' . $strAttrID . '" class="wp-pagenavi navigation"', $cc_tmp_wp_pagenavi);
+        $return = $cc_tmp_wp_pagenavi;
+
+    } else {
+		
+		$current_page = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+		if( is_front_page() ) {
+			$current_page = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
+		}
+
+
+
+		$return['open'] = '<div id="' . $strAttrID . '" class="navigation"><ul class="pager">';
+		$return['next'] = '<li class="alignleft">'. get_next_posts_link( __('<span class="arrow-left">&laquo;</span><span class="nav-next-text"> Older Entries</span>', 'cc2'), $wp_query->max_num_pages ) .'</li>';
+		$return['prev'] = '<li class="alignright">' . get_previous_posts_link( __('<span class="nav-prev-text">Newer Entries </span><span class="arrow-right">&raquo;</span>', 'cc2') ) .'</li>';
+		$return['close'] ='</ul></div><!-- End paging navigation -->';
+
+
+
+		if( $wp_query->max_num_pages > 1 ) {
+			
+			
+			$arrPages = paginate_links( array('total' => $wp_query->max_num_pages, 'current' => $current_page, 'prev_next' => false, 'type' => 'array' ) );
+			
+			//foreach( $arrPages as $
+			//new __debug( $arrPages, 'arrPages' );
+			
+			if( !empty( $arrPages ) ) {
+				foreach( $arrPages as $strPageLink ) {
+					$arrPaginationList[] = '<li>' . str_replace( array(' class=\'page-numbers current\'', ' class="page-numbers current"' ), ' class="active"', $strPageLink ) . '</li>';
+					
+				}
+				
+			
+				$return = str_replace(' class="pager">', ' class="pagination">', $return['open'] ) . $return['next'] . implode("\n", $arrPaginationList ) . $return['prev'] . $return['close'];
+			
+			}
+			
+		}
+
+    }
+    
+    
+	//new __debug( $return, 'return' );
+
+	if( !empty( $return ) && is_array( $return) ) {
+
+		$return = implode("\n", $return );
+	}
+
+	echo $return;
+}
+
+
 /**
  * Display navigation to next/previous pages when applicable
  * 
  * FIXME: Seems to be simply copy + pasted work. Undefined variable $the_lp_query is being used. Commited by the former main authors of this theme? Added a quick global + isset() to the function. (@author Fabian Wolf)
  * 
- */
+ 
 function _tk_index_nav() {
 	global $the_lp_query;
     $cc_tmp = '';
@@ -1237,7 +1310,9 @@ function _tk_index_nav() {
 	}
 
 	echo $cc_tmp;
-}
+}*/
+
+
 endif; // _tk_index_nav
 
 if ( ! function_exists( '_tk_content_nav' ) ) :
@@ -1272,6 +1347,7 @@ function _tk_content_nav( $nav_id ) {
 		<?php next_post_link( '<div class="nav-next">%link</div>', '%title <span class="meta-nav">' . _x( '&rarr;', 'Next post link', '_tk' ) . '</span>' ); ?>
 
 	<?php elseif ( $wp_query->max_num_pages > 1 && ( is_home() || is_archive() || is_search() ) ) : // navigation links for home, archive, and search pages ?>
+		<h1>Yay for pagination!</h1>
 
 		<?php if ( get_next_posts_link() ) : ?>
 		<div class="nav-previous"><?php next_posts_link( __( '<span class="meta-nav">&larr;</span> Older posts', '_tk' ) ); ?></div>

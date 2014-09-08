@@ -69,7 +69,11 @@ get_header(); ?>
                                     </div>
 
                                     <?php // Get the page navigation for older and newer posts ?>
-                                    <?php _tk_index_nav(); ?>
+                                    <?php do_action('cc2_have_posts_after_loop' );
+                                    
+                                    //new __debug( $wp_query, 'wp_query' );
+                                    
+                                    _tk_index_nav(); ?>
 
                                 </div>
                             </div>
