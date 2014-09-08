@@ -1204,21 +1204,24 @@ if( !function_exists( 'cc2_bootstrap_comment_form_fields' ) ):
 endif;
 
 
-
-if ( ! function_exists( '_tk_content_nav' ) ) :
-
+if( ! function_exists( 'cc2_pagination' ) ) :
 /**
  * Display navigation to next/previous pages when applicable
  * 
- * NOTE: Resurrected original function from 1.99 / early alpha releases
+ * NOTE: Rewrite of resurrected original function from 1.99 / early alpha releases
  */
-function _tk_index_nav() {
+
+function cc2_pagination( $arrParams = array() ) {
 	global $wp_query;
 	static $tk_index_count = 1;
 
 	$return = '';
+	$echo = true;
+	
 	$strAttrID = 'cc2-pagination' . $tk_index_count;
 	$tk_index_count++;
+	
+	
 
     if(function_exists('wp_pagenavi')) {
 
@@ -1229,54 +1232,130 @@ function _tk_index_nav() {
         $return = $cc_tmp_wp_pagenavi;
 
     } else {
+		// prepare parameters
+		
+		$arrParams = wp_parse_args( array(
+			'use_pagination' => true,
+			'echo' => true,
+			'center_pagination' => true,
+			'center_pager' => false,
+		), $arrParams );
+		
+		extract( $arrParams );
+		
+		// get current page
 		
 		$current_page = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 		if( is_front_page() ) {
 			$current_page = ( get_query_var( 'page' ) ) ? get_query_var( 'page' ) : 1;
 		}
 
+		// prepare links
+		
+		$arrPostsLink['next'] = get_next_posts_link( __('<span class="arrow-left">&laquo;</span><span class="nav-next-text"> Older Entries</span>', 'cc2'), $wp_query->max_num_pages );
+		
+		$arrPostsLink['prev'] = get_previous_posts_link( __('<span class="nav-prev-text">Newer Entries </span><span class="arrow-right">&raquo;</span>', 'cc2') );
 
+		// prepare templates
 
-		$return['open'] = '<div id="' . $strAttrID . '" class="navigation"><ul class="pager">';
-		$return['next'] = '<li class="alignleft">'. get_next_posts_link( __('<span class="arrow-left">&laquo;</span><span class="nav-next-text"> Older Entries</span>', 'cc2'), $wp_query->max_num_pages ) .'</li>';
-		$return['prev'] = '<li class="alignright">' . get_previous_posts_link( __('<span class="nav-prev-text">Newer Entries </span><span class="arrow-right">&raquo;</span>', 'cc2') ) .'</li>';
-		$return['close'] ='</ul></div><!-- End paging navigation -->';
-
+		$arrTemplate['open'] = apply_filters('cc2_pagination_template_wrapper_open', '<div id="%s" class="%s"><ul class="%s">' );
+		$arrTemplate['next_prev'] = apply_filters('cc2_pagination_template_prev_next', '<li class="%s">%s</li>' );
+		$arrTemplate['paging'] = apply_filters('cc2_pagination_template_paging', '<li class="%s">%s</li>' );
+		
+		$arrTemplate['close'] = apply_filters('cc2_paginatation_template_wrapper_close', '</ul></div><!-- End paging navigation -->' );
 
 
 		if( $wp_query->max_num_pages > 1 ) {
 			
-			
 			$arrPages = paginate_links( array('total' => $wp_query->max_num_pages, 'current' => $current_page, 'prev_next' => false, 'type' => 'array' ) );
 			
-			//foreach( $arrPages as $
-			//new __debug( $arrPages, 'arrPages' );
 			
 			if( !empty( $arrPages ) ) {
 				foreach( $arrPages as $strPageLink ) {
-					$arrPaginationList[] = '<li>' . str_replace( array(' class=\'page-numbers current\'', ' class="page-numbers current"' ), ' class="active"', $strPageLink ) . '</li>';
+					$strPageLinkClass = 'pagination-nav';
+					$strCurrentPageLink = $strPageLink;
 					
+					if( stripos( $strPageLink, 'page-numbers current' ) !== false ) {
+						$strPageLinkClass = 'active';
+						$strCurrentPageLink = str_replace( array(' class=\'page-numbers current\'', ' class="page-numbers current"' ), '', $strPageLink );
+					}
+					
+					$arrPaginationList[] = sprintf( $arrTemplate['paging'], $strPageLinkClass, $strCurrentPageLink );
 				}
-				
+
+			}
+
+		}
 			
-				$return = str_replace(' class="pager">', ' class="pagination">', $return['open'] ) . $return['next'] . implode("\n", $arrPaginationList ) . $return['prev'] . $return['close'];
+		// wrapper.open
 			
+		$strPagingContainerClass = 'navigation';
+		$strPagingClass = 'pager';
+		
+		if( !empty( $arrPaginationList ) && !empty( $use_pagination ) ) {
+			$strPagingClass = 'pagination';
+		}
+		
+		if( !empty( $center_pagination ) ) {
+			$strPagingContainerClass .= ' aligncenter';
+		}
+		
+		$return = sprintf( $arrTemplate['open'], $strAttrID, $strPagingContainerClass, $strPagingClass );
+
+		// add next
+		if( !empty( $arrPostsLink['next'] ) ) {
+			$strPostsLinkClassNext = 'nav-link-next';
+			if( empty($center_pager) && $strPagingClass != 'pagination' ) {
+				$strPostsLinkClassNext .= ' alignleft';
 			}
 			
+			$return .= sprintf( $arrTemplate['next_prev'], $strPostsLinkClassNext, $arrPostsLink['next'] );
 		}
+		
+		// add pagination
+		if( $strPagingClass == 'pagination' ) { // easy, eh? ;-)
+			$return .= implode("\n", $arrPaginationList );
+		}
+		
+		// add prev
+		if( !empty( $arrPostsLink['prev'] ) ) {
+			$strPostsLinkClassPrev = 'nav-link-prev';
+			if( empty($center_pager) && $strPagingClass != 'pagination' ) {
+				$strPostsLinkClassPrev .= ' alignright';
+			}
+			
+			$return .= sprintf( $arrTemplate['next_prev'], $strPostsLinkClassPrev, $arrPostsLink['prev'] );
+		}
+		
+		// wrapper.close
+		$return .= $arrTemplate['close'];
+		
 
     }
-    
-    
+
 	//new __debug( $return, 'return' );
 
-	if( !empty( $return ) && is_array( $return) ) {
-
-		$return = implode("\n", $return );
+	if( !empty( $echo ) ) {
+		echo $return;
+		return;
 	}
-
-	echo $return;
+	return $return;
 }
+
+if ( ! function_exists( '_tk_index_nav' ) ) :
+/**
+ * Wrapper function for proper backwars compatiblity
+ */
+function _tk_index_nav() {
+	if( !function_exists('cc2_pagination' ) ) {
+		return;
+	}
+	
+	cc2_pagination();
+}
+ 
+ 
+endif;
 
 
 /**
