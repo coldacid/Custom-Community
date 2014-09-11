@@ -380,16 +380,61 @@ add_action('admin_enqueue_scripts', 'cc2_js_aid', 1 ); // admin
 //add_action('admin_enqueue_scripts', 'cc2_js_aid', 0 );
 
 
+/*
 if( !class_exists( 'cc2_ColorSchemes' ) ) {
 	
-	/**
-	 * @hook cc2_include_color_scheme_class		Optionally add drop-in replacement.
-	 */
 	
 	require_once( apply_filters('cc2_include_color_scheme_class', get_template_directory() . '/includes/color-schemes.class.php' ) );
 
 	add_action('after_setup_theme', array( 'cc2_ColorSchemes', 'init' ), 11 );
+}*/
+
+
+
+/**
+ * Helper functions
+ */
+
+if( !class_exists( 'cc2_ColorSchemes' ) ) {
+	include_once( apply_filters('cc2_include_color_scheme_class', get_template_directory() . '/includes/color-schemes.class.php' ) );
 }
+
+/**
+ * Global wrapper function
+ */
+if( !function_exists('_cc2_get_current_color_scheme' ) ) :
+	function _cc2_get_current_color_scheme() {
+		global $cc2_color_schemes;
+		
+		$return = apply_filters('cc2_get_current_color_scheme', $cc2_color_schemes->get_current_color_scheme() );
+		
+		return $return;
+	}
+endif;
+
+/**
+ * Helps with initialization, esp. if you're using a child theme or want to extend or override the class with your own.
+ *
+ * NOTE: Experimental usage of anonymous function call. WP 3.9+ requires at least PHP 5.3 to work, AND PHP 5.2 is officially being deprecated, so it shouldnt be a problem anyway.
+ * 
+ * @requires WP 3.9
+ */
+ 
+add_action('after_setup_theme', function() {
+	global $cc2_color_schemes;
+	//new __debug('init CHECK fires');
+	
+	
+	if( !isset( $cc2_color_schemes ) ) {
+		//new __debug('init fires');
+		
+		do_action('cc2_init_color_schemes');
+	} else {
+		/*$current_scheme = _cc2_get_current_color_scheme();
+		new __debug( $current_scheme, 'current color scheme' );
+		*/
+	}
+}, 20 );
 
 
 

@@ -73,8 +73,9 @@ if( $show_front_page_content ) :
 
                                     </div>
 
-                                    <?php // Get the page navigation for older and newer posts ?>
-                                    <?php _tk_index_nav(); ?>
+									<?php // Get the page navigation for older and newer posts
+									do_action('cc2_have_posts_after_loop_front_page' );
+									?>
 
                                 </div>
                             </div>

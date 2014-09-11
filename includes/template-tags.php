@@ -1342,6 +1342,11 @@ function cc2_pagination( $arrParams = array() ) {
 	return $return;
 }
 
+add_action('cc2_have_posts_after_loop_front_page', 'cc2_pagination');
+add_action('cc2_have_posts_after_loop_archive', 'cc2_pagination');
+add_action('cc2_have_posts_after_loop', 'cc2_pagination');
+
+
 if ( ! function_exists( '_tk_index_nav' ) ) :
 /**
  * Wrapper function for proper backwars compatiblity

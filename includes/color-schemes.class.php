@@ -7,11 +7,38 @@
  * @since 2.0-r2
  */
 
-if( !class_exists( 'cc2_ColorSchemes' ) ) {
+if( class_exists( 'cc2_ColorSchemes' ) ) {
+	return;
+}
+
 	class cc2_ColorSchemes {
 		
 		var $arrKnownLocations = array(),
 			$arrColorSchemes = array();
+		
+		/**
+         * @static
+         * @var    \wp_less Reusable object instance.
+         */
+        protected static $instance = null;
+
+
+        /**
+         * Creates a new instance. Called on 'after_setup_theme'.
+         * May be used to access class methods from outside.
+         *
+         * @see    __construct()
+         * @static
+         * @return \wp_less
+         */
+        public static function init() {
+			global $cc2_color_schemes;
+			null === self::$instance AND self::$instance = new self;
+			
+			$cc2_color_schemes = self::$instance;
+			
+			return self::$instance;
+        }
 		
 		function __construct() {
 			// init variables
@@ -30,11 +57,7 @@ if( !class_exists( 'cc2_ColorSchemes' ) ) {
 			
 			add_filter( 'cc2_style_css', array( $this, 'switch_color_scheme') );
 		}
-		
-		public static function init() {
-			
-			new cc2_ColorSchemes();
-		}
+
 
 		public function set_known_locations( $arrLocations = array() ) {
 			$return = false;
@@ -127,4 +150,6 @@ if( !class_exists( 'cc2_ColorSchemes' ) ) {
 			return $return;
 		}
 	}
-}
+	
+	add_action('cc2_init_color_schemes', array('cc2_ColorSchemes', 'init'), 11 );
+

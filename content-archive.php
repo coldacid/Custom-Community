@@ -91,7 +91,9 @@
                         <?php endwhile; ?>
 
                     </div>
-                    <?php _tk_index_nav(); ?>
+                    <?php 
+					do_action('cc2_have_posts_after_loop_archive' );
+					?>
                 </div>
             </div>
 
