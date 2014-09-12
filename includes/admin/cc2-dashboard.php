@@ -63,7 +63,7 @@ class cc2_Admin {
 		add_action( 'admin_enqueue_scripts', array( $this, 'init_assets' ), 10 );
 		
 		// enqueue base assets AFTER registering them (lower priority = loaded LATER)
-		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ), 11 );
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ), 11, 1 );
 		
 		//new __debug('cc2 theme settings loaded');
 	}
@@ -261,11 +261,19 @@ class cc2_Admin {
 
 	}
 	
-	function load_assets() {
+	
+	function load_assets( $page_slug ) {
+		
+		
+		
+		
+		wp_enqueue_script('consoledummy');
 		wp_enqueue_script( 'svg-painter' ); // might fix the randomly appearing 'cannot initialize wp.svgPainter' error
 		
 		wp_enqueue_script('cc-admin-js');
 		wp_enqueue_style('cc-admin-css');
+		
+		
 		
 		/**
 		 * @see http://wordpress.stackexchange.com/questions/22857/css-not-pulling-in-for-jquery-ui-dialog#comment41208_22857
@@ -281,11 +289,17 @@ class cc2_Admin {
 		
 		
 		wp_enqueue_script('cc-admin-ajaxhooks');
-		if( !empty( $this->arrSupportSettings ) ) {
-			wp_localize_script( 'cc-support-helper', 'tk_support_settings', $this->arrSupportSettings );
-		}
-		wp_enqueue_script('cc-support-helper');
 		
+		// load zenbox + more ONLY on the cc2-settings pages, but NOT eg. on the theme customizer page!
+		
+		if( is_cc2_admin_page( $page_slug, 'cc2-settings' ) ) {
+		
+			if( !empty( $this->arrSupportSettings ) ) {
+				wp_localize_script( 'cc-support-helper', 'tk_support_settings', $this->arrSupportSettings );
+			}
+			wp_enqueue_script('cc-support-helper');
+
+		}
 		/*
 		wp_enqueue_script('cc_tk_zendesk_js');
 		wp_enqueue_style('cc_tk_zendesk_js');*/

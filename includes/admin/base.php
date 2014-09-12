@@ -73,6 +73,10 @@ class cc2_Admin_Base {
 	
 	public function init_assets() {
 		// register base files
+		// load the aid against JS errors (@see https://github.com/andyet/ConsoleDummy.js)
+		wp_register_script( 'consoledummy', get_template_directory_uri() . '/includes/js/SlimConsoleDummy.min.js' );
+
+		
 		wp_register_script('cc-admin-ajaxhooks', get_template_directory_uri() . '/includes/admin/js/ajaxhooks.js', array('jquery') );
 		
 		wp_register_script('cc-admin-helper', get_template_directory_uri().'/includes/admin/js/admin-helper.js', array('jquery') );
@@ -118,4 +122,32 @@ class cc2_Admin_Base {
 		wp_register_style( 'cc-animate-css', get_template_directory_uri() . '/includes/resources/animatecss/animate.min.css' );
 
 	}
+}
+
+
+function is_cc2_admin_page( $current_page_slug, $allowed_suffixes = array() ) {
+	$return = false;
+	
+	$arrKnownSuffixes = apply_filters('is_cc2_admin_page_known_suffixes', $allowed_suffixes );
+	
+	//new __debug( $current_page_slug, 'load_assets suffix' );
+	//new __debug( $arrKnownSuffixes, 'allowed suffixes (after filter)' );
+	
+	if( !empty( $arrKnownSuffixes ) ) {
+		if( !is_array( $arrKnownSuffixes ) ) {
+			$arrKnownSuffixes = array( $arrKnownSuffixes );
+		}
+		//new __debug( $arrKnownSuffixes, 'allowed suffixes (after is_array check)' );
+		
+		foreach( $arrKnownSuffixes as $strSuffix ) {
+			if( strpos( $current_page_slug, $strSuffix ) !== false ) {
+				$return = true;
+				break;
+			}
+		}
+	}
+	
+	//new __debug( $return ? 'true' : 'false', 'return' );
+	
+	return $return;
 }

@@ -536,6 +536,8 @@ class cc2_Admin_ExportImport {
 	 */
 
 	function init_admin_js($hook_suffix) {
+		wp_enqueue_script('consoledummy');
+		
 		wp_enqueue_media();
 		//wp_enqueue_
 		

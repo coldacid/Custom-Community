@@ -326,22 +326,23 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 				add_action('customizer_register', array( $this,  ) );
 			}*/
 			
-		
-			add_action( 'customize_register', array( $this, 'section_color_schemes' ) );
-			add_action( 'customize_register', array( $this, 'section_background' ) );
-			add_action( 'customize_register', array( $this, 'section_static_frontpage' ) );
-			add_action( 'customize_register', array( $this, 'section_title_tagline' ) );
-			add_action( 'customize_register', array( $this, 'section_header' ) );
-			add_action( 'customize_register', array( $this, 'section_nav' ) );
-			add_action( 'customize_register', array( $this, 'section_branding' ) );
-			add_action( 'customize_register', array( $this, 'section_content' ) );
-			add_action( 'customize_register', array( $this, 'section_layouts' ) );
-			add_action( 'customize_register', array( $this, 'section_widgets' ) );
-			add_action( 'customize_register', array( $this, 'section_typography' ) );
-			add_action( 'customize_register', array( $this, 'section_footer' ) );
-			add_action( 'customize_register', array( $this, 'section_blog' ) );
-			add_action( 'customize_register', array( $this, 'section_slider' ) );
-			add_action( 'customize_register', array( $this, 'section_customize_bootstrap' ) );
+			$action_priority = 20;
+			
+			add_action( 'customize_register', array( $this, 'section_color_schemes' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_background' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_static_frontpage' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_title_tagline' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_header' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_nav' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_branding' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_content' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_layouts' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_widgets' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_typography' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_footer' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_blog' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_slider' ), $action_priority++ );
+			add_action( 'customize_register', array( $this, 'section_customize_bootstrap' ), $action_priority++ );
 		
 			
 			//add_action( 'customize_register', 'tk_customizer_support' );

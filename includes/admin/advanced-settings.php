@@ -361,6 +361,7 @@ class cc2_Admin_AdvancedSettings {
 	 */
 
 	function init_admin_js($hook_suffix) {
+		wp_enqueue_script('consoledummy');
 		wp_enqueue_media();
 		
 		
@@ -378,6 +379,8 @@ class cc2_Admin_AdvancedSettings {
 
 		wp_enqueue_script('jquery-ui-tabs'); //load tabs
 		wp_enqueue_script('cc-admin-js');
+			
+		//new __debug( $hook_suffix, 'hook_suffix' );
 			
 		/*
 		wp_enqueue_style( 'cc_tk_zendesk_css');
