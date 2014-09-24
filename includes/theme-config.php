@@ -67,6 +67,8 @@ define('CC2_THEME_CONFIG', serialize(
 				'title' => 'Dark Colours',
 				
 			),
+			
+			
 			'light' => array(
 				'title' => 'Light Colours',
 			),

@@ -222,7 +222,7 @@ function add_bottom_nav_brand() {
 		return;
 	}	
 	
-	if( true === get_theme_mod( 'bottom_nav_brand' ) ) {
+	if( get_theme_mod( 'bottom_nav_brand', false ) != false ) {
 		
 		$content = get_bloginfo('name');
 		
@@ -246,12 +246,15 @@ function add_bottom_nav_brand() {
  * 
  */
 function add_nav_brand( $content = '' ) {
-	// default content = title 
+	// default content = title
+	
 	if( empty( $content ) ) {
 		$content = get_bloginfo('name');
+	} elseif( !empty( $content ) && strpos( $content, '<img') === false ) {
+		$content = '<img src="' . $content . ' />';
 	}
 	
-
+	
 
 	// just echo the brand here.	
 	echo '<a class="navbar-brand hidden-xs" href="' . esc_url( home_url( '/' ) ) . '" title="'. esc_attr( get_bloginfo( 'name', 'display' ) ) .'" rel="home">' . $content . '</a>';
@@ -337,10 +340,12 @@ endif;
  */
 
 function cc2_display_both_sidebars() {
-    if( cc2_display_sidebar( 'left' ) && cc2_display_sidebar( 'right' ) )
-        return true;
+	$return = false;
+	if( cc2_display_sidebar( 'left' ) && cc2_display_sidebar( 'right' ) ) {
+		$return = true;
+	}
 
-    return false;
+	return $return;
 }
 
 /**
@@ -490,6 +495,7 @@ endif;
  * Adding some extra Bootstrap CSS classes to the sidebars - IF they should hide on small devices
  *
  * @author Konrad Sroka
+ * @author Fabian Wolf
  * @package cc2
  * @since 2.0
  *

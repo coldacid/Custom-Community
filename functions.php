@@ -24,8 +24,10 @@ endif;
  * Possible bugfix for randomly appearing "blank" screen in the Theme Customizer
  * @link http://www.mhthemes.com/support/theme-customizer-not-working/
  * @link http://wordpress.org/support/topic/theme-customizer-problem
+ * 
+ * NOTE: Didnt help much :-/
  */
-remove_action('shutdown', 'wp_ob_end_flush_all', 1);
+//remove_action('shutdown', 'wp_ob_end_flush_all', 1);
 
 
 /**
@@ -467,15 +469,18 @@ function cc2_register_scripts() {
     wp_register_script( 'cc-bootstrap-affix',        get_template_directory_uri() . '/includes/resources/bootstrap/js/affix.js',         array('jquery') );
     wp_register_script( 'cc-bootstrap-alert',        get_template_directory_uri() . '/includes/resources/bootstrap/js/alert.js',         array('jquery') );
     wp_register_script( 'cc-bootstrap-button',       get_template_directory_uri() . '/includes/resources/bootstrap/js/button.js',        array('jquery') );
-    wp_register_script( 'cc-bootstrap-carousel',     get_template_directory_uri() . '/includes/resources/bootstrap/js/carousel.js',      array('jquery') );
-    wp_register_script( 'cc-bootstrap-collapse',     get_template_directory_uri() . '/includes/resources/bootstrap/js/collapse.js',      array('jquery') );
+    
+     wp_register_script( 'cc-bootstrap-transition',   get_template_directory_uri() . '/includes/resources/bootstrap/js/transition.js',    array('jquery') );
+     
+    wp_register_script( 'cc-bootstrap-carousel',     get_template_directory_uri() . '/includes/resources/bootstrap/js/carousel.js',      array('jquery', 'cc-bootstrap-transition') );
+    wp_register_script( 'cc-bootstrap-collapse',     get_template_directory_uri() . '/includes/resources/bootstrap/js/collapse.js',      array('jquery', 'cc-bootstrap-transition') );
     wp_register_script( 'cc-bootstrap-dropdown',     get_template_directory_uri() . '/includes/resources/bootstrap/js/dropdown.js',      array('jquery') );
     wp_register_script( 'cc-bootstrap-modal',        get_template_directory_uri() . '/includes/resources/bootstrap/js/modal.js',         array('jquery') );
-    wp_register_script( 'cc-bootstrap-popover',      get_template_directory_uri() . '/includes/resources/bootstrap/js/popover.js',       array('jquery') );
+    wp_register_script( 'cc-bootstrap-popover',      get_template_directory_uri() . '/includes/resources/bootstrap/js/popover.js',       array('jquery', 'cc-bootstrap-tooltip') );
     wp_register_script( 'cc-bootstrap-scrollspy',    get_template_directory_uri() . '/includes/resources/bootstrap/js/scrollspy.js',     array('jquery') );
     wp_register_script( 'cc-bootstrap-tab',          get_template_directory_uri() . '/includes/resources/bootstrap/js/tab.js',           array('jquery') );
 
-    wp_register_script( 'cc-bootstrap-transition',   get_template_directory_uri() . '/includes/resources/bootstrap/js/transition.js',    array('jquery') );
+   
 
 
 	// load the glyphicons
@@ -487,6 +492,9 @@ function cc2_register_scripts() {
 	//wp_register_style( 'cc-style', get_stylesheet_uri() );
 
 	// load bootstrap wp js
+	/**
+	 * TODO: Check if THIS is the reason for the random "customizer preview window is empty" bug
+	 */
 	wp_register_script( 'cc-bootstrapwp', get_template_directory_uri() . '/includes/js/bootstrap-wp.js', array('jquery') );
 
 	// load animate.css
@@ -520,7 +528,7 @@ function cc2_register_scripts() {
 	//$headjs_settings = wp_parse_args( array( 'headjs_type' => $advanced_settings['headjs_type'], 'headjs_url' => $advanced_settings['headjs_url'] ) , array('headjs_type' => 'redux', 'headjs_url' => '' ) );
 		
 	$headjs_url = get_template_directory_uri() . '/includes/js/head.min.js';
-	if( !empty( $advanced_settings['headjs_url'] ) ) {		
+	if( !empty( $advanced_settings['headjs_url'] ) ) {	
 		$headjs_url = str_replace(
 			array('%template_directory_uri%', '%stylesheet_directory_uri%'), 
 			array( get_template_directory_uri(), get_stylesheet_directory_uri() ),
@@ -594,7 +602,69 @@ function cc2_load_assets() {
 	//wp_enqueue_script( 'consoledummy' );
 
 
-	// load bootstrap js
+
+
+	/**
+	 * load bootstrap js
+	 * NOTE: Improves adjustability, while trying to nail down the bloody random appearing "customizer preview = blank page" bug
+	 * Descriptions taken directly from @link http://getbootstrap.com/javascript/
+	 */
+	
+	$arrKnownBootstrapScripts = array(
+		'cc-bootstrap-tooltip' => array(
+			'description' => 'Tooltip.js; Inspired by the excellent jQuery.tipsy plugin written by Jason Frame; Tooltips is an updated version, which doesn\'t rely on images, uses CSS3 for animations, and data-attributes for local title storage.',
+		),
+		'cc-bootstrap-transition' => array(
+			'description' => 'Transition.js is a basic helper for transitionEnd events as well as a CSS transition emulator. It\'s used by the other plugins to check for CSS transition support and to catch hanging transitions.',
+		),
+		
+		'cc-bootstrap-affix' => array(
+			'description' => 'Affix; required eg. for fixed navbars.',
+		),
+		'cc-bootstrap-alert' => array(
+			'description' => 'Add dismiss functionality to all alert messages with this plugin.',
+		),
+		'cc-bootstrap-button' => array(
+			'description' => 'Do more with buttons. Control button states or create groups of buttons for more components like toolbars.',
+		),
+		
+		'cc-bootstrap-carousel' => array(
+			'description' => 'Simple slideshow function; required if you want to use the default Custom Community slideshow script',
+		),
+		'cc-bootstrap-collapse' => array(
+			'description' => 'Get base styles and flexible support for collapsible components like accordions and navigation. Requires the transitions plugin to be included in your version of Bootstrap.',
+			'deps' => 'cc-bootstrap-transition',
+		),
+		'cc-bootstrap-dropdown' => array(
+			'description' => 'Add dropdown menus to nearly anything with this simple plugin, including the navbar, tabs, and pills. Required by the navbar dropdowns.'
+		),
+		'cc-bootstrap-modal' => array( 
+			'description' => 'Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.',
+		),
+		'cc-bootstrap-popover' => array(
+			'description' => 'Add small overlays of content, like those on the iPad, to any element for housing secondary information. Popovers require the tooltip plugin to be included.',
+			'deps' => 'cc-bootstrap-tooltip',
+		),
+		'cc-bootstrap-scrollspy' => array(
+			'description' => 'The ScrollSpy plugin is for automatically updating nav targets based on scroll position. Scroll the area below the navbar and watch the active class change. The dropdown sub items will be highlighted as well.',
+		),
+		'cc-bootstrap-tab' => array(
+			'description' => 'Add quick, dynamic tab functionality to transition through panes of local content, even via dropdown menus.',
+		),
+	);
+	
+	
+	// sorry for the complex structure - but it helps explaining ;-)
+	
+	$arrLoadBootstrapScripts = apply_filters( 'cc2_bootstrap_scripts_handlers', array_keys( $arrKnownBootstrapScripts ) );
+	
+	if( !empty( $arrLoadBootstrapScripts ) ) {
+		foreach( $arrLoadBootstrapScripts as $strScriptHandler ) {
+			wp_enqueue_script( $strScriptHandler );
+		}
+	}
+	
+	/*
     wp_enqueue_script( 'cc-bootstrap-tooltip');
 
     wp_enqueue_script( 'cc-bootstrap-affix' );
@@ -610,7 +680,7 @@ function cc2_load_assets() {
     wp_enqueue_script( 'cc-bootstrap-scrollspy' );
     wp_enqueue_script( 'cc-bootstrap-tab' );
     wp_enqueue_script( 'cc-bootstrap-transition');
-
+	*/
 
 
 	// load the glyphicons
@@ -619,7 +689,9 @@ function cc2_load_assets() {
 	//wp_enqueue_style( 'cc-style', get_stylesheet_uri() );
 
 	// load bootstrap wp js
-	wp_enqueue_script( 'cc-bootstrapwp' );
+	if( ! defined( 'CC2_LESSPHP' ) ) {
+		wp_enqueue_script( 'cc-bootstrapwp' );
+	}
 
 	// load animate.css
 	wp_enqueue_style( 'cc-animate-css');

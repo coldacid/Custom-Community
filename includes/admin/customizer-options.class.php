@@ -27,6 +27,9 @@
 if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 	
 	class cc2_CustomizerLoader {
+		
+		static $customizer_section_priority;
+		
 		function __construct() {
 			
 			// scripts
@@ -299,7 +302,7 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			
 			
 			// initial function call. don't change if you don't know what you're doing!
-			add_action('customizer_register', array( $this, 'customize_default_sections' ) );
+			add_action('customizer_register', array( $this, 'customize_default_sections' ),10 );
 			
 			// rest of the calls, ordered by priority (somewhat)
 			/*$arrCustomizerSections = array(
@@ -325,24 +328,52 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			
 				add_action('customizer_register', array( $this,  ) );
 			}*/
+			self::$customizer_section_priority = 10;
+			add_action( 'customize_register', array( $this, 'section_color_schemes' ),11 );
 			
-			$action_priority = 20;
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_title_tagline' ));
+	
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_typography' ));
 			
-			add_action( 'customize_register', array( $this, 'section_color_schemes' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_background' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_static_frontpage' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_title_tagline' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_header' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_nav' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_branding' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_content' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_layouts' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_widgets' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_typography' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_footer' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_blog' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_slider' ), $action_priority++ );
-			add_action( 'customize_register', array( $this, 'section_customize_bootstrap' ), $action_priority++ );
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_background' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_header' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_nav' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_branding' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_static_frontpage' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_content' ));
+
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_blog' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_slider' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_layouts' ));
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_widgets' ));
+
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_footer' ));
+			
+
+			
+			self::$customizer_section_priority += 20;
+			add_action( 'customize_register', array( $this, 'section_customize_bootstrap' ));
 		
 			
 			//add_action( 'customize_register', 'tk_customizer_support' );
@@ -356,8 +387,8 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			// Changing some section titles, ordering and updating
 			$wp_customize->remove_section( 'background_image' );
 			$wp_customize->get_section( 'colors' 			) -> title 		= 'Color Scheme';
-			$wp_customize->get_section( 'colors' 			) -> priority	= 30;
-			$wp_customize->get_section( 'static_front_page' ) -> priority 	= 200;
+			//$wp_customize->get_section( 'colors' 			) -> priority	= 30;
+			//$wp_customize->get_section( 'static_front_page' ) -> priority 	= 200;
 			$wp_customize->get_section( 'static_front_page' ) -> title 		= 'Homepage';
 			
 			/**
@@ -387,6 +418,12 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 		
 		function section_color_schemes( $wp_customize ) {
 			extract ( $this->prepare_variables() );
+			
+			// customize from default WP
+			//self::$customizer_section_priority
+			//$wp_customize->get_section( 'colors') -> priority = 30;
+			
+			$wp_customize->get_section( 'colors')->priority = self::$customizer_section_priority;
 			
 			if( !empty( $color_schemes ) ) {
 				// mind the test scheme
@@ -428,11 +465,17 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 		
 		/**
 		 * static_front_page aka Home Page
+		 * NOTE: Built-in section
 		 */
 		
 		
 		function section_static_frontpage( $wp_customize ) {
 			extract( $this->prepare_variables() );
+			
+			// change default WP priority
+			$wp_customize->get_section( 'static_front_page' )->priority = self::$customizer_section_priority;
+			
+			
 			 // Hide all Content on Frontpage
 			$wp_customize->add_setting( 'hide_front_page_content', array(
 				'default'       =>  false,
@@ -537,7 +580,8 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 			
 			$wp_customize->add_section( 'header', array(
 				'title'         => 	'Header',
-				'priority'      => 	60,
+				//'priority'      => 	60,
+				'priority' => self::$customizer_section_priority,
 			) );
 
 				// Display Header
@@ -1059,7 +1103,8 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 		function section_branding( $wp_customize ) {
 			extract( $this->prepare_variables() );
 
-			$branding_section_priority = 70;
+			//$branding_section_priority = 70;
+			$branding_section_priority = self::$customizer_section_priority;
 		 
 			$wp_customize->add_section( 'branding', array(
 				'title' =>	__( 'Branding', 'cc2' ),
@@ -1185,7 +1230,8 @@ if( !class_exists( 'cc2_CustomizerLoader' ) ) {
 
 			$wp_customize->add_section( 'content', array(
 				'title' =>	__( 'Content', 'cc2' ),
-				'priority' => 260,
+				/*'priority' => 260,*/
+				'priority' => self::$customizer_section_priority,
 			) );
 			
 

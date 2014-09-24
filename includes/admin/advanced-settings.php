@@ -355,14 +355,18 @@ class cc2_Admin_AdvancedSettings {
 	 *
 	 * FIXME: Needs to be loaded ONLY when showing the admin screen, but NOWHERE ELSE!
 	 * TODO: Bundle into a seperate, independent call
+	 * NOTE: Doesn't seem as if its being called anywhere, anyway.
 	 * 
 	 * @package cc2
 	 * @since 2.0
 	 */
 
 	function init_admin_js($hook_suffix) {
+		//new __debug( $hook_suffix, 'advanced settings: hook suffix' );
+		
 		wp_enqueue_script('consoledummy');
 		wp_enqueue_media();
+		
 		
 		
 		wp_enqueue_script('jquery'); //load tabs
