@@ -22,7 +22,7 @@
 		
 	<?php endif; ?>
 	
-<?php if( !empty($import_result) ) : ?>
+<?php if( empty($import_result) ) : ?>
 		<p class="description"><label for="field-import-data"><?php _e('Copy + paste the data you want to import into the following text field:', 'cc2'); ?></label></p>
 		
 		<p><textarea class="large-text" rows="10" cols="50" name="import_data" id="field-import-data"></textarea>
