@@ -1,43 +1,54 @@
+<?php
+/**
+ * The template for displaying all pages.
+ *
+ * This is the template that displays all pages by default.
+ * Please note that this is the WordPress construct of pages
+ * and that other 'pages' on your WordPress site will use a
+ * different template.
+ *
+ * @package _tk
+ */
+$content_class = array('main-content-inner');
+?>
+
 <?php get_header(); ?>
 
-	<div id="content" class="span8">
-		<div class="padder">
+    <div class="main-content">
+        <div id="container" class="container">
+            <div class="row">
+				
 
-		<?php do_action( 'bp_before_blog_page' ) ?>
+                <?php do_action( 'cc_first_inside_main_content'); ?>
 
-		<div class="page" id="blog-page">
+                <?php
+                // get the left sidebar if it should be displayed
+                if( cc2_display_sidebar( 'left' ) )
+                    get_sidebar( 'left' ); ?>
+                <div id="content" class="<?php echo apply_filters( 'cc2_content_class', $content_class ); ?>">
 
-			<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+                    <?php do_action( 'cc_first_inside_main_content_inner'); ?>
 
-                <?php get_posts_titles(get_the_title(), get_the_ID());?>
+                    <?php while ( have_posts() ) : the_post(); ?>
 
-				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-					<div class="entry">
-						<?php if ( function_exists( 'sharing_display' ) ) remove_filter( 'the_content', 'sharing_display', 19 ); ?>
-						<?php the_content( __( '<p class="serif">Read the rest of this page &rarr;</p>', 'cc' ) ); ?>
-						<div class="clear"></div>
-						<?php wp_link_pages( array( 'before' => __( '<p class="cc_pagecount"><strong>Pages:</strong> ', 'cc' ), 'after' => '</p>', 'next_or_number' => 'number')); ?>
+                        <?php get_template_part( 'content', 'page' ); ?>
 
-					</div>
-					<div class="clear"></div>
-				</div>
+                        <?php
+                            // If comments are open or we have at least one comment, load up the comment template
+                            if ( comments_open() || '0' != get_comments_number() )
+                                comments_template();
+                        ?>
 
-			<?php endwhile; endif; ?>
+                    <?php endwhile; // end of the loop. ?>
 
-		</div><!-- .page -->
+                </div><!-- close #content -->
 
-		<?php cc_list_posts_on_page(); ?>
+                <?php if( cc2_display_sidebar( 'right' ) )
+                    get_sidebar( 'right' ); ?>
 
-		<div class="clear"></div>
 
-		<?php do_action( 'bp_after_blog_page' ) ?>
-
-		<?php edit_post_link( __( 'Edit this page.', 'cc' ), '<p class="edit-link">', '</p>'); ?>
-
-		<!-- instead of comment_form() we use comments_template(). If you want to fall back to wp, change this function call ;-) -->
-		<?php comments_template(); ?>
-
-		</div><!-- .padder -->
-	</div><!-- #content -->
+            </div><!-- close .row -->
+        </div><!-- close .container -->
+    </div><!-- close .main-content -->
 
 <?php get_footer(); ?>
